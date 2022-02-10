@@ -2,6 +2,7 @@ package ThreadComputation
 
 import (
   "os"
+  "fmt"
   log "github.com/sirupsen/logrus"
   "github.com/antlr/antlr4/runtime/Go/antlr"
   "github.com/gammazero/deque"
@@ -73,6 +74,14 @@ func (tc *TCstate) Get() interface{} {
     return nil
   }
   return tc.Res.PopFront()
+}
+
+func (tc *TCstate) GetAsString() string {
+  res := tc.Get()
+  if res != nil {
+    return fmt.Sprintf("%v", res)
+  }
+  return ""
 }
 
 func (l *tcExecErrorListener) SyntaxError(recognizer antlr.Recognizer, offendingSymbol interface{}, line, column int, msg string, e antlr.RecognitionException) {
