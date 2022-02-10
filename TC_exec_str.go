@@ -7,6 +7,9 @@ import (
 )
 
 func (l *TCExecListener) EnterString_term(c *parser.String_termContext) {
+  if l.TC.Errors() > 0 {
+    return
+  }
   str, err := conv.String(c.GetVALUE().GetText())
   if strings.HasPrefix(str, "\"") {
     str = strings.TrimSuffix(str, "\"")

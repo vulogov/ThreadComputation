@@ -16,7 +16,7 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 11, 54, 4,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 14, 54, 4,
 	2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 4, 5, 9, 5, 4, 6, 9, 6, 4, 7, 9, 7, 4,
 	8, 9, 8, 4, 9, 9, 9, 3, 2, 7, 2, 20, 10, 2, 12, 2, 14, 2, 23, 11, 2, 3,
 	3, 3, 3, 5, 3, 27, 10, 3, 3, 4, 3, 4, 3, 4, 7, 4, 32, 10, 4, 12, 4, 14,
@@ -43,7 +43,7 @@ var literalNames = []string{
 }
 var symbolicNames = []string{
 	"", "", "", "NAME", "INTEGER", "DECIMAL_INTEGER", "FLOAT_NUMBER", "STRING",
-	"TRUE", "FALSE",
+	"TRUE", "FALSE", "BLOCK_COMMENT", "WhiteSpace", "NewLine",
 }
 
 var ruleNames = []string{
@@ -92,6 +92,9 @@ const (
 	ThreadComputationParserSTRING          = 7
 	ThreadComputationParserTRUE            = 8
 	ThreadComputationParserFALSE           = 9
+	ThreadComputationParserBLOCK_COMMENT   = 10
+	ThreadComputationParserWhiteSpace      = 11
+	ThreadComputationParserNewLine         = 12
 )
 
 // ThreadComputationParser rules.
@@ -362,11 +365,11 @@ type IFunContext interface {
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
-	// GetName returns the name token.
-	GetName() antlr.Token
+	// GetFname returns the fname token.
+	GetFname() antlr.Token
 
-	// SetName sets the name token.
-	SetName(antlr.Token)
+	// SetFname sets the fname token.
+	SetFname(antlr.Token)
 
 	// Get_term returns the _term rule contexts.
 	Get_term() ITermContext
@@ -387,7 +390,7 @@ type IFunContext interface {
 type FunContext struct {
 	*antlr.BaseParserRuleContext
 	parser antlr.Parser
-	name   antlr.Token
+	fname  antlr.Token
 	_term  ITermContext
 	param  []ITermContext
 }
@@ -414,9 +417,9 @@ func NewFunContext(parser antlr.Parser, parent antlr.ParserRuleContext, invoking
 
 func (s *FunContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *FunContext) GetName() antlr.Token { return s.name }
+func (s *FunContext) GetFname() antlr.Token { return s.fname }
 
-func (s *FunContext) SetName(v antlr.Token) { s.name = v }
+func (s *FunContext) SetFname(v antlr.Token) { s.fname = v }
 
 func (s *FunContext) Get_term() ITermContext { return s._term }
 
@@ -503,7 +506,7 @@ func (p *ThreadComputationParser) Fun() (localctx IFunContext) {
 
 		var _m = p.Match(ThreadComputationParserNAME)
 
-		localctx.(*FunContext).name = _m
+		localctx.(*FunContext).fname = _m
 	}
 	p.SetState(35)
 	p.GetErrorHandler().Sync(p)

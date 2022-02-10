@@ -3,11 +3,14 @@ package ThreadComputation
 import (
   "os"
   "fmt"
+  "github.com/lrita/cmap"
   log "github.com/sirupsen/logrus"
   "github.com/antlr/antlr4/runtime/Go/antlr"
   "github.com/gammazero/deque"
   "github.com/vulogov/ThreadComputation/parser"
 )
+
+var Functions cmap.Cmap
 
 type TCExecListener struct {
   *parser.BaseThreadComputationListener
@@ -17,6 +20,7 @@ type TCExecListener struct {
 type TCstate struct {
   TC          *TCstate
   errors       int
+  errmsg       string
   InAttr       bool
   Attrs        deque.Deque
   Res          deque.Deque
@@ -51,13 +55,17 @@ func (tc *TCstate) Eval(code string) *TCstate {
   listener := new(TCExecListener)
   listener.TC = tc
   errorListener.TC = tc
-  tc.errors = errorListener.errors
+  if errorListener.errors > 0 {
+    tc.errors = errorListener.errors
+  }
   if errorListener.errors > 0 {
 		log.Fatalf("Lexer errors detected: %v", errorListener.errors)
 		return nil
 	}
   antlr.ParseTreeWalkerDefault.Walk(listener, p.Expressions())
-  tc.errors = errorListener.errors
+  if errorListener.errors > 0 {
+    tc.errors = errorListener.errors
+  }
   if errorListener.errors > 0 {
 		log.Fatalf("Errors detected: %v", errorListener.errors)
 		return nil
@@ -67,6 +75,10 @@ func (tc *TCstate) Eval(code string) *TCstate {
 
 func (tc *TCstate) Errors() int {
   return tc.errors
+}
+
+func (tc *TCstate) Error() string {
+  return tc.errmsg
 }
 
 func (tc *TCstate) Get() interface{} {
@@ -84,19 +96,38 @@ func (tc *TCstate) GetAsString() string {
   return ""
 }
 
+func (tc *TCstate) Ready() bool {
+  if tc.Res.Len() == 0 {
+    return false
+  }
+  return true
+}
+
 func (l *tcExecErrorListener) SyntaxError(recognizer antlr.Recognizer, offendingSymbol interface{}, line, column int, msg string, e antlr.RecognitionException) {
-	log.Errorf("Syntax error line=%v, column=%v : %v", line, column, msg)
+  msgout := fmt.Sprintf("Syntax error line=%v, column=%v : %v", line, column, msg)
+  log.Errorf(msgout)
+  l.TC.errmsg = msgout
 	l.errors += 1
 }
 func (l *tcExecErrorListener) ReportAmbiguity(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex int, exact bool, ambigAlts *antlr.BitSet, configs antlr.ATNConfigSet) {
-	log.Errorf("Ambiguity Error")
+  msgout := fmt.Sprintf("Ambiguity Error")
+  log.Errorf(msgout)
+  l.TC.errmsg = msgout
 	l.errors += 1
 }
 func (l *tcExecErrorListener) ReportAttemptingFullContext(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex int, conflictingAlts *antlr.BitSet, configs antlr.ATNConfigSet) {
-	log.Errorf("Attempting in Full Context")
+  msgout := fmt.Sprintf("Attempting in Full Context")
+  log.Errorf(msgout)
+  l.TC.errmsg = msgout
 	l.errors += 1
 }
 func (l *tcExecErrorListener) ReportContextSensitivity(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex, prediction int, configs antlr.ATNConfigSet) {
-	log.Errorf("Context sensitivity error")
+  msgout := fmt.Sprintf("Context sensitivity error")
+  log.Errorf(msgout)
+  l.TC.errmsg = msgout
 	l.errors += 1
+}
+
+func init() {
+  initStdlib()
 }

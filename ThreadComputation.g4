@@ -10,7 +10,7 @@ root_term
 );
 
 fun
- : name=NAME ('[' (param+=term)* ']')?
+ : fname=NAME ('[' (param+=term)* ']')?
 ;
 
 integer_term: VALUE=INTEGER ;
@@ -58,6 +58,12 @@ FALSE
   | '#FALSE'
   ;
 
+BLOCK_COMMENT
+  :   '/*' .*? '*/' -> skip
+  ;
+
+WhiteSpace : [ \t]+ -> skip;
+NewLine : ('\r'?'\n'|'\r') -> skip;
 
 fragment NON_ZERO_DIGIT
   : [1-9]

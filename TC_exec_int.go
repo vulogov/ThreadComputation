@@ -6,6 +6,9 @@ import (
 )
 
 func (l *TCExecListener) EnterInteger_term(c *parser.Integer_termContext) {
+  if l.TC.Errors() > 0 {
+    return
+  }
   str, err := conv.Int64(c.GetVALUE().GetText())
   if err == nil {
     if l.TC.InAttr == false {

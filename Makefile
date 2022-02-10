@@ -4,6 +4,7 @@ pre:
 	go get github.com/antlr/antlr4/runtime/Go/antlr
 	go get github.com/sirupsen/logrus
 	go get github.com/cstockton/go-conv
+	go get github.com/lrita/cmap
 build:
 	rm -rf ./parser
 	antlr -Dlanguage=Go -o parser ThreadComputation.g4

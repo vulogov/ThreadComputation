@@ -6,6 +6,9 @@ import (
 )
 
 func (l *TCExecListener) EnterFloat_term(c *parser.Float_termContext) {
+  if l.TC.Errors() > 0 {
+    return
+  }
   str, err := conv.Float64(c.GetVALUE().GetText())
   if err == nil {
     if l.TC.InAttr == false {
