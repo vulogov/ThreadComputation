@@ -348,3 +348,27 @@ func TestStdlibMath19(t *testing.T) {
 		t.Fatalf("2 2 + 6 - had failed: %v", res)
 	}
 }
+
+func TestStdlibMath20(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval(" TheAnswer ")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("TheAnswer: %v", res)
+	}
+}
+
+func TestStdlibMath21(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval(" TheAnswer[3.14] ")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "3.14" {
+		t.Fatalf("TheAnswer[3.14]: %v", res)
+	}
+}

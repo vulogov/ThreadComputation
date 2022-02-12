@@ -52,8 +52,51 @@ fmt.Println(tc.Get())
 ```
 
 - First, we are importing the the module.
-- Next, we are creating VM instance.
+- Next, by calling _ThreadComputation.Init()_, we are creating VM instance.
 - _tc.Eval()_ will evaluate the code.
 - _tc.Get()_ will return the last return value of the last called function
 
 There are more GoLang module functions, but those are most common ones.
+
+How to extend the module ?
+
+## How to extend ThreadComputation ?
+
+ThreadComputation module by itself is not very useful. You have to add your own functions to it. Here is how. First, you define your function:
+
+```(language=Go)
+func TheUltimateAnswerFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  if q.Len() > 0 {
+    return q.PopFront(), nil
+  }
+  return 42, nil
+}
+```
+
+- This function takes two arguments: first is a reference to a evaluation context, where attribute _l.TC_ is a reference to execution context. Second, is a reference to optional parameters, as a queue.
+- This function will return value and error. If everything fine, error will be nil. The value will be pushed to the front of the context stack. Result of execution of the previous function will be always stored in the front of the context stack.
+- We are checking, if we are passing anything as an arguments to this function call, then we are returning the first argument after we popping this argument from the arguments queue. VM will place this value to the top of the stack.
+- And if no arguments passed, we are returning 42.
+
+Next, you shall registed this function in the list of global functions:
+
+```(language=Go)
+ThreadComputation.SetFunction("TheAnswer", TheUltimateAnswerFunction)
+```
+
+- First parameter is a name of the function as it will be known in DSL.
+- Second, is a reference to your function implementation.
+
+After that, you can use that function
+
+```
+TheAnswer
+```
+
+This call will place 42 into a top of the context stack, but if you pass an argument to the call, like that:
+
+```
+TheAnswer[3.14]
+```
+
+then value of the Pi will be returned to the stack.

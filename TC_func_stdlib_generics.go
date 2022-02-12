@@ -88,6 +88,13 @@ func DupFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   return nil, nil
 }
 
+func TheUltimateAnswerFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  if q.Len() > 0 {
+    return q.PopFront(), nil
+  }
+  return 42, nil
+}
+
 func initStdlibGenerics() {
   SetFunction("print", PrintFunction)
   SetFunction("printAll", PrintAllFunction)
@@ -98,4 +105,5 @@ func initStdlibGenerics() {
   SetFunction("dup", DupFunction)
   SetFunction("^", DupFunction)
   SetFunction("clr", ClrFunction)
+  SetFunction("TheAnswer", TheUltimateAnswerFunction)
 }
