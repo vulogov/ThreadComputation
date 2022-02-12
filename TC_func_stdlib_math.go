@@ -5,7 +5,7 @@ import (
   "github.com/gammazero/deque"
   "errors"
   "gonum.org/v1/gonum/floats"
-  // "gonum.org/v1/gonum/stat"
+  "gonum.org/v1/gonum/stat"
 )
 
 
@@ -51,6 +51,21 @@ func ArithmeticFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) 
 }
 
 
+func MeanFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  return applyAggFunToFloatArrayWithWeight(l, q, stat.Mean)
+}
+
+func VarianceFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  return applyAggFunToFloatArrayWithWeight(l, q, stat.Variance)
+}
+
+func SkewFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  return applyAggFunToFloatArrayWithWeight(l, q, stat.Skew)
+}
+
+func DeviationFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  return applyAggFunToFloatArrayWithWeight(l, q, stat.StdDev)
+}
 
 func MinFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   return applyAggFunToFloatArray(l, q, floats.Min)
@@ -70,4 +85,8 @@ func initStdlibMath() {
   SetFunction("/", ArithmeticFunction)
   SetFunction("min", MinFunction)
   SetFunction("max", MaxFunction)
+  SetFunction("mean", MeanFunction)
+  SetFunction("variance", VarianceFunction)
+  SetFunction("skew", SkewFunction)
+  SetFunction("deviation", DeviationFunction)
 }

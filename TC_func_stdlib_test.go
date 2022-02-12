@@ -205,3 +205,51 @@ func TestStdlibMath8(t *testing.T) {
 		t.Fatalf("2 9 min had failed: %v", res)
 	}
 }
+
+func TestStdlibMath9(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("2 9 mean")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "5.5" {
+		t.Fatalf("2 9 mean had failed: %v", res)
+	}
+}
+
+func TestStdlibMath10(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("2 9 variance")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "24.5" {
+		t.Fatalf("2 9 variance had failed: %v", res)
+	}
+}
+
+func TestStdlibMath11(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("2 10 12 skew")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "-1.4578629673213053" {
+		t.Fatalf("2 10 12 skew had failed: %v", res)
+	}
+}
+
+func TestStdlibMath12(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("2 10 12 deviation")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "5.291502622129181" {
+		t.Fatalf("2 10 12 deviation had failed: %v", res)
+	}
+}
