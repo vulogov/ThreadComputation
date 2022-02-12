@@ -7,10 +7,15 @@ expressions
 root_term
  : ( fun
    | term
+   | vars
 );
 
 fun
  : fname=(NAME|OPS) ('[' (param+=term)* ']')?
+;
+
+vars
+ : '$' vname=NAME
 ;
 
 integer_term: VALUE=INTEGER ;
@@ -70,7 +75,6 @@ OP
   | ':'
   | ';'
   | '`'
-  | '!'
   | '?'
   ;
 

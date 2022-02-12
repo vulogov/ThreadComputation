@@ -20,6 +20,9 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
     return
   }
   func_name := c.GetFname().GetText()
+  if _, ok := l.TC.Vars.Load(func_name); ok {
+    return
+  }
   if _, ok := Functions.Load(func_name); ok {
 		l.TC.InAttr += 1
     l.TC.Attrs.Add()
@@ -39,6 +42,10 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     return
   }
   func_name := c.GetFname().GetText()
+  if vdata, ok := l.TC.Vars.Load(func_name); ok {
+    l.TC.Res.PushFront(vdata)
+    return
+  }
   if lfun, ok := Functions.Load(func_name); ok {
     fun := lfun.(TCFun)
     q   := l.TC.Attrs.Q()

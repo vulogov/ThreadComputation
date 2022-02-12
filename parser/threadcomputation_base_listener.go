@@ -39,6 +39,12 @@ func (s *BaseThreadComputationListener) EnterFun(ctx *FunContext) {}
 // ExitFun is called when production fun is exited.
 func (s *BaseThreadComputationListener) ExitFun(ctx *FunContext) {}
 
+// EnterVars is called when production vars is entered.
+func (s *BaseThreadComputationListener) EnterVars(ctx *VarsContext) {}
+
+// ExitVars is called when production vars is exited.
+func (s *BaseThreadComputationListener) ExitVars(ctx *VarsContext) {}
+
 // EnterInteger_term is called when production integer_term is entered.
 func (s *BaseThreadComputationListener) EnterInteger_term(ctx *Integer_termContext) {}
 

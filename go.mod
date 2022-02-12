@@ -12,7 +12,7 @@ require (
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/lrita/cmap v0.0.0-20200818170753-e987cd3dfa73 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
-	golang.org/x/exp v0.0.0-20220209042442-160e291fcf24 // indirect
+	golang.org/x/exp v0.0.0-20220212023102-3e31098684e2 // indirect
 	golang.org/x/image v0.0.0-20211028202545-6944b10bf410 // indirect
 	golang.org/x/sys v0.0.0-20211019181941-9d821ace8654 // indirect
 	golang.org/x/text v0.3.7 // indirect

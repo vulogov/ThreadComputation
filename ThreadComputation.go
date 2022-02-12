@@ -25,6 +25,7 @@ type TCstate struct {
   Attrs       *TwoStack
   Res          deque.Deque
   FNStack      deque.Deque
+  Vars         cmap.Cmap
 }
 
 type tcExecErrorListener struct {

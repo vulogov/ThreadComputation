@@ -17,6 +17,9 @@ type ThreadComputationListener interface {
 	// EnterFun is called when entering the fun production.
 	EnterFun(c *FunContext)
 
+	// EnterVars is called when entering the vars production.
+	EnterVars(c *VarsContext)
+
 	// EnterInteger_term is called when entering the integer_term production.
 	EnterInteger_term(c *Integer_termContext)
 
@@ -40,6 +43,9 @@ type ThreadComputationListener interface {
 
 	// ExitFun is called when exiting the fun production.
 	ExitFun(c *FunContext)
+
+	// ExitVars is called when exiting the vars production.
+	ExitVars(c *VarsContext)
 
 	// ExitInteger_term is called when exiting the integer_term production.
 	ExitInteger_term(c *Integer_termContext)
