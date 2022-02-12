@@ -47,7 +47,7 @@ func ToStackFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   }
   for q.Len() > 0 {
     e:= q.PopFront()
-    l.TC.Res.PushFront(e)
+    l.TC.Res.Set(e)
   }
   return nil, nil
 }
@@ -82,8 +82,8 @@ func DropFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
 func DupFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   if l.TC.Ready() {
     e := l.TC.Get()
-    l.TC.Res.PushFront(e)
-    l.TC.Res.PushFront(e)
+    l.TC.Res.Set(e)
+    l.TC.Res.Set(e)
   }
   return nil, nil
 }

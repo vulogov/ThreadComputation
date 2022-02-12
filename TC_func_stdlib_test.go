@@ -76,8 +76,9 @@ func TestStdlib7(t *testing.T) {
 func TestStdlib8(t *testing.T) {
 	tc := Init()
   tc = tc.Eval("stack[1 2 3] len")
-  if tc.GetAsString() != "3" {
-		t.Fatalf("len function not working")
+	res := tc.GetAsString()
+  if res != "3" {
+		t.Fatalf("len function not working: %v", res)
 	}
 }
 
@@ -92,8 +93,9 @@ func TestStdlib9(t *testing.T) {
 func TestStdlib10(t *testing.T) {
 	tc := Init()
   tc = tc.Eval("stack[1 2 3] dup len")
-  if tc.GetAsString() != "4" {
-		t.Fatalf("dup function not working")
+	res := tc.GetAsString()
+  if res != "4" {
+		t.Fatalf("dup function not working: %v", res)
 	}
 }
 

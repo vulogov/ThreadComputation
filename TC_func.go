@@ -43,7 +43,7 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
   }
   func_name := c.GetFname().GetText()
   if vdata, ok := l.TC.Vars.Load(func_name); ok {
-    l.TC.Res.PushFront(vdata)
+    l.TC.Res.Set(vdata)
     return
   }
   if lfun, ok := Functions.Load(func_name); ok {
@@ -61,7 +61,7 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
         if l.TC.Attrs.GLen() > 1 {
           l.TC.Attrs.Set(res)
         } else {
-          l.TC.Res.PushFront(res)
+          l.TC.Res.Set(res)
         }
       }
     }
@@ -76,4 +76,5 @@ func SetFunction(name string, fun TCFun) {
 func initStdlib() {
   initStdlibGenerics()
   initStdlibMath()
+  initStdlibStack()
 }

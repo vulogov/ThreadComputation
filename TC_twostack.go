@@ -57,6 +57,26 @@ func (ts *TwoStack) Reverse() {
 	ts.Mode = false
 }
 
+
+func (ts *TwoStack) PopFront() interface{} {
+	if ts.R.Len() == 0 {
+		ts.R.PushBack(deque.New(0, minCap))
+		return nil
+	}
+	return ts.R.Front().(*deque.Deque).PopFront()
+}
+
+func (ts *TwoStack) Front() interface{} {
+	if ts.R.Len() == 0 {
+		ts.R.PushBack(deque.New(0, minCap))
+	}
+	if ts.R.Front().(*deque.Deque).Len() > 0 {
+		return ts.R.Front().(*deque.Deque).Front()
+	} else {
+		return nil
+	}
+}
+
 func (ts *TwoStack) Set(data interface{}) {
 	if ts.R.Len() == 0 {
 		ts.R.PushBack(deque.New(0, minCap))

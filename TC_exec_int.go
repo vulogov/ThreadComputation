@@ -12,7 +12,7 @@ func (l *TCExecListener) EnterInteger_term(c *parser.Integer_termContext) {
   str, err := conv.Int64(c.GetVALUE().GetText())
   if err == nil {
     if l.TC.InAttr < 1 {
-      l.TC.Res.PushFront(str)
+      l.TC.Res.Set(str)
     } else {
       l.TC.Attrs.Set(str)
     }

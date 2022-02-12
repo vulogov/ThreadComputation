@@ -17,7 +17,7 @@ func (l *TCExecListener) EnterString_term(c *parser.String_termContext) {
   }
   if err == nil {
     if l.TC.InAttr < 1 {
-      l.TC.Res.PushFront(str)
+      l.TC.Res.Set(str)
     } else {
       l.TC.Attrs.Set(str)
     }

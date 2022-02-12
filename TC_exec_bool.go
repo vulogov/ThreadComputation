@@ -12,7 +12,7 @@ func (l *TCExecListener) EnterBoolean_term(c *parser.Boolean_termContext) {
   str, err := conv.Bool(c.GetVALUE().GetText()[1:])
   if err == nil {
     if l.TC.InAttr < 1 {
-      l.TC.Res.PushFront(str)
+      l.TC.Res.Set(str)
     } else {
       l.TC.Attrs.Set(str)
     }

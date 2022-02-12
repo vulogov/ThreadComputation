@@ -20,6 +20,12 @@ type ThreadComputationListener interface {
 	// EnterVars is called when entering the vars production.
 	EnterVars(c *VarsContext)
 
+	// EnterDblock_term is called when entering the dblock_term production.
+	EnterDblock_term(c *Dblock_termContext)
+
+	// EnterDblock is called when entering the dblock production.
+	EnterDblock(c *DblockContext)
+
 	// EnterInteger_term is called when entering the integer_term production.
 	EnterInteger_term(c *Integer_termContext)
 
@@ -46,6 +52,12 @@ type ThreadComputationListener interface {
 
 	// ExitVars is called when exiting the vars production.
 	ExitVars(c *VarsContext)
+
+	// ExitDblock_term is called when exiting the dblock_term production.
+	ExitDblock_term(c *Dblock_termContext)
+
+	// ExitDblock is called when exiting the dblock production.
+	ExitDblock(c *DblockContext)
 
 	// ExitInteger_term is called when exiting the integer_term production.
 	ExitInteger_term(c *Integer_termContext)

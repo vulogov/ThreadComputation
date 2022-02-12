@@ -23,7 +23,7 @@ type TCstate struct {
   errmsg       string
   InAttr       int
   Attrs       *TwoStack
-  Res          deque.Deque
+  Res         *TwoStack
   FNStack      deque.Deque
   Vars         cmap.Cmap
 }
@@ -41,8 +41,10 @@ func Init() *TCstate {
   tc := &TCstate{
     InAttr:  0,
     errors:  0,
+    Res:     InitTS(),
     Attrs:   InitTS(),
   }
+  tc.Res.Add()
   return tc
 }
 
@@ -88,7 +90,11 @@ func (tc *TCstate) Get() interface{} {
   if tc.Res.Len() == 0 {
     return nil
   }
-  return tc.Res.PopFront()
+  res, err := tc.Res.Take()
+  if err == nil {
+    return res
+  }
+  return nil
 }
 
 func (tc *TCstate) GetAsString() string {

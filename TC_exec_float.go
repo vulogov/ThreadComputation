@@ -12,7 +12,7 @@ func (l *TCExecListener) EnterFloat_term(c *parser.Float_termContext) {
   str, err := conv.Float64(c.GetVALUE().GetText())
   if err == nil {
     if l.TC.InAttr < 1 {
-      l.TC.Res.PushFront(str)
+      l.TC.Res.Set(str)
     } else {
       l.TC.Attrs.Set(str)
     }

@@ -16,42 +16,49 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 17, 60, 4,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 19, 78, 4,
 	2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 4, 5, 9, 5, 4, 6, 9, 6, 4, 7, 9, 7, 4,
-	8, 9, 8, 4, 9, 9, 9, 4, 10, 9, 10, 3, 2, 7, 2, 22, 10, 2, 12, 2, 14, 2,
-	25, 11, 2, 3, 3, 3, 3, 3, 3, 5, 3, 30, 10, 3, 3, 4, 3, 4, 3, 4, 7, 4, 35,
-	10, 4, 12, 4, 14, 4, 38, 11, 4, 3, 4, 5, 4, 41, 10, 4, 3, 5, 3, 5, 3, 5,
-	3, 6, 3, 6, 3, 7, 3, 7, 3, 8, 3, 8, 3, 9, 3, 9, 3, 10, 3, 10, 3, 10, 3,
-	10, 5, 10, 58, 10, 10, 3, 10, 2, 2, 11, 2, 4, 6, 8, 10, 12, 14, 16, 18,
-	2, 4, 3, 2, 6, 7, 3, 2, 13, 14, 2, 58, 2, 23, 3, 2, 2, 2, 4, 29, 3, 2,
-	2, 2, 6, 31, 3, 2, 2, 2, 8, 42, 3, 2, 2, 2, 10, 45, 3, 2, 2, 2, 12, 47,
-	3, 2, 2, 2, 14, 49, 3, 2, 2, 2, 16, 51, 3, 2, 2, 2, 18, 57, 3, 2, 2, 2,
-	20, 22, 5, 4, 3, 2, 21, 20, 3, 2, 2, 2, 22, 25, 3, 2, 2, 2, 23, 21, 3,
-	2, 2, 2, 23, 24, 3, 2, 2, 2, 24, 3, 3, 2, 2, 2, 25, 23, 3, 2, 2, 2, 26,
-	30, 5, 6, 4, 2, 27, 30, 5, 18, 10, 2, 28, 30, 5, 8, 5, 2, 29, 26, 3, 2,
-	2, 2, 29, 27, 3, 2, 2, 2, 29, 28, 3, 2, 2, 2, 30, 5, 3, 2, 2, 2, 31, 40,
-	9, 2, 2, 2, 32, 36, 7, 3, 2, 2, 33, 35, 5, 18, 10, 2, 34, 33, 3, 2, 2,
-	2, 35, 38, 3, 2, 2, 2, 36, 34, 3, 2, 2, 2, 36, 37, 3, 2, 2, 2, 37, 39,
-	3, 2, 2, 2, 38, 36, 3, 2, 2, 2, 39, 41, 7, 4, 2, 2, 40, 32, 3, 2, 2, 2,
-	40, 41, 3, 2, 2, 2, 41, 7, 3, 2, 2, 2, 42, 43, 7, 5, 2, 2, 43, 44, 7, 7,
-	2, 2, 44, 9, 3, 2, 2, 2, 45, 46, 7, 8, 2, 2, 46, 11, 3, 2, 2, 2, 47, 48,
-	7, 10, 2, 2, 48, 13, 3, 2, 2, 2, 49, 50, 7, 11, 2, 2, 50, 15, 3, 2, 2,
-	2, 51, 52, 9, 3, 2, 2, 52, 17, 3, 2, 2, 2, 53, 58, 5, 10, 6, 2, 54, 58,
-	5, 12, 7, 2, 55, 58, 5, 14, 8, 2, 56, 58, 5, 16, 9, 2, 57, 53, 3, 2, 2,
-	2, 57, 54, 3, 2, 2, 2, 57, 55, 3, 2, 2, 2, 57, 56, 3, 2, 2, 2, 58, 19,
-	3, 2, 2, 2, 7, 23, 29, 36, 40, 57,
+	8, 9, 8, 4, 9, 9, 9, 4, 10, 9, 10, 4, 11, 9, 11, 4, 12, 9, 12, 3, 2, 7,
+	2, 26, 10, 2, 12, 2, 14, 2, 29, 11, 2, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 35,
+	10, 3, 3, 4, 3, 4, 3, 4, 7, 4, 40, 10, 4, 12, 4, 14, 4, 43, 11, 4, 3, 4,
+	5, 4, 46, 10, 4, 3, 5, 3, 5, 3, 5, 3, 6, 3, 6, 5, 6, 53, 10, 6, 3, 7, 3,
+	7, 7, 7, 57, 10, 7, 12, 7, 14, 7, 60, 11, 7, 3, 7, 3, 7, 3, 8, 3, 8, 3,
+	9, 3, 9, 3, 10, 3, 10, 3, 11, 3, 11, 3, 12, 3, 12, 3, 12, 3, 12, 5, 12,
+	76, 10, 12, 3, 12, 2, 2, 13, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 2,
+	4, 3, 2, 8, 9, 3, 2, 15, 16, 2, 77, 2, 27, 3, 2, 2, 2, 4, 34, 3, 2, 2,
+	2, 6, 36, 3, 2, 2, 2, 8, 47, 3, 2, 2, 2, 10, 52, 3, 2, 2, 2, 12, 54, 3,
+	2, 2, 2, 14, 63, 3, 2, 2, 2, 16, 65, 3, 2, 2, 2, 18, 67, 3, 2, 2, 2, 20,
+	69, 3, 2, 2, 2, 22, 75, 3, 2, 2, 2, 24, 26, 5, 4, 3, 2, 25, 24, 3, 2, 2,
+	2, 26, 29, 3, 2, 2, 2, 27, 25, 3, 2, 2, 2, 27, 28, 3, 2, 2, 2, 28, 3, 3,
+	2, 2, 2, 29, 27, 3, 2, 2, 2, 30, 35, 5, 6, 4, 2, 31, 35, 5, 22, 12, 2,
+	32, 35, 5, 8, 5, 2, 33, 35, 5, 12, 7, 2, 34, 30, 3, 2, 2, 2, 34, 31, 3,
+	2, 2, 2, 34, 32, 3, 2, 2, 2, 34, 33, 3, 2, 2, 2, 35, 5, 3, 2, 2, 2, 36,
+	45, 9, 2, 2, 2, 37, 41, 7, 3, 2, 2, 38, 40, 5, 22, 12, 2, 39, 38, 3, 2,
+	2, 2, 40, 43, 3, 2, 2, 2, 41, 39, 3, 2, 2, 2, 41, 42, 3, 2, 2, 2, 42, 44,
+	3, 2, 2, 2, 43, 41, 3, 2, 2, 2, 44, 46, 7, 4, 2, 2, 45, 37, 3, 2, 2, 2,
+	45, 46, 3, 2, 2, 2, 46, 7, 3, 2, 2, 2, 47, 48, 7, 5, 2, 2, 48, 49, 7, 9,
+	2, 2, 49, 9, 3, 2, 2, 2, 50, 53, 5, 6, 4, 2, 51, 53, 5, 22, 12, 2, 52,
+	50, 3, 2, 2, 2, 52, 51, 3, 2, 2, 2, 53, 11, 3, 2, 2, 2, 54, 58, 7, 6, 2,
+	2, 55, 57, 5, 10, 6, 2, 56, 55, 3, 2, 2, 2, 57, 60, 3, 2, 2, 2, 58, 56,
+	3, 2, 2, 2, 58, 59, 3, 2, 2, 2, 59, 61, 3, 2, 2, 2, 60, 58, 3, 2, 2, 2,
+	61, 62, 7, 7, 2, 2, 62, 13, 3, 2, 2, 2, 63, 64, 7, 10, 2, 2, 64, 15, 3,
+	2, 2, 2, 65, 66, 7, 12, 2, 2, 66, 17, 3, 2, 2, 2, 67, 68, 7, 13, 2, 2,
+	68, 19, 3, 2, 2, 2, 69, 70, 9, 3, 2, 2, 70, 21, 3, 2, 2, 2, 71, 76, 5,
+	14, 8, 2, 72, 76, 5, 16, 9, 2, 73, 76, 5, 18, 10, 2, 74, 76, 5, 20, 11,
+	2, 75, 71, 3, 2, 2, 2, 75, 72, 3, 2, 2, 2, 75, 73, 3, 2, 2, 2, 75, 74,
+	3, 2, 2, 2, 76, 23, 3, 2, 2, 2, 9, 27, 34, 41, 45, 52, 58, 75,
 }
 var literalNames = []string{
-	"", "'['", "']'", "'$'",
+	"", "'['", "']'", "'$'", "'('", "')'",
 }
 var symbolicNames = []string{
-	"", "", "", "", "OPS", "NAME", "INTEGER", "DECIMAL_INTEGER", "FLOAT_NUMBER",
+	"", "", "", "", "", "", "OPS", "NAME", "INTEGER", "DECIMAL_INTEGER", "FLOAT_NUMBER",
 	"STRING", "OP", "TRUE", "FALSE", "BLOCK_COMMENT", "WhiteSpace", "NewLine",
 }
 
 var ruleNames = []string{
-	"expressions", "root_term", "fun", "vars", "integer_term", "float_term",
-	"string_term", "boolean_term", "term",
+	"expressions", "root_term", "fun", "vars", "dblock_term", "dblock", "integer_term",
+	"float_term", "string_term", "boolean_term", "term",
 }
 
 type ThreadComputationParser struct {
@@ -89,18 +96,20 @@ const (
 	ThreadComputationParserT__0            = 1
 	ThreadComputationParserT__1            = 2
 	ThreadComputationParserT__2            = 3
-	ThreadComputationParserOPS             = 4
-	ThreadComputationParserNAME            = 5
-	ThreadComputationParserINTEGER         = 6
-	ThreadComputationParserDECIMAL_INTEGER = 7
-	ThreadComputationParserFLOAT_NUMBER    = 8
-	ThreadComputationParserSTRING          = 9
-	ThreadComputationParserOP              = 10
-	ThreadComputationParserTRUE            = 11
-	ThreadComputationParserFALSE           = 12
-	ThreadComputationParserBLOCK_COMMENT   = 13
-	ThreadComputationParserWhiteSpace      = 14
-	ThreadComputationParserNewLine         = 15
+	ThreadComputationParserT__3            = 4
+	ThreadComputationParserT__4            = 5
+	ThreadComputationParserOPS             = 6
+	ThreadComputationParserNAME            = 7
+	ThreadComputationParserINTEGER         = 8
+	ThreadComputationParserDECIMAL_INTEGER = 9
+	ThreadComputationParserFLOAT_NUMBER    = 10
+	ThreadComputationParserSTRING          = 11
+	ThreadComputationParserOP              = 12
+	ThreadComputationParserTRUE            = 13
+	ThreadComputationParserFALSE           = 14
+	ThreadComputationParserBLOCK_COMMENT   = 15
+	ThreadComputationParserWhiteSpace      = 16
+	ThreadComputationParserNewLine         = 17
 )
 
 // ThreadComputationParser rules.
@@ -109,11 +118,13 @@ const (
 	ThreadComputationParserRULE_root_term    = 1
 	ThreadComputationParserRULE_fun          = 2
 	ThreadComputationParserRULE_vars         = 3
-	ThreadComputationParserRULE_integer_term = 4
-	ThreadComputationParserRULE_float_term   = 5
-	ThreadComputationParserRULE_string_term  = 6
-	ThreadComputationParserRULE_boolean_term = 7
-	ThreadComputationParserRULE_term         = 8
+	ThreadComputationParserRULE_dblock_term  = 4
+	ThreadComputationParserRULE_dblock       = 5
+	ThreadComputationParserRULE_integer_term = 6
+	ThreadComputationParserRULE_float_term   = 7
+	ThreadComputationParserRULE_string_term  = 8
+	ThreadComputationParserRULE_boolean_term = 9
+	ThreadComputationParserRULE_term         = 10
 )
 
 // IExpressionsContext is an interface to support dynamic dispatch.
@@ -222,17 +233,17 @@ func (p *ThreadComputationParser) Expressions() (localctx IExpressionsContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(21)
+	p.SetState(25)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__2)|(1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
+	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__2)|(1<<ThreadComputationParserT__3)|(1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
 		{
-			p.SetState(18)
+			p.SetState(22)
 			p.Root_term()
 		}
 
-		p.SetState(23)
+		p.SetState(27)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 	}
@@ -308,6 +319,16 @@ func (s *Root_termContext) Vars() IVarsContext {
 	return t.(IVarsContext)
 }
 
+func (s *Root_termContext) Dblock() IDblockContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IDblockContext)(nil)).Elem(), 0)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IDblockContext)
+}
+
 func (s *Root_termContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
@@ -352,26 +373,32 @@ func (p *ThreadComputationParser) Root_term() (localctx IRoot_termContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(27)
+	p.SetState(32)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case ThreadComputationParserOPS, ThreadComputationParserNAME:
 		{
-			p.SetState(24)
+			p.SetState(28)
 			p.Fun()
 		}
 
 	case ThreadComputationParserINTEGER, ThreadComputationParserFLOAT_NUMBER, ThreadComputationParserSTRING, ThreadComputationParserTRUE, ThreadComputationParserFALSE:
 		{
-			p.SetState(25)
+			p.SetState(29)
 			p.Term()
 		}
 
 	case ThreadComputationParserT__2:
 		{
-			p.SetState(26)
+			p.SetState(30)
 			p.Vars()
+		}
+
+	case ThreadComputationParserT__3:
+		{
+			p.SetState(31)
+			p.Dblock()
 		}
 
 	default:
@@ -529,7 +556,7 @@ func (p *ThreadComputationParser) Fun() (localctx IFunContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(29)
+		p.SetState(34)
 
 		var _lt = p.GetTokenStream().LT(1)
 
@@ -546,22 +573,22 @@ func (p *ThreadComputationParser) Fun() (localctx IFunContext) {
 			p.Consume()
 		}
 	}
-	p.SetState(38)
+	p.SetState(43)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == ThreadComputationParserT__0 {
 		{
-			p.SetState(30)
+			p.SetState(35)
 			p.Match(ThreadComputationParserT__0)
 		}
-		p.SetState(34)
+		p.SetState(39)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
 		for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
 			{
-				p.SetState(31)
+				p.SetState(36)
 
 				var _x = p.Term()
 
@@ -569,12 +596,12 @@ func (p *ThreadComputationParser) Fun() (localctx IFunContext) {
 			}
 			localctx.(*FunContext).param = append(localctx.(*FunContext).param, localctx.(*FunContext)._term)
 
-			p.SetState(36)
+			p.SetState(41)
 			p.GetErrorHandler().Sync(p)
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
-			p.SetState(37)
+			p.SetState(42)
 			p.Match(ThreadComputationParserT__1)
 		}
 
@@ -681,15 +708,298 @@ func (p *ThreadComputationParser) Vars() (localctx IVarsContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(40)
+		p.SetState(45)
 		p.Match(ThreadComputationParserT__2)
 	}
 	{
-		p.SetState(41)
+		p.SetState(46)
 
 		var _m = p.Match(ThreadComputationParserNAME)
 
 		localctx.(*VarsContext).vname = _m
+	}
+
+	return localctx
+}
+
+// IDblock_termContext is an interface to support dynamic dispatch.
+type IDblock_termContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// IsDblock_termContext differentiates from other interfaces.
+	IsDblock_termContext()
+}
+
+type Dblock_termContext struct {
+	*antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyDblock_termContext() *Dblock_termContext {
+	var p = new(Dblock_termContext)
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	p.RuleIndex = ThreadComputationParserRULE_dblock_term
+	return p
+}
+
+func (*Dblock_termContext) IsDblock_termContext() {}
+
+func NewDblock_termContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Dblock_termContext {
+	var p = new(Dblock_termContext)
+
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = ThreadComputationParserRULE_dblock_term
+
+	return p
+}
+
+func (s *Dblock_termContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *Dblock_termContext) Fun() IFunContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IFunContext)(nil)).Elem(), 0)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IFunContext)
+}
+
+func (s *Dblock_termContext) Term() ITermContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*ITermContext)(nil)).Elem(), 0)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(ITermContext)
+}
+
+func (s *Dblock_termContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *Dblock_termContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *Dblock_termContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(ThreadComputationListener); ok {
+		listenerT.EnterDblock_term(s)
+	}
+}
+
+func (s *Dblock_termContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(ThreadComputationListener); ok {
+		listenerT.ExitDblock_term(s)
+	}
+}
+
+func (p *ThreadComputationParser) Dblock_term() (localctx IDblock_termContext) {
+	this := p
+	_ = this
+
+	localctx = NewDblock_termContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 8, ThreadComputationParserRULE_dblock_term)
+
+	defer func() {
+		p.ExitRule()
+	}()
+
+	defer func() {
+		if err := recover(); err != nil {
+			if v, ok := err.(antlr.RecognitionException); ok {
+				localctx.SetException(v)
+				p.GetErrorHandler().ReportError(p, v)
+				p.GetErrorHandler().Recover(p, v)
+			} else {
+				panic(err)
+			}
+		}
+	}()
+
+	p.EnterOuterAlt(localctx, 1)
+	p.SetState(50)
+	p.GetErrorHandler().Sync(p)
+
+	switch p.GetTokenStream().LA(1) {
+	case ThreadComputationParserOPS, ThreadComputationParserNAME:
+		{
+			p.SetState(48)
+			p.Fun()
+		}
+
+	case ThreadComputationParserINTEGER, ThreadComputationParserFLOAT_NUMBER, ThreadComputationParserSTRING, ThreadComputationParserTRUE, ThreadComputationParserFALSE:
+		{
+			p.SetState(49)
+			p.Term()
+		}
+
+	default:
+		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+	}
+
+	return localctx
+}
+
+// IDblockContext is an interface to support dynamic dispatch.
+type IDblockContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// Get_dblock_term returns the _dblock_term rule contexts.
+	Get_dblock_term() IDblock_termContext
+
+	// Set_dblock_term sets the _dblock_term rule contexts.
+	Set_dblock_term(IDblock_termContext)
+
+	// GetParam returns the param rule context list.
+	GetParam() []IDblock_termContext
+
+	// SetParam sets the param rule context list.
+	SetParam([]IDblock_termContext)
+
+	// IsDblockContext differentiates from other interfaces.
+	IsDblockContext()
+}
+
+type DblockContext struct {
+	*antlr.BaseParserRuleContext
+	parser       antlr.Parser
+	_dblock_term IDblock_termContext
+	param        []IDblock_termContext
+}
+
+func NewEmptyDblockContext() *DblockContext {
+	var p = new(DblockContext)
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	p.RuleIndex = ThreadComputationParserRULE_dblock
+	return p
+}
+
+func (*DblockContext) IsDblockContext() {}
+
+func NewDblockContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *DblockContext {
+	var p = new(DblockContext)
+
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = ThreadComputationParserRULE_dblock
+
+	return p
+}
+
+func (s *DblockContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *DblockContext) Get_dblock_term() IDblock_termContext { return s._dblock_term }
+
+func (s *DblockContext) Set_dblock_term(v IDblock_termContext) { s._dblock_term = v }
+
+func (s *DblockContext) GetParam() []IDblock_termContext { return s.param }
+
+func (s *DblockContext) SetParam(v []IDblock_termContext) { s.param = v }
+
+func (s *DblockContext) AllDblock_term() []IDblock_termContext {
+	var ts = s.GetTypedRuleContexts(reflect.TypeOf((*IDblock_termContext)(nil)).Elem())
+	var tst = make([]IDblock_termContext, len(ts))
+
+	for i, t := range ts {
+		if t != nil {
+			tst[i] = t.(IDblock_termContext)
+		}
+	}
+
+	return tst
+}
+
+func (s *DblockContext) Dblock_term(i int) IDblock_termContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IDblock_termContext)(nil)).Elem(), i)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IDblock_termContext)
+}
+
+func (s *DblockContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *DblockContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *DblockContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(ThreadComputationListener); ok {
+		listenerT.EnterDblock(s)
+	}
+}
+
+func (s *DblockContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(ThreadComputationListener); ok {
+		listenerT.ExitDblock(s)
+	}
+}
+
+func (p *ThreadComputationParser) Dblock() (localctx IDblockContext) {
+	this := p
+	_ = this
+
+	localctx = NewDblockContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 10, ThreadComputationParserRULE_dblock)
+	var _la int
+
+	defer func() {
+		p.ExitRule()
+	}()
+
+	defer func() {
+		if err := recover(); err != nil {
+			if v, ok := err.(antlr.RecognitionException); ok {
+				localctx.SetException(v)
+				p.GetErrorHandler().ReportError(p, v)
+				p.GetErrorHandler().Recover(p, v)
+			} else {
+				panic(err)
+			}
+		}
+	}()
+
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(52)
+		p.Match(ThreadComputationParserT__3)
+	}
+	p.SetState(56)
+	p.GetErrorHandler().Sync(p)
+	_la = p.GetTokenStream().LA(1)
+
+	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
+		{
+			p.SetState(53)
+
+			var _x = p.Dblock_term()
+
+			localctx.(*DblockContext)._dblock_term = _x
+		}
+		localctx.(*DblockContext).param = append(localctx.(*DblockContext).param, localctx.(*DblockContext)._dblock_term)
+
+		p.SetState(58)
+		p.GetErrorHandler().Sync(p)
+		_la = p.GetTokenStream().LA(1)
+	}
+	{
+		p.SetState(59)
+		p.Match(ThreadComputationParserT__4)
 	}
 
 	return localctx
@@ -773,7 +1083,7 @@ func (p *ThreadComputationParser) Integer_term() (localctx IInteger_termContext)
 	_ = this
 
 	localctx = NewInteger_termContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 8, ThreadComputationParserRULE_integer_term)
+	p.EnterRule(localctx, 12, ThreadComputationParserRULE_integer_term)
 
 	defer func() {
 		p.ExitRule()
@@ -793,7 +1103,7 @@ func (p *ThreadComputationParser) Integer_term() (localctx IInteger_termContext)
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(43)
+		p.SetState(61)
 
 		var _m = p.Match(ThreadComputationParserINTEGER)
 
@@ -881,7 +1191,7 @@ func (p *ThreadComputationParser) Float_term() (localctx IFloat_termContext) {
 	_ = this
 
 	localctx = NewFloat_termContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 10, ThreadComputationParserRULE_float_term)
+	p.EnterRule(localctx, 14, ThreadComputationParserRULE_float_term)
 
 	defer func() {
 		p.ExitRule()
@@ -901,7 +1211,7 @@ func (p *ThreadComputationParser) Float_term() (localctx IFloat_termContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(45)
+		p.SetState(63)
 
 		var _m = p.Match(ThreadComputationParserFLOAT_NUMBER)
 
@@ -989,7 +1299,7 @@ func (p *ThreadComputationParser) String_term() (localctx IString_termContext) {
 	_ = this
 
 	localctx = NewString_termContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 12, ThreadComputationParserRULE_string_term)
+	p.EnterRule(localctx, 16, ThreadComputationParserRULE_string_term)
 
 	defer func() {
 		p.ExitRule()
@@ -1009,7 +1319,7 @@ func (p *ThreadComputationParser) String_term() (localctx IString_termContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(47)
+		p.SetState(65)
 
 		var _m = p.Match(ThreadComputationParserSTRING)
 
@@ -1101,7 +1411,7 @@ func (p *ThreadComputationParser) Boolean_term() (localctx IBoolean_termContext)
 	_ = this
 
 	localctx = NewBoolean_termContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 14, ThreadComputationParserRULE_boolean_term)
+	p.EnterRule(localctx, 18, ThreadComputationParserRULE_boolean_term)
 	var _la int
 
 	defer func() {
@@ -1122,7 +1432,7 @@ func (p *ThreadComputationParser) Boolean_term() (localctx IBoolean_termContext)
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(49)
+		p.SetState(67)
 
 		var _lt = p.GetTokenStream().LT(1)
 
@@ -1246,7 +1556,7 @@ func (p *ThreadComputationParser) Term() (localctx ITermContext) {
 	_ = this
 
 	localctx = NewTermContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 16, ThreadComputationParserRULE_term)
+	p.EnterRule(localctx, 20, ThreadComputationParserRULE_term)
 
 	defer func() {
 		p.ExitRule()
@@ -1265,31 +1575,31 @@ func (p *ThreadComputationParser) Term() (localctx ITermContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(55)
+	p.SetState(73)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case ThreadComputationParserINTEGER:
 		{
-			p.SetState(51)
+			p.SetState(69)
 			p.Integer_term()
 		}
 
 	case ThreadComputationParserFLOAT_NUMBER:
 		{
-			p.SetState(52)
+			p.SetState(70)
 			p.Float_term()
 		}
 
 	case ThreadComputationParserSTRING:
 		{
-			p.SetState(53)
+			p.SetState(71)
 			p.String_term()
 		}
 
 	case ThreadComputationParserTRUE, ThreadComputationParserFALSE:
 		{
-			p.SetState(54)
+			p.SetState(72)
 			p.Boolean_term()
 		}
 

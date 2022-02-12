@@ -102,7 +102,7 @@ func applyFunToFloats(l *TCExecListener, q *deque.Deque, fun func(float64) float
   }
   for x := 0; x < len(data); x++ {
     e := fun(data[x])
-    l.TC.Res.PushFront(e)
+    l.TC.Res.Set(e)
   }
   return nil, nil
 }

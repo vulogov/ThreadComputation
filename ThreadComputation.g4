@@ -8,6 +8,7 @@ root_term
  : ( fun
    | term
    | vars
+   | dblock
 );
 
 fun
@@ -16,6 +17,15 @@ fun
 
 vars
  : '$' vname=NAME
+;
+
+dblock_term
+ : ( fun
+   | term
+);
+
+dblock
+ : '(' (param+=dblock_term)* ')'
 ;
 
 integer_term: VALUE=INTEGER ;
@@ -76,6 +86,10 @@ OP
   | ';'
   | '`'
   | '?'
+  | '_'
+  | '<'
+  | '>'
+  | '='
   ;
 
 TRUE
