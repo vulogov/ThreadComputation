@@ -60,6 +60,15 @@ func LenFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
       return l.TC.Res.Len(), nil
     }
   }
+  return 0, nil
+}
+
+func ClrFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  if l.TC.Ready() {
+    for l.TC.Ready() {
+      l.TC.Get()
+    }
+  }
   return nil, nil
 }
 
@@ -88,5 +97,5 @@ func initStdlibGenerics() {
   SetFunction(",", DropFunction)
   SetFunction("dup", DupFunction)
   SetFunction("^", DupFunction)
-
+  SetFunction("clr", ClrFunction)
 }

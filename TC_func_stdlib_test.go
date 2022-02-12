@@ -97,6 +97,15 @@ func TestStdlib10(t *testing.T) {
 	}
 }
 
+func TestStdlib12(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("stack[1 2 3] clr len")
+	res := tc.GetAsString()
+  if  res != "0" {
+		t.Fatalf("clr function not working: %v", res)
+	}
+}
+
 func TestStdlibMath1(t *testing.T) {
 	tc := Init()
   tc = tc.Eval("+[2 2]")
