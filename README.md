@@ -33,12 +33,27 @@ here, we are passing parameters to the function as an argument. Arguments are in
 printAll["Hello world!" "and sorry, Dave"]
 ```
 
+## The Stack
+
+Classic threading macros are passing the values as a first argument of the next function, but ThreadComputation is doing this through the reference to a context, and context stores the data in the stack, the FIFO structure.
+
 ## Show me the Go code
+
+Let's do some RPN computations:
 
 ```(language=Go)
 import "github.com/vulogov/ThreadComputation"
 
 ...
 
-
+tc := ThreadComputation.Init()
+tc.Eval("2 2 + 6 -")
+fmt.Println(tc.Get())
 ```
+
+# First, we are importing the the module.
+# Next, we are creating VM instance.
+# _tc.Eval()_ will evaluate the code.
+# _tc.Get()_ will return the last return value of the last called function
+
+There are more GoLang module functions, but those are most common ones.

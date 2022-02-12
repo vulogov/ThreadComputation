@@ -336,3 +336,15 @@ func TestStdlibMath18(t *testing.T) {
 		t.Fatalf("42 sqrt had failed: %v", res)
 	}
 }
+
+func TestStdlibMath19(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval(" 2 2 + 6 -")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "2" {
+		t.Fatalf("2 2 + 6 - had failed: %v", res)
+	}
+}
