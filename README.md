@@ -131,6 +131,25 @@ Numbers".(dot)"Numbers will be converted to the Float value, represented by Floa
 
 ### Variables declaration
 
+You can take the data from top of the stack and store it as named variable in the execution context. For example:
+
+```
+42 $answer
+```
+
+This code will define variable with name *answer* and value _42_. When your function name during the call will be matching the context variable name, he variable value will be placed in the stack. Example:
+
+```
+42 $answer answer print
+```
+
+This code will print 42 on standard output.
+
+- First step, _42_ will store value in the stack;
+- Second step, _$answer_ will take value from the stack and define variable with name "answer" and value that been taken from the stack.
+- Third step, call _answer_ before checking global functions will check variable names and if found, return variable value to the stack.
+- Fourth step,  call of the function _print_ will take value from the stack and print it.
+
 ### Functions calling
 
 There are number of the functions that already
