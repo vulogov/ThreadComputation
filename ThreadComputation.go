@@ -21,9 +21,10 @@ type TCstate struct {
   TC          *TCstate
   errors       int
   errmsg       string
-  InAttr       bool
-  Attrs        deque.Deque
+  InAttr       int
+  Attrs       *TwoStack
   Res          deque.Deque
+  FNStack      deque.Deque
 }
 
 type tcExecErrorListener struct {
@@ -37,8 +38,9 @@ func Init() *TCstate {
   log.SetOutput(os.Stderr)
   log.SetLevel(log.InfoLevel)
   tc := &TCstate{
-    InAttr:  false,
+    InAttr:  0,
     errors:  0,
+    Attrs:   InitTS(),
   }
   return tc
 }
@@ -101,6 +103,21 @@ func (tc *TCstate) Ready() bool {
     return false
   }
   return true
+}
+
+func (tc *TCstate) HaveAttrs() bool {
+  if tc.Attrs.Len() == 0 {
+    return false
+  }
+  return true
+}
+
+func (tc *TCstate) CurrentFunctionName() string {
+  if tc.FNStack.Len() > 0 {
+    return tc.FNStack.Front().(string)
+  } else {
+    return "#MAIN"
+  }
 }
 
 func (l *tcExecErrorListener) SyntaxError(recognizer antlr.Recognizer, offendingSymbol interface{}, line, column int, msg string, e antlr.RecognitionException) {

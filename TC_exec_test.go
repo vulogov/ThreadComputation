@@ -13,6 +13,14 @@ func TestEval2(t *testing.T) {
 	}
 }
 
+func TestEval6(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("42 /* This is comment */")
+  if tc.Res.Len() == 0 {
+		t.Fatalf("ThreadComputation parse failed")
+	}
+}
+
 func TestEval21(t *testing.T) {
 	tc := Init()
   tc = tc.Eval("\"Hello\"")

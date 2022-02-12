@@ -16,34 +16,35 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 14, 54, 4,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 16, 54, 4,
 	2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 4, 5, 9, 5, 4, 6, 9, 6, 4, 7, 9, 7, 4,
 	8, 9, 8, 4, 9, 9, 9, 3, 2, 7, 2, 20, 10, 2, 12, 2, 14, 2, 23, 11, 2, 3,
 	3, 3, 3, 5, 3, 27, 10, 3, 3, 4, 3, 4, 3, 4, 7, 4, 32, 10, 4, 12, 4, 14,
 	4, 35, 11, 4, 3, 4, 5, 4, 38, 10, 4, 3, 5, 3, 5, 3, 6, 3, 6, 3, 7, 3, 7,
 	3, 8, 3, 8, 3, 9, 3, 9, 3, 9, 3, 9, 5, 9, 52, 10, 9, 3, 9, 2, 2, 10, 2,
-	4, 6, 8, 10, 12, 14, 16, 2, 3, 3, 2, 10, 11, 2, 52, 2, 21, 3, 2, 2, 2,
-	4, 26, 3, 2, 2, 2, 6, 28, 3, 2, 2, 2, 8, 39, 3, 2, 2, 2, 10, 41, 3, 2,
-	2, 2, 12, 43, 3, 2, 2, 2, 14, 45, 3, 2, 2, 2, 16, 51, 3, 2, 2, 2, 18, 20,
-	5, 4, 3, 2, 19, 18, 3, 2, 2, 2, 20, 23, 3, 2, 2, 2, 21, 19, 3, 2, 2, 2,
-	21, 22, 3, 2, 2, 2, 22, 3, 3, 2, 2, 2, 23, 21, 3, 2, 2, 2, 24, 27, 5, 6,
-	4, 2, 25, 27, 5, 16, 9, 2, 26, 24, 3, 2, 2, 2, 26, 25, 3, 2, 2, 2, 27,
-	5, 3, 2, 2, 2, 28, 37, 7, 5, 2, 2, 29, 33, 7, 3, 2, 2, 30, 32, 5, 16, 9,
-	2, 31, 30, 3, 2, 2, 2, 32, 35, 3, 2, 2, 2, 33, 31, 3, 2, 2, 2, 33, 34,
-	3, 2, 2, 2, 34, 36, 3, 2, 2, 2, 35, 33, 3, 2, 2, 2, 36, 38, 7, 4, 2, 2,
-	37, 29, 3, 2, 2, 2, 37, 38, 3, 2, 2, 2, 38, 7, 3, 2, 2, 2, 39, 40, 7, 6,
-	2, 2, 40, 9, 3, 2, 2, 2, 41, 42, 7, 8, 2, 2, 42, 11, 3, 2, 2, 2, 43, 44,
-	7, 9, 2, 2, 44, 13, 3, 2, 2, 2, 45, 46, 9, 2, 2, 2, 46, 15, 3, 2, 2, 2,
-	47, 52, 5, 8, 5, 2, 48, 52, 5, 10, 6, 2, 49, 52, 5, 12, 7, 2, 50, 52, 5,
-	14, 8, 2, 51, 47, 3, 2, 2, 2, 51, 48, 3, 2, 2, 2, 51, 49, 3, 2, 2, 2, 51,
-	50, 3, 2, 2, 2, 52, 17, 3, 2, 2, 2, 7, 21, 26, 33, 37, 51,
+	4, 6, 8, 10, 12, 14, 16, 2, 4, 3, 2, 5, 6, 3, 2, 12, 13, 2, 52, 2, 21,
+	3, 2, 2, 2, 4, 26, 3, 2, 2, 2, 6, 28, 3, 2, 2, 2, 8, 39, 3, 2, 2, 2, 10,
+	41, 3, 2, 2, 2, 12, 43, 3, 2, 2, 2, 14, 45, 3, 2, 2, 2, 16, 51, 3, 2, 2,
+	2, 18, 20, 5, 4, 3, 2, 19, 18, 3, 2, 2, 2, 20, 23, 3, 2, 2, 2, 21, 19,
+	3, 2, 2, 2, 21, 22, 3, 2, 2, 2, 22, 3, 3, 2, 2, 2, 23, 21, 3, 2, 2, 2,
+	24, 27, 5, 6, 4, 2, 25, 27, 5, 16, 9, 2, 26, 24, 3, 2, 2, 2, 26, 25, 3,
+	2, 2, 2, 27, 5, 3, 2, 2, 2, 28, 37, 9, 2, 2, 2, 29, 33, 7, 3, 2, 2, 30,
+	32, 5, 16, 9, 2, 31, 30, 3, 2, 2, 2, 32, 35, 3, 2, 2, 2, 33, 31, 3, 2,
+	2, 2, 33, 34, 3, 2, 2, 2, 34, 36, 3, 2, 2, 2, 35, 33, 3, 2, 2, 2, 36, 38,
+	7, 4, 2, 2, 37, 29, 3, 2, 2, 2, 37, 38, 3, 2, 2, 2, 38, 7, 3, 2, 2, 2,
+	39, 40, 7, 7, 2, 2, 40, 9, 3, 2, 2, 2, 41, 42, 7, 9, 2, 2, 42, 11, 3, 2,
+	2, 2, 43, 44, 7, 10, 2, 2, 44, 13, 3, 2, 2, 2, 45, 46, 9, 3, 2, 2, 46,
+	15, 3, 2, 2, 2, 47, 52, 5, 8, 5, 2, 48, 52, 5, 10, 6, 2, 49, 52, 5, 12,
+	7, 2, 50, 52, 5, 14, 8, 2, 51, 47, 3, 2, 2, 2, 51, 48, 3, 2, 2, 2, 51,
+	49, 3, 2, 2, 2, 51, 50, 3, 2, 2, 2, 52, 17, 3, 2, 2, 2, 7, 21, 26, 33,
+	37, 51,
 }
 var literalNames = []string{
 	"", "'['", "']'",
 }
 var symbolicNames = []string{
-	"", "", "", "NAME", "INTEGER", "DECIMAL_INTEGER", "FLOAT_NUMBER", "STRING",
-	"TRUE", "FALSE", "BLOCK_COMMENT", "WhiteSpace", "NewLine",
+	"", "", "", "OPS", "NAME", "INTEGER", "DECIMAL_INTEGER", "FLOAT_NUMBER",
+	"STRING", "OP", "TRUE", "FALSE", "BLOCK_COMMENT", "WhiteSpace", "NewLine",
 }
 
 var ruleNames = []string{
@@ -85,16 +86,18 @@ const (
 	ThreadComputationParserEOF             = antlr.TokenEOF
 	ThreadComputationParserT__0            = 1
 	ThreadComputationParserT__1            = 2
-	ThreadComputationParserNAME            = 3
-	ThreadComputationParserINTEGER         = 4
-	ThreadComputationParserDECIMAL_INTEGER = 5
-	ThreadComputationParserFLOAT_NUMBER    = 6
-	ThreadComputationParserSTRING          = 7
-	ThreadComputationParserTRUE            = 8
-	ThreadComputationParserFALSE           = 9
-	ThreadComputationParserBLOCK_COMMENT   = 10
-	ThreadComputationParserWhiteSpace      = 11
-	ThreadComputationParserNewLine         = 12
+	ThreadComputationParserOPS             = 3
+	ThreadComputationParserNAME            = 4
+	ThreadComputationParserINTEGER         = 5
+	ThreadComputationParserDECIMAL_INTEGER = 6
+	ThreadComputationParserFLOAT_NUMBER    = 7
+	ThreadComputationParserSTRING          = 8
+	ThreadComputationParserOP              = 9
+	ThreadComputationParserTRUE            = 10
+	ThreadComputationParserFALSE           = 11
+	ThreadComputationParserBLOCK_COMMENT   = 12
+	ThreadComputationParserWhiteSpace      = 13
+	ThreadComputationParserNewLine         = 14
 )
 
 // ThreadComputationParser rules.
@@ -219,7 +222,7 @@ func (p *ThreadComputationParser) Expressions() (localctx IExpressionsContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
+	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
 		{
 			p.SetState(16)
 			p.Root_term()
@@ -339,7 +342,7 @@ func (p *ThreadComputationParser) Root_term() (localctx IRoot_termContext) {
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
-	case ThreadComputationParserNAME:
+	case ThreadComputationParserOPS, ThreadComputationParserNAME:
 		{
 			p.SetState(22)
 			p.Fun()
@@ -433,6 +436,10 @@ func (s *FunContext) NAME() antlr.TerminalNode {
 	return s.GetToken(ThreadComputationParserNAME, 0)
 }
 
+func (s *FunContext) OPS() antlr.TerminalNode {
+	return s.GetToken(ThreadComputationParserOPS, 0)
+}
+
 func (s *FunContext) AllTerm() []ITermContext {
 	var ts = s.GetTypedRuleContexts(reflect.TypeOf((*ITermContext)(nil)).Elem())
 	var tst = make([]ITermContext, len(ts))
@@ -504,9 +511,20 @@ func (p *ThreadComputationParser) Fun() (localctx IFunContext) {
 	{
 		p.SetState(26)
 
-		var _m = p.Match(ThreadComputationParserNAME)
+		var _lt = p.GetTokenStream().LT(1)
 
-		localctx.(*FunContext).fname = _m
+		localctx.(*FunContext).fname = _lt
+
+		_la = p.GetTokenStream().LA(1)
+
+		if !(_la == ThreadComputationParserOPS || _la == ThreadComputationParserNAME) {
+			var _ri = p.GetErrorHandler().RecoverInline(p)
+
+			localctx.(*FunContext).fname = _ri
+		} else {
+			p.GetErrorHandler().ReportMatch(p)
+			p.Consume()
+		}
 	}
 	p.SetState(35)
 	p.GetErrorHandler().Sync(p)

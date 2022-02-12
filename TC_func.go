@@ -3,10 +3,11 @@ package ThreadComputation
 import (
   "fmt"
   log "github.com/sirupsen/logrus"
+  "github.com/gammazero/deque"
   "github.com/vulogov/ThreadComputation/parser"
 )
 
-type TCFun func(l *TCExecListener) error
+type TCFun func(l *TCExecListener, q *deque.Deque) (interface{}, error)
 
 func (l *TCExecListener) EnterFun(c *parser.FunContext) {
   if l.TC.Errors() > 0 {
@@ -20,7 +21,9 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
   }
   func_name := c.GetFname().GetText()
   if _, ok := Functions.Load(func_name); ok {
-		l.TC.InAttr = true
+		l.TC.InAttr += 1
+    l.TC.Attrs.Add()
+    l.TC.FNStack.PushFront(func_name)
 	} else {
     l.TC.errmsg = fmt.Sprintf("Function: %v not found", func_name)
     l.TC.errors += 1
@@ -29,18 +32,31 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
 }
 
 func (l *TCExecListener) ExitFun(c *parser.FunContext) {
-  l.TC.InAttr = false
+  if l.TC.InAttr > 0 {
+    l.TC.InAttr -= 1
+  }
   if l.TC.Errors() > 0 {
     return
   }
   func_name := c.GetFname().GetText()
   if lfun, ok := Functions.Load(func_name); ok {
     fun := lfun.(TCFun)
-    res := fun(l)
-    if res != nil {
-      l.TC.errmsg = res.Error()
+    q   := l.TC.Attrs.Q()
+    l.TC.Attrs.Del()
+    res, err := fun(l, q)
+    l.TC.FNStack.PopFront()
+    if err != nil {
+      l.TC.errmsg = err.Error()
       l.TC.errors += 1
       log.Errorf(l.TC.errmsg)
+    } else {
+      if res != nil {
+        if l.TC.Attrs.GLen() > 1 {
+          l.TC.Attrs.Set(res)
+        } else {
+          l.TC.Res.PushFront(res)
+        }
+      }
     }
   }
 }
@@ -52,4 +68,5 @@ func SetFunction(name string, fun TCFun) {
 
 func initStdlib() {
   initStdlibGenerics()
+  initStdlibMath()
 }

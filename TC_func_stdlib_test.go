@@ -13,6 +13,18 @@ func TestStdlib1(t *testing.T) {
 	}
 }
 
+func TestStdlib11(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("42 print")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("Not pushed to stack: %v", res)
+	}
+}
+
 func TestStdlib2(t *testing.T) {
 	tc := Init()
   tc = tc.Eval("\"Hello world\" print")
@@ -34,5 +46,162 @@ func TestStdlib4(t *testing.T) {
   tc = tc.Eval("#TRUE print")
   if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())
+	}
+}
+
+func TestStdlib5(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("print[1 2 3]")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
+func TestStdlib6(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("1 2 3 printAll")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
+func TestStdlib7(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("stack[1 2 3] printAll")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
+func TestStdlib8(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("stack[1 2 3] len")
+  if tc.GetAsString() != "3" {
+		t.Fatalf("len function not working")
+	}
+}
+
+func TestStdlib9(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("stack[1 2 3] , len")
+  if tc.GetAsString() != "2" {
+		t.Fatalf("drop function not working")
+	}
+}
+
+func TestStdlib10(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("stack[1 2 3] dup len")
+  if tc.GetAsString() != "4" {
+		t.Fatalf("dup function not working")
+	}
+}
+
+func TestStdlibMath1(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("+[2 2]")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "4" {
+		t.Fatalf("+[2 2] had failed: %v", res)
+	}
+}
+
+func TestStdlibMath2(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("2 2 +")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "4" {
+		t.Fatalf("2 2 + had failed: %v", res)
+	}
+}
+
+func TestStdlibMath3(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("-[43 1]")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("-[43 1] had failed: %v", res)
+	}
+}
+
+func TestStdlibMath4(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("3 3 3 *")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "27" {
+		t.Fatalf("3 3 3 * had failed: %v", res)
+	}
+}
+
+func TestStdlibMath5(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("2 9 /")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "4.5" {
+		t.Fatalf("2 9 / had failed: %v", res)
+	}
+}
+
+func TestStdlibMath6(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("/[9 2]")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "4.5" {
+		t.Fatalf("/[9 2] had failed: %v", res)
+	}
+}
+
+func TestStdlibMath61(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("2 9 /")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "4.5" {
+		t.Fatalf("2 9 / had failed: %v", res)
+	}
+}
+
+
+func TestStdlibMath7(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("max[9 2]")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "9" {
+		t.Fatalf("max[9 2] had failed: %v", res)
+	}
+}
+
+func TestStdlibMath8(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("2 9 min")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "2" {
+		t.Fatalf("2 9 min had failed: %v", res)
 	}
 }

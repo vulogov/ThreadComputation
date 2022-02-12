@@ -10,7 +10,7 @@ root_term
 );
 
 fun
- : fname=NAME ('[' (param+=term)* ']')?
+ : fname=(NAME|OPS) ('[' (param+=term)* ']')?
 ;
 
 integer_term: VALUE=INTEGER ;
@@ -24,6 +24,10 @@ term
     | string_term
     | boolean_term
 );
+
+OPS
+  : (OP)+
+  ;
 
 NAME
   : ID_START ID_CONTINUE*
@@ -44,6 +48,30 @@ FLOAT_NUMBER
 
 STRING
   : SHORT_STRING
+  ;
+
+OP
+  : '+'
+  | '-'
+  | '*'
+  | '/'
+  | '|'
+  | '^'
+  | '&'
+  | '!'
+  | '~'
+  | '↑'
+  | '↓'
+  | '×'
+  | '÷'
+  | '∆'
+  | '∇'
+  | ','
+  | ':'
+  | ';'
+  | '`'
+  | '!'
+  | '?'
   ;
 
 TRUE
@@ -103,4 +131,5 @@ fragment ID_START
 fragment ID_CONTINUE
  : ID_START
  | [0-9]
+ | '.'
  ;

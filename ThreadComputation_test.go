@@ -6,7 +6,7 @@ import (
 
 func TestInit(t *testing.T) {
 	tc := Init()
-	if tc.InAttr != false {
+	if tc.InAttr != 0 {
 		t.Fatalf("ThreadComputation is failed to initialize")
 	}
 }

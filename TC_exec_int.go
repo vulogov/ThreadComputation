@@ -11,10 +11,10 @@ func (l *TCExecListener) EnterInteger_term(c *parser.Integer_termContext) {
   }
   str, err := conv.Int64(c.GetVALUE().GetText())
   if err == nil {
-    if l.TC.InAttr == false {
+    if l.TC.InAttr < 1 {
       l.TC.Res.PushFront(str)
     } else {
-      l.TC.Attrs.PushBack(str)
+      l.TC.Attrs.Set(str)
     }
   }
 }

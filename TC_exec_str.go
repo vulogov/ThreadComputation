@@ -16,10 +16,10 @@ func (l *TCExecListener) EnterString_term(c *parser.String_termContext) {
     str = strings.TrimPrefix(str, "\"")
   }
   if err == nil {
-    if l.TC.InAttr == false {
+    if l.TC.InAttr < 1 {
       l.TC.Res.PushFront(str)
     } else {
-      l.TC.Attrs.PushBack(str)
+      l.TC.Attrs.Set(str)
     }
   }
 }
