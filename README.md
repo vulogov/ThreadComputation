@@ -100,3 +100,37 @@ TheAnswer[3.14]
 ```
 
 then value of the Pi will be returned to the stack.
+
+##ThreadComputation language
+
+What is the ThreadComputation language syntax ? It could be defined as combination of three types of terms:
+
+- Data definition
+- Variables declaration
+- Functions calling.
+
+### Data definition
+
+ThreadComputation is dynamically-typed language and there are four data types currently defined
+
+#### Boolean data type
+
+Described as ether #TRUE or #FALSE in DSL. Represented by _bool_ data type on the GoLang level.
+
+#### Integer data type
+
+Any combination of the digits will be converted to the integer number, represented by Int64 on the GoLang level.
+
+#### Float data type
+
+Numbers".(dot)"Numbers will be converted to the Float value, represented by Float64 on GlLang level.
+
+#### String data type
+
+"\"(quote)"CHARACTERS"\"(quote)" will be converted to the string value, represented by the String in GoLang.
+
+### Variables declaration
+
+### Functions calling
+
+There are number of the functions that already
