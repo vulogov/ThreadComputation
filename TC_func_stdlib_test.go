@@ -253,3 +253,75 @@ func TestStdlibMath12(t *testing.T) {
 		t.Fatalf("2 10 12 deviation had failed: %v", res)
 	}
 }
+
+func TestStdlibMath13(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("-42 abs")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("-42 abs had failed: %v", res)
+	}
+}
+
+func TestStdlibMath14(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("42 exp")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "1.7392749415205012e+18" {
+		t.Fatalf("42 exp had failed: %v", res)
+	}
+}
+
+func TestStdlibMath15(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("42 exp2")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "4.398046511104e+12" {
+		t.Fatalf("42 exp2 had failed: %v", res)
+	}
+}
+
+func TestStdlibMath16(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("42 log")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "3.7376696182833684" {
+		t.Fatalf("42 log had failed: %v", res)
+	}
+}
+
+func TestStdlibMath17(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("42 log10")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "1.6232492903979006" {
+		t.Fatalf("42 log10 had failed: %v", res)
+	}
+}
+
+func TestStdlibMath18(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("42 sqrt")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "6.48074069840786" {
+		t.Fatalf("42 sqrt had failed: %v", res)
+	}
+}

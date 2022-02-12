@@ -4,6 +4,7 @@ import (
   "fmt"
   "github.com/gammazero/deque"
   "errors"
+  "math"
   "gonum.org/v1/gonum/floats"
   "gonum.org/v1/gonum/stat"
 )
@@ -50,6 +51,25 @@ func ArithmeticFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) 
   return acc, nil
 }
 
+func MathFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  switch l.TC.CurrentFunctionName() {
+  case "abs":
+    return applyFunToFloats(l, q, math.Abs)
+  case "exp":
+    return applyFunToFloats(l, q, math.Exp)
+  case "exp2":
+    return applyFunToFloats(l, q, math.Exp2)
+  case "log":
+    return applyFunToFloats(l, q, math.Log)
+  case "log10":
+    return applyFunToFloats(l, q, math.Log10)
+  case "sqrt":
+    return applyFunToFloats(l, q, math.Sqrt)
+  default:
+    return nil, errors.New(fmt.Sprintf("Unknown math function: %v", l.TC.CurrentFunctionName()))
+  }
+  return nil, nil
+}
 
 func MeanFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   return applyAggFunToFloatArrayWithWeight(l, q, stat.Mean)
@@ -89,4 +109,10 @@ func initStdlibMath() {
   SetFunction("variance", VarianceFunction)
   SetFunction("skew", SkewFunction)
   SetFunction("deviation", DeviationFunction)
+  SetFunction("abs", MathFunction)
+  SetFunction("exp", MathFunction)
+  SetFunction("exp2", MathFunction)
+  SetFunction("log", MathFunction)
+  SetFunction("log10", MathFunction)
+  SetFunction("sqrt", MathFunction)
 }

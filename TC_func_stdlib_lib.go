@@ -94,3 +94,15 @@ func applyAggFunToFloatArrayWithWeight(l *TCExecListener, q *deque.Deque, fun fu
   acc = fun(data.([]float64), nil)
   return acc, nil
 }
+
+func applyFunToFloats(l *TCExecListener, q *deque.Deque, fun func(float64) float64) (interface{}, error) {
+  data := collectData(l, q).([]float64)
+  if l.TC.Errors() > 0 {
+    return nil, errors.New(l.TC.Error())
+  }
+  for x := 0; x < len(data); x++ {
+    e := fun(data[x])
+    l.TC.Res.PushFront(e)
+  }
+  return nil, nil
+}
