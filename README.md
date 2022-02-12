@@ -51,9 +51,9 @@ tc.Eval("2 2 + 6 -")
 fmt.Println(tc.Get())
 ```
 
-# First, we are importing the the module.
-# Next, we are creating VM instance.
-# _tc.Eval()_ will evaluate the code.
-# _tc.Get()_ will return the last return value of the last called function
+- First, we are importing the the module.
+- Next, we are creating VM instance.
+- _tc.Eval()_ will evaluate the code.
+- _tc.Get()_ will return the last return value of the last called function
 
 There are more GoLang module functions, but those are most common ones.
