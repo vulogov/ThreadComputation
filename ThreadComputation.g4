@@ -84,7 +84,6 @@ OP
   | ','
   | ':'
   | ';'
-  | '`'
   | '?'
   | '_'
   | '<'
@@ -144,6 +143,7 @@ fragment SHORT_STRING
 fragment ID_START
  : ([A-Z]|[a-z])
  | [a-z]
+ | '`'
  ;
 
 fragment ID_CONTINUE

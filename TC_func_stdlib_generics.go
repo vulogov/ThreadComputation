@@ -2,20 +2,30 @@ package ThreadComputation
 
 import (
   "fmt"
+  "errors"
   "github.com/gammazero/deque"
 )
+
+func toString(data interface{}) (string, error) {
+  switch data.(type) {
+  case int64, float64, string, bool:
+    return fmt.Sprintf("%v", data), nil
+  case nil:
+    return "#NIL", nil
+  }
+  return "#ERROR", errors.New("Unknown data type in conversion to string")
+}
 
 func PrintFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   if q.Len() > 0 {
     for q.Len() > 0 {
       e := q.PopFront()
-      fmt.Println(e)
+      fmt.Println(toString(e))
     }
-
   } else {
     if l.TC.Ready() {
       data_out := l.TC.Get()
-      fmt.Println(data_out)
+      fmt.Println(toString(data_out))
       return data_out, nil
     }
   }
