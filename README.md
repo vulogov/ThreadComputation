@@ -152,4 +152,10 @@ This code will print 42 on standard output.
 
 ### Functions calling
 
-There are number of the functions that already
+Functions are called by it's name with optionally passing space separated arguments enclosed between _[_ and _]_. There are number of functions that already defined and can be considered as a "standard library" of the ThreadComputation language.
+
+#### Generic functions.
+
+- print, printAll - printing single or all elements of stack
+- Math functions + -  * /
+- Statistics function mean variance skew deviation
