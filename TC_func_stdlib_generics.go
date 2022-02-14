@@ -221,6 +221,39 @@ func ExecuteAllFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) 
   return nil, nil
 }
 
+func SetAttrsFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  var r interface{}
+  var tq deque.Deque
+  var wq *deque.Deque
+  if l.TC.Ready() {
+    r = l.TC.Get()
+  } else {
+    return nil, errors.New("stack is too shallow for attr[] function")
+  }
+  switch r.(type) {
+  case *TCFunRef:
+    if q.Len() > 0 {
+      wq = q
+      for wq.Len() > 0 {
+        e := wq.PopFront()
+        tq.PushBack(e)
+      }
+    } else {
+      wq = l.TC.Res.Q()
+      for wq.Len() > 0 {
+        e := wq.PopFront()
+        tq.PushFront(e)
+      }
+    }
+    r.(*TCFunRef).Attrs = &tq
+    return r, nil
+  default:
+    return nil, errors.New(fmt.Sprintf("reference execution expects function reference in stack: %v", r))
+  }
+  return nil, nil
+}
+
+
 func initStdlibGenerics() {
   SetFunction("print", PrintFunction)
   SetFunction("printAll", PrintAllFunction)
@@ -236,4 +269,5 @@ func initStdlibGenerics() {
   SetFunction("global", SetGlobalFunction)
   SetFunction("!", ExecuteFunction)
   SetFunction("!*", ExecuteAllFunction)
+  SetFunction("attr", SetAttrsFunction)
 }

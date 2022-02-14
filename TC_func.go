@@ -37,7 +37,6 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
     l.TC.InAttr += 1
     l.TC.InRef  += 1
     l.TC.Attrs.Add()
-    l.TC.FNStack.PushFront(func_name)
     return
   }
   _, ok := Functions.Load(func_name)
@@ -127,8 +126,11 @@ func (tc *TCstate) ExecFunction(l *TCExecListener, func_name string, q *deque.De
     lfun, ok = tc.Functions.Load(func_name)
   }
   if ok {
+    l.TC.FNStack.PushFront(func_name)
     fun := lfun.(TCFun)
-    return fun(l, q)
+    res, err := fun(l, q)
+    l.TC.FNStack.PopFront()
+    return res, err
   } else {
     l.TC.errmsg = fmt.Sprintf("Function: %v not found", func_name)
     l.TC.errors += 1
