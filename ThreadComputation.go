@@ -24,6 +24,8 @@ type TCstate struct {
   errmsg       string
   InAttr       int
   InRef        int
+  ToSkip       bool
+  SkipFunction string
   Attrs       *TwoStack
   Res         *TwoStack
   FNStack      deque.Deque
@@ -44,6 +46,7 @@ func Init() *TCstate {
   tc := &TCstate{
     InAttr:  0,
     InRef:   0,
+    ToSkip:  false,
     errors:  0,
     Res:     InitTS(),
     Attrs:   InitTS(),

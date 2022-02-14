@@ -46,9 +46,13 @@ term
 );
 
 OPS
-  : ('`')? (OP)+
+  : (OPS_START)? (OP)+
   ;
-
+OPS_START
+  : (
+    '`'
+  | '?'
+  );
 NAME
   : ID_START ID_CONTINUE*
   ;
@@ -89,7 +93,6 @@ OP
   | ','
   | ':'
   | ';'
-  | '?'
   | '_'
   | '<'
   | '>'
@@ -149,6 +152,7 @@ fragment ID_START
  : ([A-Z]|[a-z])
  | [a-z]
  | '`'
+ | '?'
  ;
 
 fragment ID_CONTINUE
