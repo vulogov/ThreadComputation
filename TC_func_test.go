@@ -39,6 +39,16 @@ func TestFunc12(t *testing.T) {
 	}
 }
 
+func TestFunc13(t *testing.T) {
+	tc := Init()
+	tc2 := Init()
+	tc.SetFunction("FunctionNotExists", testFunctionExists)
+  tc = tc2.Eval("FunctionNotExists")
+  if tc.Errors() == 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
 func TestFunc2(t *testing.T) {
 	tc := Init()
   tc = tc.Eval("stack[ stack[42]]")
