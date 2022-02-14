@@ -10,6 +10,7 @@ import (
   "github.com/vulogov/ThreadComputation/parser"
 )
 
+var Vars      cmap.Cmap
 var Functions cmap.Cmap
 
 type TCExecListener struct {
@@ -26,6 +27,7 @@ type TCstate struct {
   Res         *TwoStack
   FNStack      deque.Deque
   Vars         cmap.Cmap
+  Functions    cmap.Cmap
 }
 
 type tcExecErrorListener struct {
@@ -126,6 +128,12 @@ func (tc *TCstate) CurrentFunctionName() string {
     return "#MAIN"
   }
 }
+
+func (tc *TCstate) SetFunction(name string, fun TCFun) {
+  tc.Functions.Delete(name)
+  tc.Functions.Store(name, fun)
+}
+
 
 func (l *tcExecErrorListener) SyntaxError(recognizer antlr.Recognizer, offendingSymbol interface{}, line, column int, msg string, e antlr.RecognitionException) {
   msgout := fmt.Sprintf("Syntax error line=%v, column=%v : %v", line, column, msg)

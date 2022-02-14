@@ -20,14 +20,21 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
     return
   }
   func_name := c.GetFname().GetText()
+  if _, ok := Vars.Load(func_name); ok {
+    return
+  }
   if _, ok := l.TC.Vars.Load(func_name); ok {
     return
   }
-  if _, ok := Functions.Load(func_name); ok {
+  _, ok := Functions.Load(func_name)
+  if ok == false {
+    _, ok = l.TC.Functions.Load(func_name)
+  }
+  if ok {
 		l.TC.InAttr += 1
     l.TC.Attrs.Add()
     l.TC.FNStack.PushFront(func_name)
-	} else {
+  } else {
     l.TC.errmsg = fmt.Sprintf("Function: %v not found", func_name)
     l.TC.errors += 1
     log.Errorf(l.TC.errmsg)
@@ -35,6 +42,7 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
 }
 
 func (l *TCExecListener) ExitFun(c *parser.FunContext) {
+  var lfun interface{}
   if l.TC.InAttr > 0 {
     l.TC.InAttr -= 1
   }
@@ -42,11 +50,19 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     return
   }
   func_name := c.GetFname().GetText()
+  if gvdata, ok := Vars.Load(func_name); ok {
+    l.TC.Res.Set(gvdata)
+    return
+  }
   if vdata, ok := l.TC.Vars.Load(func_name); ok {
     l.TC.Res.Set(vdata)
     return
   }
-  if lfun, ok := Functions.Load(func_name); ok {
+  lfun, ok := Functions.Load(func_name)
+  if ok == false {
+    lfun, ok = l.TC.Functions.Load(func_name)
+  }
+  if ok {
     fun := lfun.(TCFun)
     q   := l.TC.Attrs.Q()
     l.TC.Attrs.Del()
