@@ -12,7 +12,7 @@ root_term
 );
 
 fun
- : fname=(NAME|OPS) ('[' (param+=term)* ']')?
+ : fname=(NAME|OPS) ('[' (param+=fun_term)* ']')?
 ;
 
 vars
@@ -20,6 +20,11 @@ vars
 ;
 
 dblock_term
+ : ( fun
+   | term
+);
+
+fun_term
  : ( fun
    | term
 );
