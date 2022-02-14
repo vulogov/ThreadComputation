@@ -12,7 +12,7 @@ root_term
 );
 
 fun
- : fname=(NAME|OPS) ('[' (param+=term)* ']')?
+ : fname=(NAME|OPS) ('[' (param+=fun_term)* ']')?
 ;
 
 vars
@@ -20,6 +20,11 @@ vars
 ;
 
 dblock_term
+ : ( fun
+   | term
+);
+
+fun_term
  : ( fun
    | term
 );
@@ -84,7 +89,6 @@ OP
   | ','
   | ':'
   | ';'
-  | '`'
   | '?'
   | '_'
   | '<'
@@ -144,6 +148,7 @@ fragment SHORT_STRING
 fragment ID_START
  : ([A-Z]|[a-z])
  | [a-z]
+ | '`'
  ;
 
 fragment ID_CONTINUE
