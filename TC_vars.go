@@ -16,3 +16,8 @@ func (l *TCExecListener) EnterVars(c *parser.VarsContext) {
     l.TC.Vars.Store(vname, e)
   }
 }
+
+func SetVariable(name string, data interface{}) {
+  Vars.Delete(name)
+  Vars.Store(name, data)
+}

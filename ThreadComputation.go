@@ -134,6 +134,10 @@ func (tc *TCstate) SetFunction(name string, fun TCFun) {
   tc.Functions.Store(name, fun)
 }
 
+func (tc *TCstate) SetVariable(name string, data interface{}) {
+  tc.Vars.Delete(name)
+  tc.Vars.Store(name, data)
+}
 
 func (l *tcExecErrorListener) SyntaxError(recognizer antlr.Recognizer, offendingSymbol interface{}, line, column int, msg string, e antlr.RecognitionException) {
   msgout := fmt.Sprintf("Syntax error line=%v, column=%v : %v", line, column, msg)

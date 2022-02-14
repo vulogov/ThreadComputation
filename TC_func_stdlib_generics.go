@@ -4,6 +4,7 @@ import (
   "fmt"
   "errors"
   "github.com/gammazero/deque"
+  "github.com/lrita/cmap"
 )
 
 func toString(data interface{}) (string, error) {
@@ -121,6 +122,35 @@ func TheUltimateAnswerFunction(l *TCExecListener, q *deque.Deque) (interface{}, 
   return 42, nil
 }
 
+func setLocalOrGlobalFunction(l *TCExecListener, q *deque.Deque, d *cmap.Cmap) error {
+  if l.TC.Res.Len() != q.Len() {
+    return errors.New("Number of requested variable set not matched with depth of the stack")
+  }
+  for q.Len() > 0 {
+    n := q.PopFront()
+    switch n.(type) {
+    case string:
+      data, err := l.TC.Res.Take()
+      if err != nil {
+        return err
+      }
+      d.Delete(n)
+      d.Store(n, data)
+    default:
+      return errors.New("Variable name must be defined in string")
+    }
+  }
+  return nil
+}
+
+func SetGlobalFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  return nil, setLocalOrGlobalFunction(l, q, &Vars)
+}
+
+func SetLocalFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  return nil, setLocalOrGlobalFunction(l, q, &l.TC.Vars)
+}
+
 func initStdlibGenerics() {
   SetFunction("print", PrintFunction)
   SetFunction("printAll", PrintAllFunction)
@@ -132,4 +162,6 @@ func initStdlibGenerics() {
   SetFunction("^", DupFunction)
   SetFunction("clr", ClrFunction)
   SetFunction("TheAnswer", TheUltimateAnswerFunction)
+  SetFunction("local", SetLocalFunction)
+  SetFunction("global", SetGlobalFunction)
 }
