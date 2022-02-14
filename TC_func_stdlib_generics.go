@@ -183,6 +183,44 @@ func ExecuteFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   }
 }
 
+func ExecuteAllFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  var tq deque.Deque
+  if q.Len() == 0 {
+    for l.TC.Ready() {
+      e := l.TC.Get()
+      switch e.(type) {
+      case *TCFunRef:
+        res, err := l.TC.ExecFunction(l, e.(*TCFunRef).Name, e.(*TCFunRef).Attrs)
+        if err != nil {
+          return nil, err
+        }
+        tq.PushFront(res)
+      default:
+        return nil, errors.New(fmt.Sprintf("reference execution expects function reference in stack: %v", e))
+      }
+    }
+  } else {
+    for q.Len() > 0 {
+      e := q.PopFront()
+      switch e.(type) {
+      case *TCFunRef:
+        res, err := l.TC.ExecFunction(l, e.(*TCFunRef).Name, e.(*TCFunRef).Attrs)
+        if err != nil {
+          return nil, err
+        }
+        tq.PushFront(res)
+      default:
+        return nil, errors.New("reference execution expects function reference in arguments")
+      }
+    }
+  }
+  for tq.Len() > 0 {
+    d := tq.PopFront()
+    l.TC.Res.Set(d)
+  }
+  return nil, nil
+}
+
 func initStdlibGenerics() {
   SetFunction("print", PrintFunction)
   SetFunction("printAll", PrintAllFunction)
@@ -197,4 +235,5 @@ func initStdlibGenerics() {
   SetFunction("local", SetLocalFunction)
   SetFunction("global", SetGlobalFunction)
   SetFunction("!", ExecuteFunction)
+  SetFunction("!*", ExecuteAllFunction)
 }

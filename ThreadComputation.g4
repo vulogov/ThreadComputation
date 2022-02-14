@@ -46,7 +46,7 @@ term
 );
 
 OPS
-  : (OP)+
+  : ('`')? (OP)+
   ;
 
 NAME
