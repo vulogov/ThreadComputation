@@ -10,6 +10,7 @@ import (
   "github.com/vulogov/ThreadComputation/parser"
 )
 
+var Vars      cmap.Cmap
 var Functions cmap.Cmap
 
 type TCExecListener struct {
@@ -22,10 +23,12 @@ type TCstate struct {
   errors       int
   errmsg       string
   InAttr       int
+  InRef        int
   Attrs       *TwoStack
   Res         *TwoStack
   FNStack      deque.Deque
   Vars         cmap.Cmap
+  Functions    cmap.Cmap
 }
 
 type tcExecErrorListener struct {
@@ -40,6 +43,7 @@ func Init() *TCstate {
   log.SetLevel(log.InfoLevel)
   tc := &TCstate{
     InAttr:  0,
+    InRef:   0,
     errors:  0,
     Res:     InitTS(),
     Attrs:   InitTS(),
@@ -125,6 +129,16 @@ func (tc *TCstate) CurrentFunctionName() string {
   } else {
     return "#MAIN"
   }
+}
+
+func (tc *TCstate) SetFunction(name string, fun TCFun) {
+  tc.Functions.Delete(name)
+  tc.Functions.Store(name, fun)
+}
+
+func (tc *TCstate) SetVariable(name string, data interface{}) {
+  tc.Vars.Delete(name)
+  tc.Vars.Store(name, data)
 }
 
 func (l *tcExecErrorListener) SyntaxError(recognizer antlr.Recognizer, offendingSymbol interface{}, line, column int, msg string, e antlr.RecognitionException) {

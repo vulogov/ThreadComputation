@@ -108,6 +108,58 @@ func TestStdlib12(t *testing.T) {
 	}
 }
 
+func TestStdlib13(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("`print print")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
+func TestStdlib131(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("`print[42 41 40 39] print")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
+func TestStdlib14(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval(" 2 40 `+ attr !")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("2 40 `+ attr ! had failed: %v", res)
+	}
+}
+
+func TestStdlib141(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval(" 2 44 `- attr !")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("2 44 `- attr ! had failed: %v", res)
+	}
+}
+
+func TestStdlib1412(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval(" `- attr[44 2] !")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("`- attr[44 2] ! had failed: %v", res)
+	}
+}
+
 func TestStdlibMath1(t *testing.T) {
 	tc := Init()
   tc = tc.Eval("+[2 2]")
