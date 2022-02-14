@@ -11,6 +11,20 @@ func toString(data interface{}) (string, error) {
   switch data.(type) {
   case int64, float64, string, bool:
     return fmt.Sprintf("%v", data), nil
+  case *TCFunRef:
+    out := fmt.Sprintf("`%v", data.(*TCFunRef).Name)
+    if data.(*TCFunRef).Attrs.Len() > 0 {
+      out += "[ "
+      for x := 0; x < data.(*TCFunRef).Attrs.Len(); x++ {
+        p, err := toString(data.(*TCFunRef).Attrs.At(x))
+        if err != nil {
+          return "", err
+        }
+        out += fmt.Sprintf("%v ", p)
+      }
+      out += "]"
+    }
+    return out, nil
   case nil:
     return "#NIL", nil
   }
@@ -151,6 +165,24 @@ func SetLocalFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   return nil, setLocalOrGlobalFunction(l, q, &l.TC.Vars)
 }
 
+func ExecuteFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  if l.TC.Ready() {
+    e := l.TC.Get()
+    switch e.(type) {
+    case *TCFunRef:
+      if q.Len() == 0 {
+        return l.TC.ExecFunction(l, e.(*TCFunRef).Name, e.(*TCFunRef).Attrs)
+      } else {
+        return l.TC.ExecFunction(l, e.(*TCFunRef).Name, q)
+      }
+    default:
+      return nil, errors.New("reference execution expects function reference in stack")
+    }
+  } else {
+    return nil, errors.New("Stack is too shallow to execute function reference")
+  }
+}
+
 func initStdlibGenerics() {
   SetFunction("print", PrintFunction)
   SetFunction("printAll", PrintAllFunction)
@@ -164,4 +196,5 @@ func initStdlibGenerics() {
   SetFunction("TheAnswer", TheUltimateAnswerFunction)
   SetFunction("local", SetLocalFunction)
   SetFunction("global", SetGlobalFunction)
+  SetFunction("!", ExecuteFunction)
 }

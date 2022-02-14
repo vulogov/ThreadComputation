@@ -2,12 +2,19 @@ package ThreadComputation
 
 import (
   "fmt"
+  "strings"
+  "errors"
   log "github.com/sirupsen/logrus"
   "github.com/gammazero/deque"
   "github.com/vulogov/ThreadComputation/parser"
 )
 
 type TCFun func(l *TCExecListener, q *deque.Deque) (interface{}, error)
+
+type TCFunRef struct {
+  Name        string
+  Attrs      *deque.Deque
+}
 
 func (l *TCExecListener) EnterFun(c *parser.FunContext) {
   if l.TC.Errors() > 0 {
@@ -24,6 +31,13 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
     return
   }
   if _, ok := l.TC.Vars.Load(func_name); ok {
+    return
+  }
+  if strings.HasPrefix(func_name, "`") {
+    l.TC.InAttr += 1
+    l.TC.InRef  += 1
+    l.TC.Attrs.Add()
+    l.TC.FNStack.PushFront(func_name)
     return
   }
   _, ok := Functions.Load(func_name)
@@ -58,6 +72,23 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     l.TC.Res.Set(vdata)
     return
   }
+  if strings.HasPrefix(func_name, "`") {
+    func_name := strings.TrimPrefix(func_name, "`")
+    if l.TC.InRef > 0 {
+      l.TC.InRef -= 1
+    }
+    r := &TCFunRef{
+      Name: func_name,
+      Attrs: l.TC.Attrs.Q(),
+    }
+    l.TC.Attrs.Del()
+    if l.TC.Attrs.GLen() > 1 {
+      l.TC.Attrs.Set(r)
+    } else {
+      l.TC.Res.Set(r)
+    }
+    return
+  }
   lfun, ok := Functions.Load(func_name)
   if ok == false {
     lfun, ok = l.TC.Functions.Load(func_name)
@@ -82,6 +113,28 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
       }
     }
   }
+}
+
+func (tc *TCstate) ExecFunction(l *TCExecListener, func_name string, q *deque.Deque) (interface {}, error) {
+  if gvdata, ok := Vars.Load(func_name); ok {
+    return gvdata, nil
+  }
+  if vdata, ok := tc.Vars.Load(func_name); ok {
+    return vdata, nil
+  }
+  lfun, ok := Functions.Load(func_name)
+  if ok == false {
+    lfun, ok = tc.Functions.Load(func_name)
+  }
+  if ok {
+    fun := lfun.(TCFun)
+    return fun(l, q)
+  } else {
+    l.TC.errmsg = fmt.Sprintf("Function: %v not found", func_name)
+    l.TC.errors += 1
+    return nil, errors.New(l.TC.errmsg)
+  }
+  return nil, nil
 }
 
 func SetFunction(name string, fun TCFun) {

@@ -60,3 +60,35 @@ func TestFunc2(t *testing.T) {
 		t.Fatalf("stack[ stack[42]] not working: %v", res)
 	}
 }
+
+func TestFunc3(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("`print[42] !")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
+func TestFunc31(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("`stack[42] !")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("stack[ 42 ] ! not working: %v", res)
+	}
+}
+
+func TestFunc32(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("`stack ![42]")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("stack ![42] not working: %v", res)
+	}
+}

@@ -108,6 +108,22 @@ func TestStdlib12(t *testing.T) {
 	}
 }
 
+func TestStdlib13(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("`print print")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
+func TestStdlib131(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("`print[42 41 40 39] print")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
 func TestStdlibMath1(t *testing.T) {
 	tc := Init()
   tc = tc.Eval("+[2 2]")

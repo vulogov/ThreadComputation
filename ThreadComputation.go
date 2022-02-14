@@ -23,6 +23,7 @@ type TCstate struct {
   errors       int
   errmsg       string
   InAttr       int
+  InRef        int
   Attrs       *TwoStack
   Res         *TwoStack
   FNStack      deque.Deque
@@ -42,6 +43,7 @@ func Init() *TCstate {
   log.SetLevel(log.InfoLevel)
   tc := &TCstate{
     InAttr:  0,
+    InRef:   0,
     errors:  0,
     Res:     InitTS(),
     Attrs:   InitTS(),
