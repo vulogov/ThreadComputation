@@ -33,6 +33,9 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
   if _, ok := l.TC.Vars.Load(func_name); ok {
     return
   }
+  if _, ok := l.TC.UserFun.Load(func_name); ok {
+    return
+  }
   if strings.HasPrefix(func_name, "`") {
     l.TC.InAttr += 1
     l.TC.InRef  += 1
@@ -104,6 +107,10 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
   }
   if vdata, ok := l.TC.Vars.Load(func_name); ok {
     l.TC.Res.Set(vdata)
+    return
+  }
+  if code, ok := l.TC.UserFun.Load(func_name); ok {
+    l.TC.Eval(code.(string))
     return
   }
   if strings.HasPrefix(func_name, "`") {

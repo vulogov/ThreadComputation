@@ -10,6 +10,9 @@ func (l *TCExecListener) EnterBoolean_term(c *parser.Boolean_termContext) {
     return
   }
   str, err := conv.Bool(c.GetVALUE().GetText()[1:])
+  if l.TC.AddToUserFun(c.GetVALUE().GetText()) {
+    return
+  }
   if err == nil {
     if l.TC.InAttr < 1 {
       l.TC.Res.Set(str)

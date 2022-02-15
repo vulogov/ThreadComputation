@@ -10,11 +10,13 @@ func (l *TCExecListener) EnterInteger_term(c *parser.Integer_termContext) {
     return
   }
   str, err := conv.Int64(c.GetVALUE().GetText())
-  if err == nil {
-    if l.TC.InAttr < 1 {
-      l.TC.Res.Set(str)
-    } else {
-      l.TC.Attrs.Set(str)
+  if l.TC.AddToUserFun(c.GetVALUE().GetText()) == false {
+    if err == nil {
+      if l.TC.InAttr < 1 {
+        l.TC.Res.Set(str)
+      } else {
+        l.TC.Attrs.Set(str)
+      }
     }
   }
 }

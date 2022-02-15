@@ -11,6 +11,9 @@ func (l *TCExecListener) EnterString_term(c *parser.String_termContext) {
     return
   }
   str, err := conv.String(c.GetVALUE().GetText())
+  if l.TC.AddToUserFun(str) {
+    return
+  }
   if strings.HasPrefix(str, "\"") {
     str = strings.TrimSuffix(str, "\"")
     str = strings.TrimPrefix(str, "\"")

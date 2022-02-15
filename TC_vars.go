@@ -1,12 +1,16 @@
 package ThreadComputation
 
 import (
+  "fmt"
   "github.com/vulogov/ThreadComputation/parser"
 )
 
 
 func (l *TCExecListener) EnterVars(c *parser.VarsContext) {
   if l.TC.Errors() > 0 {
+    return
+  }
+  if l.TC.AddToUserFun(fmt.Sprintf("$%v",c.GetVname().GetText())) {
     return
   }
   if l.TC.Ready() {

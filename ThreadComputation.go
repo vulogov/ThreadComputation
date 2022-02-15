@@ -28,9 +28,12 @@ type TCstate struct {
   SkipFunction string
   Attrs       *TwoStack
   Res         *TwoStack
+  UFStack      deque.Deque
+  UFNStack     deque.Deque
   FNStack      deque.Deque
   Vars         cmap.Cmap
   Functions    cmap.Cmap
+  UserFun      cmap.Cmap
 }
 
 type tcExecErrorListener struct {

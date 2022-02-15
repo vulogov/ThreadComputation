@@ -17,6 +17,9 @@ type ThreadComputationListener interface {
 	// EnterFun is called when entering the fun production.
 	EnterFun(c *FunContext)
 
+	// EnterUfun is called when entering the ufun production.
+	EnterUfun(c *UfunContext)
+
 	// EnterVars is called when entering the vars production.
 	EnterVars(c *VarsContext)
 
@@ -25,6 +28,9 @@ type ThreadComputationListener interface {
 
 	// EnterFun_term is called when entering the fun_term production.
 	EnterFun_term(c *Fun_termContext)
+
+	// EnterUfun_term is called when entering the ufun_term production.
+	EnterUfun_term(c *Ufun_termContext)
 
 	// EnterDblock is called when entering the dblock production.
 	EnterDblock(c *DblockContext)
@@ -53,6 +59,9 @@ type ThreadComputationListener interface {
 	// ExitFun is called when exiting the fun production.
 	ExitFun(c *FunContext)
 
+	// ExitUfun is called when exiting the ufun production.
+	ExitUfun(c *UfunContext)
+
 	// ExitVars is called when exiting the vars production.
 	ExitVars(c *VarsContext)
 
@@ -61,6 +70,9 @@ type ThreadComputationListener interface {
 
 	// ExitFun_term is called when exiting the fun_term production.
 	ExitFun_term(c *Fun_termContext)
+
+	// ExitUfun_term is called when exiting the ufun_term production.
+	ExitUfun_term(c *Ufun_termContext)
 
 	// ExitDblock is called when exiting the dblock production.
 	ExitDblock(c *DblockContext)
