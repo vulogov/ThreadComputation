@@ -424,3 +424,27 @@ func TestStdlibMath21(t *testing.T) {
 		t.Fatalf("TheAnswer[3.14]: %v", res)
 	}
 }
+
+func TestStdlib15(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval(" \"2 40 +\" !")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf(" \"2 40 +\" ! had failed: %v", res)
+	}
+}
+
+func TestStdlib16(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval(" !*[\"2 40 +\"]")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf(" !*[\"2 40 +\"] had failed: %v", res)
+	}
+}

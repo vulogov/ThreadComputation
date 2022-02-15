@@ -175,12 +175,15 @@ func ExecuteFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
       } else {
         return l.TC.ExecFunction(l, e.(*TCFunRef).Name, q)
       }
+    case string:
+      l.TC.Eval(e.(string))
     default:
       return nil, errors.New("reference execution expects function reference in stack")
     }
   } else {
     return nil, errors.New("Stack is too shallow to execute function reference")
   }
+  return nil, nil
 }
 
 func ExecuteAllFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
@@ -195,6 +198,8 @@ func ExecuteAllFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) 
           return nil, err
         }
         tq.PushFront(res)
+      case string:
+        l.TC.Eval(e.(string))
       default:
         return nil, errors.New(fmt.Sprintf("reference execution expects function reference in stack: %v", e))
       }
@@ -209,6 +214,8 @@ func ExecuteAllFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) 
           return nil, err
         }
         tq.PushFront(res)
+      case string:
+        l.TC.Eval(e.(string))
       default:
         return nil, errors.New("reference execution expects function reference in arguments")
       }
