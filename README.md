@@ -13,6 +13,12 @@ a() b() c()
 
 Where a() is called and passing return value to b() and b() is passing return value to c() and return value of c() will be an outcome of computation. This syntax will be much easier to comprehend and therefore more error-proof. Lisp-like languages offering some solution for that problem but I've decided to step forward in different direction.
 
+## First, to the source
+
+Information about [ThreadComputation package](https://pkg.go.dev/github.com/vulogov/ThreadComputation) is available on [https://pkg.go.dev](https://pkg.go.dev/github.com/vulogov/ThreadComputation)
+
+Source code available on GitHub: [https://github.com/vulogov/ThreadComputation](https://github.com/vulogov/ThreadComputation)
+
 ## What is exactly ThreadComputation module ?
 
 Imagine, that you are in despeate need of embeddable, simple and extendable DSL language for your GoLang application. Something you can use as your application query language or expression evaluation. Don't have to be a Turing complete, but easy to understand by your users, powerful and easily extendable. And ThreadComputation module is trying to fill that niche. Let me show you the code.

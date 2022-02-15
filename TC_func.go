@@ -39,6 +39,32 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
     l.TC.Attrs.Add()
     return
   }
+  if strings.HasPrefix(func_name, "?") {
+    if l.TC.Ready() {
+      e := l.TC.Get()
+      switch e.(type) {
+      case bool:
+        func_name = strings.TrimPrefix(func_name, "?")
+        if e.(bool) {
+          l.TC.ToSkip = false
+          l.TC.SkipFunction = func_name
+        } else {
+          l.TC.ToSkip = true
+          l.TC.SkipFunction = func_name
+        }
+      default:
+        l.TC.errmsg = "Boolean value is expected for conditional"
+        l.TC.errors += 1
+        log.Errorf(l.TC.errmsg)
+        return
+      }
+    } else {
+      l.TC.errmsg = "Stack is too shallow for conditional"
+      l.TC.errors += 1
+      log.Errorf(l.TC.errmsg)
+      return
+    }
+  }
   _, ok := Functions.Load(func_name)
   if ok == false {
     _, ok = l.TC.Functions.Load(func_name)
@@ -63,6 +89,15 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     return
   }
   func_name := c.GetFname().GetText()
+  if strings.HasPrefix(func_name, "?") {
+    func_name = strings.TrimPrefix(func_name, "?")
+  }
+  if l.TC.ToSkip {
+    if func_name == l.TC.SkipFunction {
+      l.TC.ToSkip = false
+      return
+    }
+  }
   if gvdata, ok := Vars.Load(func_name); ok {
     l.TC.Res.Set(gvdata)
     return
@@ -148,4 +183,5 @@ func initStdlib() {
   initStdlibGenerics()
   initStdlibMath()
   initStdlibStack()
+  initStdlibCmp()
 }
