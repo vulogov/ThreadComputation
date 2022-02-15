@@ -84,3 +84,27 @@ func TestUserFunc7(t *testing.T) {
 		t.Fatalf("@returnanswer[stack[42]] returnanswer not working: %v", res)
 	}
 }
+
+func TestUserFunc8(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("@add[+] add[2 40]")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("@add[+] add[2 40] returnanswer not working: %v", res)
+	}
+}
+
+func TestUserFunc10(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("@answer[ 41 (42) <- ] answer ")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("@answer[ 41 (42) <- ] answer not working: %v", res)
+	}
+}

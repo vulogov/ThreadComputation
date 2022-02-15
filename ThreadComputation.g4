@@ -38,6 +38,7 @@ ufun_term
  : ( fun
    | term
    | vars
+   | dblock
 );
 
 dblock

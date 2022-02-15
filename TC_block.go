@@ -9,11 +9,17 @@ func (l *TCExecListener) EnterDblock(c *parser.DblockContext) {
   if l.TC.Errors() > 0 {
     return
   }
+  if l.TC.AddToUserFun("(") == true {
+    return
+  }
   l.TC.Res.Add()
 }
 
 func (l *TCExecListener) ExitDblock(c *parser.DblockContext) {
   if l.TC.Errors() > 0 {
+    return
+  }
+  if l.TC.AddToUserFun(")") == true {
     return
   }
   l.TC.Res.Left()
