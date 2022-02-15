@@ -72,3 +72,15 @@ func TestUserFunc6(t *testing.T) {
 		t.Fatalf("@returnanswer[42 $answser] returnanswer not working: %v", res)
 	}
 }
+
+func TestUserFunc7(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("@returnanswer[stack[42]] returnanswer")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("@returnanswer[stack[42]] returnanswer not working: %v", res)
+	}
+}

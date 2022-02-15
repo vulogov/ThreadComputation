@@ -27,6 +27,9 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
     return
   }
   func_name := c.GetFname().GetText()
+  if l.TC.AddToUserFun(fmt.Sprintf("%v[", func_name)) == true {
+    return
+  }
   if _, ok := Vars.Load(func_name); ok {
     return
   }
@@ -89,6 +92,9 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     l.TC.InAttr -= 1
   }
   if l.TC.Errors() > 0 {
+    return
+  }
+  if l.TC.AddToUserFun("]") == true {
     return
   }
   func_name := c.GetFname().GetText()
