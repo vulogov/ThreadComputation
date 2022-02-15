@@ -183,4 +183,5 @@ func initStdlib() {
   initStdlibGenerics()
   initStdlibMath()
   initStdlibStack()
+  initStdlibCmp()
 }
