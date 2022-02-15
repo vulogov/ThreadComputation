@@ -177,6 +177,8 @@ func ExecuteFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
       }
     case string:
       l.TC.Eval(e.(string))
+    case int64, float64, bool:
+      return e, nil
     default:
       return nil, errors.New("reference execution expects function reference in stack")
     }
@@ -200,6 +202,8 @@ func ExecuteAllFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) 
         tq.PushFront(res)
       case string:
         l.TC.Eval(e.(string))
+      case int64, float64, bool:
+        tq.PushFront(e)
       default:
         return nil, errors.New(fmt.Sprintf("reference execution expects function reference in stack: %v", e))
       }
@@ -216,6 +220,8 @@ func ExecuteAllFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) 
         tq.PushFront(res)
       case string:
         l.TC.Eval(e.(string))
+      case int64, float64, bool:
+        tq.PushFront(e)
       default:
         return nil, errors.New("reference execution expects function reference in arguments")
       }

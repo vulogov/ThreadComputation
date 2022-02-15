@@ -448,3 +448,27 @@ func TestStdlib16(t *testing.T) {
 		t.Fatalf(" !*[\"2 40 +\"] had failed: %v", res)
 	}
 }
+
+func TestStdlib17(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval(" 42 ! ")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf(" 42 ! had failed: %v", res)
+	}
+}
+
+func TestStdlib18(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval(" !*[#TRUE] ")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "true" {
+		t.Fatalf(" !*[#TRUE] had failed: %v", res)
+	}
+}
