@@ -167,7 +167,7 @@ func LogicFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
 
   fun_name := l.TC.FNStack.Front().(string)
 
-  if fun_name == "and" || fun_name == "&&" {
+  if fun_name == "and" || fun_name == "&&" || fun_name == "∧" {
     switch e1.(type) {
     case bool:
       switch e2.(type) {
@@ -175,7 +175,7 @@ func LogicFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
         return e1.(bool) && e2.(bool), nil
       }
     }
-  } else if fun_name == "or" || fun_name == "||" {
+  } else if fun_name == "or" || fun_name == "||" || fun_name == "∨" {
     switch e1.(type) {
     case bool:
       switch e2.(type) {
@@ -185,6 +185,29 @@ func LogicFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
     }
   }
   return nil, errors.New("Unknown context for logic operator")
+}
+
+func LogicNotFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+
+  if q.Len() == 0 && l.TC.Ready() {
+    e := l.TC.Get()
+    switch e.(type) {
+    case bool:
+      return ! e.(bool), nil
+    }
+  } else if q.Len() > 0 {
+    for q.Len() > 0 {
+      e := q.PopFront()
+      switch e.(type) {
+      case bool:
+        l.TC.Res.Set(! e.(bool))
+      default:
+        return nil, errors.New("Inconclusive context for logic NOT operator")
+      }
+    }
+    return nil, nil
+  }
+  return nil, errors.New("Unknown context for logic NOT operator")
 }
 
 func initStdlibCmp() {
@@ -198,4 +221,7 @@ func initStdlibCmp() {
   SetFunction("or", LogicFunction)
   SetFunction("&&", LogicFunction)
   SetFunction("||", LogicFunction)
+  SetFunction("not", LogicNotFunction)
+  SetFunction("¬", LogicNotFunction)
+
 }
