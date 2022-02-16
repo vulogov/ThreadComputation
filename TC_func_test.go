@@ -240,3 +240,27 @@ func TestFunc201(t *testing.T) {
 		t.Fatalf("set.New[42] set.New[1 42] --- unset not working: %v", res)
 	}
 }
+
+func TestFunc202(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("41 in[42]")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "false" {
+		t.Fatalf("41 in[42] not working: %v", res)
+	}
+}
+
+func TestFunc203(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("42 set in[42]")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "true" {
+		t.Fatalf("42 set in[42] not working: %v", res)
+	}
+}
