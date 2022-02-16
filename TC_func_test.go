@@ -160,3 +160,27 @@ func TestFunc7(t *testing.T) {
 		t.Fatalf(" set[42] unset not working: %v", res)
 	}
 }
+
+func TestFunc8(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("set +++[42] unset")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf(" set +++[42] unset not working: %v", res)
+	}
+}
+
+func TestFunc9(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("42 set.New +++ unset")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf(" 42 set.New +++ unset not working: %v", res)
+	}
+}

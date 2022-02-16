@@ -29,7 +29,24 @@ func TCSetFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
     }
     return s, nil
   }
-  return nil, errors.New("read function did not discover proper context")
+  return nil, errors.New("set function did not discover proper context")
+}
+
+func TCNewSetFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  s := mapset.NewSet()
+  if q.Len() > 0 {
+    for q.Len() > 0 {
+      data := q.PopFront()
+      switch data.(type) {
+      case string, int64, float64, bool:
+        s.Add(data)
+      }
+    }
+    return s, nil
+  } else {
+    return s, nil
+  }
+  return nil, errors.New("set.New function did not discover proper context")
 }
 
 func TCUnSetFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
@@ -59,5 +76,6 @@ func TCUnSetFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
 
 func initStdlibSet() {
   SetFunction("set", TCSetFunction)
+  SetFunction("set.New", TCNewSetFunction)
   SetFunction("unset", TCUnSetFunction)
 }

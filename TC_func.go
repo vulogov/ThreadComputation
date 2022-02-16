@@ -211,5 +211,5 @@ func initStdlib() {
   initStdlibString()
   initStdlibTime()
   initStdlibSet()
-
+  initStdlibMerge()
 }
