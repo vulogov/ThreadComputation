@@ -1,8 +1,10 @@
 package ThreadComputation
 
 import (
+  "os"
   "fmt"
   "errors"
+  "strings"
   "github.com/c2fo/vfs/v6/vfssimple"
   "github.com/gammazero/deque"
 )
@@ -10,6 +12,11 @@ import (
 func readVfsFile(uri string) (string, error) {
   max_filesize, _ := GetVariable("tc.Maxfilesize")
   buf := make([]byte, max_filesize.(int))
+  if strings.HasPrefix(uri, "@") {
+    cwd, _ := os.Getwd()
+    uri = strings.TrimPrefix(uri, "@")
+    uri = fmt.Sprintf("file://%v%v", cwd, uri)
+  }
   file, err := vfssimple.NewFile(uri)
   if err != nil {
     return "", err

@@ -266,6 +266,38 @@ func SetAttrsFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   return nil, nil
 }
 
+func UseFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  if q.Len() > 0 {
+    for q.Len() > 0 {
+      fn := q.PopFront()
+      switch fn.(type) {
+      case string:
+        data, err := readVfsFile(fn.(string))
+        if err != nil {
+          return nil, err
+        }
+        l.TC.Eval(data)
+      default:
+        break
+      }
+    }
+    return nil, nil
+  } else {
+    if l.TC.Ready() {
+      fn := l.TC.Get()
+      switch fn.(type) {
+      case string:
+        data, err := readVfsFile(fn.(string))
+        if err != nil {
+          return nil, err
+        }
+        l.TC.Eval(data)
+        return nil, nil
+      }
+    }
+  }
+  return nil, errors.New("use function did not discover proper context")
+}
 
 func initStdlibGenerics() {
   SetFunction("print", PrintFunction)
@@ -283,4 +315,5 @@ func initStdlibGenerics() {
   SetFunction("!", ExecuteFunction)
   SetFunction("!*", ExecuteAllFunction)
   SetFunction("attr", SetAttrsFunction)
+  SetFunction("use", UseFunction)
 }

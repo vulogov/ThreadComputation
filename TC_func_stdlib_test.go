@@ -463,12 +463,24 @@ func TestStdlib17(t *testing.T) {
 
 func TestStdlib18(t *testing.T) {
 	tc := Init()
-  tc = tc.Eval(" !*[#TRUE] ")
+  tc = tc.Eval(" \"@/examples/answer.tc\" use ")
 	if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())
 	}
 	res := tc.GetAsString()
-	if res != "true" {
-		t.Fatalf(" !*[#TRUE] had failed: %v", res)
+	if res != "42" {
+		t.Fatalf("  \"@/examples/anwer.tc\" use: %v", res)
+	}
+}
+
+func TestStdlib19(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("use[\"@/examples/answer.tc\"]")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("use[\"@/examples/answer.tc\"] failed: %v", res)
 	}
 }

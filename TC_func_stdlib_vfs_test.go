@@ -54,3 +54,15 @@ func TestVfs3(t *testing.T) {
 		t.Fatalf(" %v had failed: %v", script, res)
 	}
 }
+
+func TestVfs4(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval("\"@/examples/hello.txt\" read strip")
+	if tc1.Errors() != 0 {
+		t.Fatalf("\"@/examples/hello.txt\" read strip parse failed")
+	}
+	res := tc.GetAsString()
+	if res != "Hello world!" {
+		t.Fatalf("\"@/examples/hello.txt\" read strip had failed: %v", res)
+	}
+}
