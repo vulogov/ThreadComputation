@@ -61,7 +61,7 @@ func TCUnSetFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
         }
       }
     }
-  } else {
+  } else if l.TC.Ready() {
     s := l.TC.Get()
     switch s.(type) {
     case mapset.Set:
@@ -74,8 +74,21 @@ func TCUnSetFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   return nil, nil
 }
 
+func TCSetLenFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  if l.TC.Ready() {
+    s := l.TC.Get()
+    switch s.(type) {
+    case mapset.Set:
+      l.TC.Res.Set(s)
+      return int64(s.(mapset.Set).Cardinality()), nil
+    }
+  }
+  return nil, nil
+}
+
 func initStdlibSet() {
   SetFunction("set", TCSetFunction)
   SetFunction("set.New", TCNewSetFunction)
+  SetFunction("set.Len", TCSetLenFunction)
   SetFunction("unset", TCUnSetFunction)
 }
