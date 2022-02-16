@@ -207,4 +207,6 @@ func initStdlib() {
   initStdlibMath()
   initStdlibStack()
   initStdlibCmp()
+  initStdlibVfs()
+  initStdlibString()
 }

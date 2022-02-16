@@ -1,6 +1,7 @@
 package ThreadComputation
 
 import (
+  "errors"
   "fmt"
   "github.com/vulogov/ThreadComputation/parser"
 )
@@ -24,4 +25,16 @@ func (l *TCExecListener) EnterVars(c *parser.VarsContext) {
 func SetVariable(name string, data interface{}) {
   Vars.Delete(name)
   Vars.Store(name, data)
+}
+
+func GetVariable(name string) (interface{}, error) {
+  if data, ok := Vars.Load(name); ok {
+    return data, nil
+  }
+  return nil, errors.New(fmt.Sprintf("Variable %v not found", name))
+}
+
+func initStdVars() {
+  SetVariable("tc.Version", VERSION)
+  SetVariable("tc.Maxfilesize", 16777216)
 }
