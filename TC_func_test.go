@@ -140,3 +140,23 @@ func TestFunc51(t *testing.T) {
 		t.Fatalf(" 41 #TRUE ?stack[ 42 ] not working: %v", res)
 	}
 }
+
+func TestFunc6(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("1 1 2 2 3 3 set print")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
+func TestFunc7(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("set[42] unset ")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf(" set[42] unset not working: %v", res)
+	}
+}

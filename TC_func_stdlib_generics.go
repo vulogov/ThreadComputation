@@ -5,6 +5,7 @@ import (
   "errors"
   "plugin"
   "github.com/gammazero/deque"
+  "github.com/deckarep/golang-set"
   "github.com/lrita/cmap"
 )
 
@@ -26,6 +27,8 @@ func toString(data interface{}) (string, error) {
       out += "]"
     }
     return out, nil
+  case mapset.Set:
+    return data.(mapset.Set).String(), nil
   case nil:
     return "#NIL", nil
   }

@@ -210,4 +210,6 @@ func initStdlib() {
   initStdlibVfs()
   initStdlibString()
   initStdlibTime()
+  initStdlibSet()
+
 }
