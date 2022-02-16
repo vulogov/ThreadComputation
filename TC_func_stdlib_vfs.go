@@ -15,7 +15,7 @@ func readVfsFile(uri string) (string, error) {
   if strings.HasPrefix(uri, "@") {
     cwd, _ := os.Getwd()
     uri = strings.TrimPrefix(uri, "@")
-    uri = fmt.Sprintf("file://%v%v", cwd, uri)
+    uri = fmt.Sprintf("file://%v/%v", cwd, uri)
   }
   file, err := vfssimple.NewFile(uri)
   if err != nil {
