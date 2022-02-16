@@ -3,6 +3,7 @@ package ThreadComputation
 import (
   "fmt"
   "errors"
+  "plugin"
   "github.com/gammazero/deque"
   "github.com/lrita/cmap"
 )
@@ -298,6 +299,23 @@ func UseFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   }
   return nil, errors.New("use function did not discover proper context")
 }
+
+func importModule(name string) error {
+  p, err := plugin.Open(name)
+  if err != nil {
+    return err
+  }
+  symbol, err := p.Lookup("InitModule")
+  if err != nil {
+    return err
+  }
+  plug, ok := symbol.(func())
+  if ok {
+    plug()
+  }
+  return nil
+}
+
 
 func initStdlibGenerics() {
   SetFunction("print", PrintFunction)

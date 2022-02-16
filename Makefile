@@ -13,8 +13,8 @@ build:
 	rm -rf ./parser
 	antlr -Dlanguage=Go -o parser ThreadComputation.g4
 c:
-	go build -v ./...
+	go build  -v ./...
 test:
 	go test -v
-rebuild: pre build c test
+rebuild: pre build dynmod c test
 compile: c test
