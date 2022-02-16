@@ -8,6 +8,7 @@ pre:
 	go get github.com/google/uuid
 	go get -u -t gonum.org/v1/gonum/...
 	go get -u github.com/c2fo/vfs/v6/...
+	go get -u github.com/levigross/grequests
 build:
 	rm -rf ./parser
 	antlr -Dlanguage=Go -o parser ThreadComputation.g4

@@ -66,3 +66,15 @@ func TestVfs4(t *testing.T) {
 		t.Fatalf("\"@/examples/hello.txt\" read strip had failed: %v", res)
 	}
 }
+
+func TestVfs5(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval("\"https://raw.githubusercontent.com/vulogov/ThreadComputation/main/examples/hello.txt\" read strip")
+	if tc1.Errors() != 0 {
+		t.Fatalf("\"https://raw.githubusercontent.com/vulogov/ThreadComputation/main/examples/hello.txt\" read strip parse failed")
+	}
+	res := tc.GetAsString()
+	if res != "Hello world!" {
+		t.Fatalf("\"https://raw.githubusercontent.com/vulogov/ThreadComputation/main/examples/hello.txt\" read strip had failed: %v", res)
+	}
+}
