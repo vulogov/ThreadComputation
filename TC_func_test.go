@@ -184,3 +184,11 @@ func TestFunc9(t *testing.T) {
 		t.Fatalf(" 42 set.New +++ unset not working: %v", res)
 	}
 }
+
+func TestFunc10(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("set.New[1 2] +++[set.New[3]] print")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}

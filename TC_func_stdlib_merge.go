@@ -21,6 +21,8 @@ func TCMergeFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
         switch e.(type) {
         case string, int64, float64, bool:
           s.(mapset.Set).Add(e)
+        case mapset.Set:
+          s = s.(mapset.Set).Union(e.(mapset.Set))
         }
       }
       for l.TC.Res.Len() > 0 {
@@ -28,6 +30,8 @@ func TCMergeFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
         switch e.(type) {
         case string, int64, float64, bool:
           s.(mapset.Set).Add(e)
+        case mapset.Set:
+          s = s.(mapset.Set).Union(e.(mapset.Set))
         }
       }
       return s, nil
