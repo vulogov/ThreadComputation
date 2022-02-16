@@ -3,6 +3,7 @@ package ThreadComputation
 import (
   "fmt"
   "errors"
+  "github.com/deckarep/golang-set"
   "github.com/gammazero/deque"
 )
 
@@ -46,6 +47,11 @@ func CompareFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
       case bool:
         return e1.(bool) == e2.(bool), nil
       }
+    case mapset.Set:
+      switch e2.(type) {
+      case mapset.Set:
+        return e1.(mapset.Set).Equal(e2.(mapset.Set)), nil
+      }
     }
   } else if fun_name == "<>" {
     switch e1.(type) {
@@ -68,6 +74,11 @@ func CompareFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
       switch e2.(type) {
       case bool:
         return e1.(bool) != e2.(bool), nil
+      }
+    case mapset.Set:
+      switch e2.(type) {
+      case mapset.Set:
+        return ! e1.(mapset.Set).Equal(e2.(mapset.Set)), nil
       }
     }
   } else if fun_name == "<" {

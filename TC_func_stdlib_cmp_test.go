@@ -149,3 +149,27 @@ func TestCmp10(t *testing.T) {
 		t.Fatalf("¬[#FALSE] failed: %v", res)
 	}
 }
+
+func TestCmp11(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval("set.New[1 2] set.New[2 1] =")
+	if tc1.Errors() != 0 {
+		t.Fatalf("set.New[1 2] set.New[2 1] =")
+	}
+	res := tc.GetAsString()
+	if res != "true" {
+		t.Fatalf("set.New[1 2] set.New[2 1] = failed: %v", res)
+	}
+}
+
+func TestCmp12(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval("set.New[1 2 3] set.New[2 1] <>")
+	if tc1.Errors() != 0 {
+		t.Fatalf("set.New[1 2] set.New[2 1] =")
+	}
+	res := tc.GetAsString()
+	if res != "true" {
+		t.Fatalf("set.New[1 2] set.New[2 1] = failed: %v", res)
+	}
+}
