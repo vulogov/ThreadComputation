@@ -89,3 +89,39 @@ func TestCmp51(t *testing.T) {
 		t.Fatalf("<=[41 42] failed: %v", res)
 	}
 }
+
+func TestCmp6(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval("#FALSE #FALSE and")
+	if tc1.Errors() != 0 {
+		t.Fatalf("#FALSE #FALSE and")
+	}
+	res := tc.GetAsString()
+	if res != "false" {
+		t.Fatalf("#FALSE #FALSE and failed: %v", res)
+	}
+}
+
+func TestCmp7(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval("#FALSE or[#TRUE]")
+	if tc1.Errors() != 0 {
+		t.Fatalf("#FALSE or[#TRUE]")
+	}
+	res := tc.GetAsString()
+	if res != "true" {
+		t.Fatalf("#FALSE or[#TRUE] failed: %v", res)
+	}
+}
+
+func TestCmp8(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval("or[#FALSE #FALSE]")
+	if tc1.Errors() != 0 {
+		t.Fatalf("or[#FALSE #FALSE]")
+	}
+	res := tc.GetAsString()
+	if res != "false" {
+		t.Fatalf("or[#FALSE #FALSE] failed: %v", res)
+	}
+}

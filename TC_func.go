@@ -209,4 +209,5 @@ func initStdlib() {
   initStdlibCmp()
   initStdlibVfs()
   initStdlibString()
+  initStdlibTime()
 }

@@ -148,7 +148,44 @@ func CompareFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   return nil, errors.New(fmt.Sprintf("Unknown context for compare operator"))
 }
 
+func LogicFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  var e1 interface{}
+  var e2 interface{}
 
+  if l.TC.Ready() && q.Len() == 0 && l.TC.Res.Len() >= 2 {
+    e1 = l.TC.Get()
+    e2 = l.TC.Get()
+  } else if l.TC.Ready() && q.Len() == 1 && l.TC.Res.Len() >= 1 {
+    e1 = l.TC.Get()
+    e2 = q.PopFront()
+  } else if q.Len() == 2 {
+    e1 = q.PopFront()
+    e2 = q.PopFront()
+  } else {
+    return nil, errors.New("Inconclusive context for logic operator")
+  }
+
+  fun_name := l.TC.FNStack.Front().(string)
+
+  if fun_name == "and" || fun_name == "&&" {
+    switch e1.(type) {
+    case bool:
+      switch e2.(type) {
+      case bool:
+        return e1.(bool) && e2.(bool), nil
+      }
+    }
+  } else if fun_name == "or" || fun_name == "||" {
+    switch e1.(type) {
+    case bool:
+      switch e2.(type) {
+      case bool:
+        return e1.(bool) || e2.(bool), nil
+      }
+    }
+  }
+  return nil, errors.New("Unknown context for logic operator")
+}
 
 func initStdlibCmp() {
   SetFunction("=", CompareFunction)
@@ -157,4 +194,8 @@ func initStdlibCmp() {
   SetFunction("<", CompareFunction)
   SetFunction("<=", CompareFunction)
   SetFunction(">=", CompareFunction)
+  SetFunction("and", LogicFunction)
+  SetFunction("or", LogicFunction)
+  SetFunction("&&", LogicFunction)
+  SetFunction("||", LogicFunction)
 }
