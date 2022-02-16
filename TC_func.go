@@ -27,10 +27,19 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
     return
   }
   func_name := c.GetFname().GetText()
+  if l.TC.AddToUserFun(fmt.Sprintf("%v[", func_name)) == true {
+    return
+  }
   if _, ok := Vars.Load(func_name); ok {
     return
   }
   if _, ok := l.TC.Vars.Load(func_name); ok {
+    return
+  }
+  if _, ok := l.TC.UserFun.Load(func_name); ok {
+    l.TC.InAttr += 1
+    l.TC.Attrs.Add()
+    l.TC.FNStack.PushFront(func_name)
     return
   }
   if strings.HasPrefix(func_name, "`") {
@@ -88,6 +97,9 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
   if l.TC.Errors() > 0 {
     return
   }
+  if l.TC.AddToUserFun("]") == true {
+    return
+  }
   func_name := c.GetFname().GetText()
   if strings.HasPrefix(func_name, "?") {
     func_name = strings.TrimPrefix(func_name, "?")
@@ -104,6 +116,17 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
   }
   if vdata, ok := l.TC.Vars.Load(func_name); ok {
     l.TC.Res.Set(vdata)
+    return
+  }
+  if code, ok := l.TC.UserFun.Load(func_name); ok {
+    l.TC.FNStack.PopFront()
+    q   := l.TC.Attrs.Q()
+    l.TC.Attrs.Del()
+    for q.Len() > 0 {
+      e := q.PopFront()
+      l.TC.Res.Set(e)
+    }
+    l.TC.Eval(code.(string))
     return
   }
   if strings.HasPrefix(func_name, "`") {
@@ -184,4 +207,6 @@ func initStdlib() {
   initStdlibMath()
   initStdlibStack()
   initStdlibCmp()
+  initStdlibVfs()
+  initStdlibString()
 }

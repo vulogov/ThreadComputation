@@ -10,6 +10,9 @@ func (l *TCExecListener) EnterFloat_term(c *parser.Float_termContext) {
     return
   }
   str, err := conv.Float64(c.GetVALUE().GetText())
+  if l.TC.AddToUserFun(c.GetVALUE().GetText()) {
+    return
+  }
   if err == nil {
     if l.TC.InAttr < 1 {
       l.TC.Res.Set(str)

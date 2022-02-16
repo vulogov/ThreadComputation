@@ -12,6 +12,14 @@ func TestVars1(t *testing.T) {
 	}
 }
 
+func TestVars11(t *testing.T) {
+	tc := Init()
+	tc = tc.Eval("tc.Version")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
 func TestVars2(t *testing.T) {
 	tc := Init()
 	tc = tc.Eval("42 $answer answer")

@@ -424,3 +424,63 @@ func TestStdlibMath21(t *testing.T) {
 		t.Fatalf("TheAnswer[3.14]: %v", res)
 	}
 }
+
+func TestStdlib15(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval(" \"2 40 +\" !")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf(" \"2 40 +\" ! had failed: %v", res)
+	}
+}
+
+func TestStdlib16(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval(" !*[\"2 40 +\"]")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf(" !*[\"2 40 +\"] had failed: %v", res)
+	}
+}
+
+func TestStdlib17(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval(" 42 ! ")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf(" 42 ! had failed: %v", res)
+	}
+}
+
+func TestStdlib18(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval(" \"@/examples/answer.tc\" use ")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("  \"@/examples/anwer.tc\" use: %v", res)
+	}
+}
+
+func TestStdlib19(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("use[\"@/examples/answer.tc\"]")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("use[\"@/examples/answer.tc\"] failed: %v", res)
+	}
+}

@@ -12,6 +12,7 @@ import (
 
 var Vars      cmap.Cmap
 var Functions cmap.Cmap
+var VERSION = "1.4"
 
 type TCExecListener struct {
   *parser.BaseThreadComputationListener
@@ -28,9 +29,12 @@ type TCstate struct {
   SkipFunction string
   Attrs       *TwoStack
   Res         *TwoStack
+  UFStack      deque.Deque
+  UFNStack     deque.Deque
   FNStack      deque.Deque
   Vars         cmap.Cmap
   Functions    cmap.Cmap
+  UserFun      cmap.Cmap
 }
 
 type tcExecErrorListener struct {
@@ -171,4 +175,5 @@ func (l *tcExecErrorListener) ReportContextSensitivity(recognizer antlr.Parser, 
 
 func init() {
   initStdlib()
+  initStdVars()
 }

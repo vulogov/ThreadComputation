@@ -175,12 +175,17 @@ func ExecuteFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
       } else {
         return l.TC.ExecFunction(l, e.(*TCFunRef).Name, q)
       }
+    case string:
+      l.TC.Eval(e.(string))
+    case int64, float64, bool:
+      return e, nil
     default:
       return nil, errors.New("reference execution expects function reference in stack")
     }
   } else {
     return nil, errors.New("Stack is too shallow to execute function reference")
   }
+  return nil, nil
 }
 
 func ExecuteAllFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
@@ -195,6 +200,10 @@ func ExecuteAllFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) 
           return nil, err
         }
         tq.PushFront(res)
+      case string:
+        l.TC.Eval(e.(string))
+      case int64, float64, bool:
+        tq.PushFront(e)
       default:
         return nil, errors.New(fmt.Sprintf("reference execution expects function reference in stack: %v", e))
       }
@@ -209,6 +218,10 @@ func ExecuteAllFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) 
           return nil, err
         }
         tq.PushFront(res)
+      case string:
+        l.TC.Eval(e.(string))
+      case int64, float64, bool:
+        tq.PushFront(e)
       default:
         return nil, errors.New("reference execution expects function reference in arguments")
       }
@@ -253,6 +266,38 @@ func SetAttrsFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   return nil, nil
 }
 
+func UseFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  if q.Len() > 0 {
+    for q.Len() > 0 {
+      fn := q.PopFront()
+      switch fn.(type) {
+      case string:
+        data, err := readVfsFile(fn.(string))
+        if err != nil {
+          return nil, err
+        }
+        l.TC.Eval(data)
+      default:
+        break
+      }
+    }
+    return nil, nil
+  } else {
+    if l.TC.Ready() {
+      fn := l.TC.Get()
+      switch fn.(type) {
+      case string:
+        data, err := readVfsFile(fn.(string))
+        if err != nil {
+          return nil, err
+        }
+        l.TC.Eval(data)
+        return nil, nil
+      }
+    }
+  }
+  return nil, errors.New("use function did not discover proper context")
+}
 
 func initStdlibGenerics() {
   SetFunction("print", PrintFunction)
@@ -270,4 +315,5 @@ func initStdlibGenerics() {
   SetFunction("!", ExecuteFunction)
   SetFunction("!*", ExecuteAllFunction)
   SetFunction("attr", SetAttrsFunction)
+  SetFunction("use", UseFunction)
 }

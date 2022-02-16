@@ -6,6 +6,7 @@ expressions
 
 root_term
  : ( fun
+   | ufun
    | term
    | vars
    | dblock
@@ -13,6 +14,10 @@ root_term
 
 fun
  : fname=(NAME|OPS) ('[' (param+=fun_term)* ']')?
+;
+
+ufun
+ : '@' fname=(NAME|OPS) ('[' (param+=ufun_term)* ']')?
 ;
 
 vars
@@ -27,6 +32,13 @@ dblock_term
 fun_term
  : ( fun
    | term
+);
+
+ufun_term
+ : ( fun
+   | term
+   | vars
+   | dblock
 );
 
 dblock
