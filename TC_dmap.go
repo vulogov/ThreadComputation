@@ -4,21 +4,20 @@ import (
   "fmt"
   "strings"
   log "github.com/sirupsen/logrus"
-  "github.com/lrita/cmap"
+  "github.com/srfrog/dict"
   "github.com/vulogov/ThreadComputation/parser"
   conv "github.com/cstockton/go-conv"
 )
 
 
 func (l *TCExecListener) EnterDmap(c *parser.DmapContext) {
-  var data cmap.Cmap
   if l.TC.Errors() > 0 {
     return
   }
   if l.TC.AddToUserFun("{") == true {
     return
   }
-  l.TC.Res.Set(&data)
+  l.TC.Res.Set(dict.New())
 }
 
 func (l *TCExecListener) ExitDmap(c *parser.DmapContext) {
@@ -36,7 +35,7 @@ func (l *TCExecListener) EnterKey_term(c *parser.Key_termContext) {
     return
   }
   if l.TC.Ready() {
-    v = l.TC.Res.Q().Front().(*cmap.Cmap)
+    v = l.TC.Res.Q().Front().(*dict.Dict)
   } else {
     l.TC.errmsg = "key declaration expects map on top of the stack"
     l.TC.errors += 1
@@ -50,22 +49,22 @@ func (l *TCExecListener) EnterKey_term(c *parser.Key_termContext) {
   }
   bool_val, err := conv.Bool(val[1:])
   if err == nil {
-    v.(*cmap.Cmap).Store(key, bool_val)
+    v.(*dict.Dict).Set(key, bool_val)
     return
   }
   float_val, err := conv.Float64(val)
   if err == nil {
-    v.(*cmap.Cmap).Store(key, float_val)
+    v.(*dict.Dict).Set(key, float_val)
     return
   }
   int_val, err := conv.Int64(val)
   if err == nil {
-    v.(*cmap.Cmap).Store(key, int_val)
+    v.(*dict.Dict).Set(key, int_val)
     return
   }
   if strings.HasPrefix(val, "\"") {
     val = strings.TrimSuffix(val, "\"")
     val = strings.TrimPrefix(val, "\"")
   }
-  v.(*cmap.Cmap).Store(key, val)
+  v.(*dict.Dict).Set(key, val)
 }

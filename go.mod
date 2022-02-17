@@ -18,7 +18,7 @@ require (
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b // indirect
 	github.com/antlr/antlr4/runtime/Go/antlr v0.0.0-20220209173558-ad29539cd2e9 // indirect
-	github.com/aws/aws-sdk-go v1.43.0 // indirect
+	github.com/aws/aws-sdk-go v1.43.1 // indirect
 	github.com/c2fo/vfs/v6 v6.0.2 // indirect
 	github.com/cstockton/go-conv v1.0.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -47,6 +47,7 @@ require (
 	github.com/pkg/sftp v1.13.4 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
+	github.com/srfrog/dict v0.0.2 // indirect
 	github.com/stretchr/objx v0.3.0 // indirect
 	github.com/stretchr/testify v1.7.0 // indirect
 	go.opencensus.io v0.23.0 // indirect

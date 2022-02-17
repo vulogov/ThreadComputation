@@ -6,6 +6,7 @@ import (
   "github.com/gammazero/deque"
   "github.com/deckarep/golang-set"
   "github.com/lrita/cmap"
+  "github.com/srfrog/dict"
 )
 
 func toString(data interface{}) (string, error) {
@@ -28,10 +29,17 @@ func toString(data interface{}) (string, error) {
     return out, nil
   case mapset.Set:
     return data.(mapset.Set).String(), nil
+  case *dict.Dict:
+    out := "{ "
+    for item := range data.(*dict.Dict).Items() {
+      out += fmt.Sprintf(" %v:%v ", item.Key, item.Value)
+    }
+    out += " }"
+    return out, nil
   case nil:
     return "#NIL", nil
   }
-  return "#ERROR", errors.New("Unknown data type in conversion to string")
+  return "#ERROR", errors.New(fmt.Sprintf("Unknown data type in conversion to string: %T", data))
 }
 
 func PrintFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {

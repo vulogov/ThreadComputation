@@ -4,7 +4,7 @@ import (
   "fmt"
   "strings"
   "errors"
-  "github.com/lrita/cmap"
+  "github.com/srfrog/dict"
   log "github.com/sirupsen/logrus"
   "github.com/gammazero/deque"
   "github.com/vulogov/ThreadComputation/parser"
@@ -37,14 +37,6 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
   if _, ok := l.TC.Vars.Load(func_name); ok {
     return
   }
-  if l.TC.Ready() {
-    switch l.TC.Res.Q().Front().(type) {
-    case *cmap.Cmap:
-      if _, ok := l.TC.Res.Q().Front().(*cmap.Cmap).Load(func_name); ok {
-        return
-      }
-    }
-  }
   if strings.HasPrefix(func_name, "`") {
     l.TC.InAttr += 1
     l.TC.InRef  += 1
@@ -75,6 +67,14 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
       l.TC.errors += 1
       log.Errorf(l.TC.errmsg)
       return
+    }
+  }
+  if l.TC.Ready() {
+    switch l.TC.Res.Q().Front().(type) {
+    case *dict.Dict:
+      if l.TC.Res.Q().Front().(*dict.Dict).Key(func_name) {
+        return
+      }
     }
   }
   if _, ok := l.TC.UserFun.Load(func_name); ok {
@@ -129,8 +129,9 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
   }
   if l.TC.Ready() {
     switch l.TC.Res.Q().Front().(type) {
-    case *cmap.Cmap:
-      if dmdata, ok := l.TC.Res.Q().Front().(*cmap.Cmap).Load(func_name); ok {
+    case *dict.Dict:
+      dmdata := l.TC.Res.Q().Front().(*dict.Dict).Get(func_name)
+      if dmdata != nil {
         if l.TC.Attrs.GLen() > 1 {
           l.TC.Attrs.Set(dmdata)
         } else {

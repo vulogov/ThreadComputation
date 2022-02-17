@@ -101,6 +101,8 @@ github.com/aws/aws-sdk-go v1.42.53 h1:56T04NWcmc0ZVYFbUc6HdewDQ9iHQFlmS6hj96dRjJ
 github.com/aws/aws-sdk-go v1.42.53/go.mod h1:OGr6lGMAKGlG9CVrYnWYDKIyb829c6EVBRjxqjmPepc=
 github.com/aws/aws-sdk-go v1.43.0 h1:y4UrPbxU/mIL08qksVPE/nwH9IXuC1udjOaNyhEe+pI=
 github.com/aws/aws-sdk-go v1.43.0/go.mod h1:OGr6lGMAKGlG9CVrYnWYDKIyb829c6EVBRjxqjmPepc=
+github.com/aws/aws-sdk-go v1.43.1 h1:glhvF5MvL3hrKv1r5fPYpzbekN8yUD9+VOiVcFPfpB4=
+github.com/aws/aws-sdk-go v1.43.1/go.mod h1:OGr6lGMAKGlG9CVrYnWYDKIyb829c6EVBRjxqjmPepc=
 github.com/boombuler/barcode v1.0.0/go.mod h1:paBWMcWSl3LHKBqUq+rly7CNSldXjb2rDl3JlRe0mD8=
 github.com/boombuler/barcode v1.0.1/go.mod h1:paBWMcWSl3LHKBqUq+rly7CNSldXjb2rDl3JlRe0mD8=
 github.com/c2fo/vfs/v6 v6.0.2 h1:a7Y4+LP1ULMbeRn/lfFfiLjqbIulrGt/SBzYBorz3jI=
@@ -310,6 +312,8 @@ github.com/ruudk/golang-pdf417 v0.0.0-20201230142125-a7e3863a1245/go.mod h1:pQAZ
 github.com/sirupsen/logrus v1.8.1 h1:dJKuHgqk1NNQlqoA6BTlM1Wf9DOH3NBjQyu0h9+AZZE=
 github.com/sirupsen/logrus v1.8.1/go.mod h1:yWOB1SBYBC5VeMP7gHvWumXLIWorT60ONWic61uBYv0=
 github.com/spaolacci/murmur3 v0.0.0-20180118202830-f09979ecbc72/go.mod h1:JwIasOWyU6f++ZhiEuf87xNszmSA2myDM2Kzu9HwQUA=
+github.com/srfrog/dict v0.0.2 h1:N/PLhHdKf3SOrhL8gD3GIdP85MC2SBFIfZatA1EJCXo=
+github.com/srfrog/dict v0.0.2/go.mod h1:tRfw6ykEYr6/iBz2EsG+7EFstnL9seG+HIIu/1f7VdY=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/objx v0.3.0 h1:NGXK3lHquSN08v5vWalVI/L8XU9hdzE/G6xsrze47As=
 github.com/stretchr/objx v0.3.0/go.mod h1:qt09Ya8vawLte6SNmTgCsAVtYtaKzEcn8ATUoHMkEqE=
