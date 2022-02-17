@@ -264,3 +264,31 @@ func TestFunc203(t *testing.T) {
 		t.Fatalf("42 set in[42] not working: %v", res)
 	}
 }
+
+func TestFunc204(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("&")
+  if tc.Errors() == 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
+func TestFunc205(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("@test[ 1 + dup 5 > printStack ?test] 0 test")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
+func TestFunc206(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("@test[ ++[1] dup 5 > ?test] 0 test ")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "5" {
+		t.Fatalf("@test[ ++[1] dup 5 > ?test] 0 test not working: %v", res)
+	}
+}

@@ -36,12 +36,6 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
   if _, ok := l.TC.Vars.Load(func_name); ok {
     return
   }
-  if _, ok := l.TC.UserFun.Load(func_name); ok {
-    l.TC.InAttr += 1
-    l.TC.Attrs.Add()
-    l.TC.FNStack.PushFront(func_name)
-    return
-  }
   if strings.HasPrefix(func_name, "`") {
     l.TC.InAttr += 1
     l.TC.InRef  += 1
@@ -73,6 +67,12 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
       log.Errorf(l.TC.errmsg)
       return
     }
+  }
+  if _, ok := l.TC.UserFun.Load(func_name); ok {
+    l.TC.InAttr += 1
+    l.TC.Attrs.Add()
+    l.TC.FNStack.PushFront(func_name)
+    return
   }
   _, ok := Functions.Load(func_name)
   if ok == false {
