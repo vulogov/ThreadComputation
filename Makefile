@@ -10,6 +10,7 @@ pre:
 	go get -u github.com/c2fo/vfs/v6/...
 	go get -u github.com/levigross/grequests
 	go get -u github.com/deckarep/golang-set
+	go get -u github.com/agnivade/levenshtein
 build:
 	rm -rf ./parser
 	antlr -Dlanguage=Go -o parser ThreadComputation.g4

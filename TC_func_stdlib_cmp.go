@@ -12,8 +12,12 @@ func CompareFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   var e2 interface{}
 
   if l.TC.Ready() && q.Len() == 0 {
-    e1 = l.TC.Get()
-    e2 = l.TC.Get()
+    if l.TC.Res.Len() >= 2 {
+      e1 = l.TC.Get()
+      e2 = l.TC.Get()
+    } else {
+      return nil, errors.New("expecting to have two elements for comparing")
+    }
   } else if l.TC.Ready() && q.Len() == 1  {
     e1 = l.TC.Get()
     e2 = q.PopFront()
