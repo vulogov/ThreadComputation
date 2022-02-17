@@ -140,3 +140,127 @@ func TestFunc51(t *testing.T) {
 		t.Fatalf(" 41 #TRUE ?stack[ 42 ] not working: %v", res)
 	}
 }
+
+func TestFunc6(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("1 1 2 2 3 3 set print")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
+func TestFunc7(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("set[42] unset ")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf(" set[42] unset not working: %v", res)
+	}
+}
+
+func TestFunc8(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("set +++[42] unset")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf(" set +++[42] unset not working: %v", res)
+	}
+}
+
+func TestFunc9(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("42 set.New +++ unset")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf(" 42 set.New +++ unset not working: %v", res)
+	}
+}
+
+func TestFunc10(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("set.New[1 2] +++[set.New[3]] print")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
+func TestFunc110(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("set.New[1 2] +++[set.New[3]] set.Len")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "3" {
+		t.Fatalf(" set.New[1 2] +++[set.New[3]] set.Len not working: %v", res)
+	}
+}
+
+func TestFunc111(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("set.New[1 2] +++[set.New[3]] unset len")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "3" {
+		t.Fatalf(" set.New[1 2] +++[set.New[3]] unset len not working: %v", res)
+	}
+}
+
+func TestFunc200(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("set.New[1 42] ---[1] unset")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("set.New[1 42] ---[1] unset not working: %v", res)
+	}
+}
+
+func TestFunc201(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("set.New[42] set.New[1 42] --- unset")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("set.New[42] set.New[1 42] --- unset not working: %v", res)
+	}
+}
+
+func TestFunc202(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("41 in[42]")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "false" {
+		t.Fatalf("41 in[42] not working: %v", res)
+	}
+}
+
+func TestFunc203(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("42 set in[42]")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "true" {
+		t.Fatalf("42 set in[42] not working: %v", res)
+	}
+}

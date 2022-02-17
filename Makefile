@@ -8,12 +8,14 @@ pre:
 	go get github.com/google/uuid
 	go get -u -t gonum.org/v1/gonum/...
 	go get -u github.com/c2fo/vfs/v6/...
+	go get -u github.com/levigross/grequests
+	go get -u github.com/deckarep/golang-set
 build:
 	rm -rf ./parser
 	antlr -Dlanguage=Go -o parser ThreadComputation.g4
 c:
-	go build -v ./...
+	go build  -v ./...
 test:
 	go test -v
-rebuild: pre build c test
+rebuild: pre build dynmod c test
 compile: c test

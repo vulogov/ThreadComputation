@@ -484,3 +484,15 @@ func TestStdlib19(t *testing.T) {
 		t.Fatalf("use[\"@/examples/answer.tc\"] failed: %v", res)
 	}
 }
+
+func TestStdlib20(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("use[\"https://raw.githubusercontent.com/vulogov/ThreadComputation/main/examples/answer.tc\"]")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("use[\"https://raw.githubusercontent.com/vulogov/ThreadComputation/main/examples/answer.tc\"] failed: %v", res)
+	}
+}

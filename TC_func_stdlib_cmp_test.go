@@ -89,3 +89,87 @@ func TestCmp51(t *testing.T) {
 		t.Fatalf("<=[41 42] failed: %v", res)
 	}
 }
+
+func TestCmp6(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval("#FALSE #FALSE and")
+	if tc1.Errors() != 0 {
+		t.Fatalf("#FALSE #FALSE and")
+	}
+	res := tc.GetAsString()
+	if res != "false" {
+		t.Fatalf("#FALSE #FALSE and failed: %v", res)
+	}
+}
+
+func TestCmp7(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval("#FALSE or[#TRUE]")
+	if tc1.Errors() != 0 {
+		t.Fatalf("#FALSE or[#TRUE]")
+	}
+	res := tc.GetAsString()
+	if res != "true" {
+		t.Fatalf("#FALSE or[#TRUE] failed: %v", res)
+	}
+}
+
+func TestCmp8(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval("or[#FALSE #FALSE]")
+	if tc1.Errors() != 0 {
+		t.Fatalf("or[#FALSE #FALSE]")
+	}
+	res := tc.GetAsString()
+	if res != "false" {
+		t.Fatalf("or[#FALSE #FALSE] failed: %v", res)
+	}
+}
+
+func TestCmp9(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval("#FALSE not")
+	if tc1.Errors() != 0 {
+		t.Fatalf("#FALSE not")
+	}
+	res := tc.GetAsString()
+	if res != "true" {
+		t.Fatalf("#FALSE not failed: %v", res)
+	}
+}
+
+func TestCmp10(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval("¬[#FALSE]")
+	if tc1.Errors() != 0 {
+		t.Fatalf("¬[#FALSE]")
+	}
+	res := tc.GetAsString()
+	if res != "true" {
+		t.Fatalf("¬[#FALSE] failed: %v", res)
+	}
+}
+
+func TestCmp11(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval("set.New[1 2] set.New[2 1] =")
+	if tc1.Errors() != 0 {
+		t.Fatalf("set.New[1 2] set.New[2 1] =")
+	}
+	res := tc.GetAsString()
+	if res != "true" {
+		t.Fatalf("set.New[1 2] set.New[2 1] = failed: %v", res)
+	}
+}
+
+func TestCmp12(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval("set.New[1 2 3] set.New[2 1] <>")
+	if tc1.Errors() != 0 {
+		t.Fatalf("set.New[1 2] set.New[2 1] =")
+	}
+	res := tc.GetAsString()
+	if res != "true" {
+		t.Fatalf("set.New[1 2] set.New[2 1] = failed: %v", res)
+	}
+}

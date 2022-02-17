@@ -3,7 +3,9 @@ package ThreadComputation
 import (
   "fmt"
   "errors"
+  "plugin"
   "github.com/gammazero/deque"
+  "github.com/deckarep/golang-set"
   "github.com/lrita/cmap"
 )
 
@@ -25,6 +27,8 @@ func toString(data interface{}) (string, error) {
       out += "]"
     }
     return out, nil
+  case mapset.Set:
+    return data.(mapset.Set).String(), nil
   case nil:
     return "#NIL", nil
   }
@@ -298,6 +302,23 @@ func UseFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   }
   return nil, errors.New("use function did not discover proper context")
 }
+
+func importModule(name string) error {
+  p, err := plugin.Open(name)
+  if err != nil {
+    return err
+  }
+  symbol, err := p.Lookup("InitModule")
+  if err != nil {
+    return err
+  }
+  plug, ok := symbol.(func())
+  if ok {
+    plug()
+  }
+  return nil
+}
+
 
 func initStdlibGenerics() {
   SetFunction("print", PrintFunction)
