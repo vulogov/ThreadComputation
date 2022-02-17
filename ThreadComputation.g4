@@ -10,6 +10,7 @@ root_term
    | term
    | vars
    | dblock
+   | dmap
 );
 
 fun
@@ -39,16 +40,22 @@ ufun_term
    | term
    | vars
    | dblock
+   | dmap
 );
 
 dblock
  : '(' (param+=dblock_term)* ')'
 ;
 
+dmap
+ : '{' (param+=key_term)* '}'
+;
+
 integer_term: VALUE=INTEGER ;
 float_term: VALUE=FLOAT_NUMBER ;
 string_term: VALUE=STRING ;
 boolean_term: VALUE=(TRUE|FALSE) ;
+key_term: KEY=NAME ':' VALUE=(INTEGER|FLOAT_NUMBER|STRING|TRUE|FALSE) ;
 
 term
  : ( integer_term
@@ -103,7 +110,6 @@ OP
   | '∆'
   | '∇'
   | ','
-  | ':'
   | ';'
   | '_'
   | '<'

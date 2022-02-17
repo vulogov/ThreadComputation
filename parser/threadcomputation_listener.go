@@ -35,6 +35,9 @@ type ThreadComputationListener interface {
 	// EnterDblock is called when entering the dblock production.
 	EnterDblock(c *DblockContext)
 
+	// EnterDmap is called when entering the dmap production.
+	EnterDmap(c *DmapContext)
+
 	// EnterInteger_term is called when entering the integer_term production.
 	EnterInteger_term(c *Integer_termContext)
 
@@ -46,6 +49,9 @@ type ThreadComputationListener interface {
 
 	// EnterBoolean_term is called when entering the boolean_term production.
 	EnterBoolean_term(c *Boolean_termContext)
+
+	// EnterKey_term is called when entering the key_term production.
+	EnterKey_term(c *Key_termContext)
 
 	// EnterTerm is called when entering the term production.
 	EnterTerm(c *TermContext)
@@ -77,6 +83,9 @@ type ThreadComputationListener interface {
 	// ExitDblock is called when exiting the dblock production.
 	ExitDblock(c *DblockContext)
 
+	// ExitDmap is called when exiting the dmap production.
+	ExitDmap(c *DmapContext)
+
 	// ExitInteger_term is called when exiting the integer_term production.
 	ExitInteger_term(c *Integer_termContext)
 
@@ -88,6 +97,9 @@ type ThreadComputationListener interface {
 
 	// ExitBoolean_term is called when exiting the boolean_term production.
 	ExitBoolean_term(c *Boolean_termContext)
+
+	// ExitKey_term is called when exiting the key_term production.
+	ExitKey_term(c *Key_termContext)
 
 	// ExitTerm is called when exiting the term production.
 	ExitTerm(c *TermContext)

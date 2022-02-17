@@ -75,6 +75,12 @@ func (s *BaseThreadComputationListener) EnterDblock(ctx *DblockContext) {}
 // ExitDblock is called when production dblock is exited.
 func (s *BaseThreadComputationListener) ExitDblock(ctx *DblockContext) {}
 
+// EnterDmap is called when production dmap is entered.
+func (s *BaseThreadComputationListener) EnterDmap(ctx *DmapContext) {}
+
+// ExitDmap is called when production dmap is exited.
+func (s *BaseThreadComputationListener) ExitDmap(ctx *DmapContext) {}
+
 // EnterInteger_term is called when production integer_term is entered.
 func (s *BaseThreadComputationListener) EnterInteger_term(ctx *Integer_termContext) {}
 
@@ -98,6 +104,12 @@ func (s *BaseThreadComputationListener) EnterBoolean_term(ctx *Boolean_termConte
 
 // ExitBoolean_term is called when production boolean_term is exited.
 func (s *BaseThreadComputationListener) ExitBoolean_term(ctx *Boolean_termContext) {}
+
+// EnterKey_term is called when production key_term is entered.
+func (s *BaseThreadComputationListener) EnterKey_term(ctx *Key_termContext) {}
+
+// ExitKey_term is called when production key_term is exited.
+func (s *BaseThreadComputationListener) ExitKey_term(ctx *Key_termContext) {}
 
 // EnterTerm is called when production term is entered.
 func (s *BaseThreadComputationListener) EnterTerm(ctx *TermContext) {}

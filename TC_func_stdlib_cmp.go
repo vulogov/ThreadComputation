@@ -11,10 +11,10 @@ func CompareFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   var e1 interface{}
   var e2 interface{}
 
-  if l.TC.Ready() && q.Len() == 0 && l.TC.Res.Len() >= 2 {
+  if l.TC.Ready() && q.Len() == 0 {
     e1 = l.TC.Get()
     e2 = l.TC.Get()
-  } else if l.TC.Ready() && q.Len() == 1 && l.TC.Res.Len() >= 1 {
+  } else if l.TC.Ready() && q.Len() == 1  {
     e1 = l.TC.Get()
     e2 = q.PopFront()
   } else if q.Len() == 2 {

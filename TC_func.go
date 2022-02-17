@@ -4,6 +4,7 @@ import (
   "fmt"
   "strings"
   "errors"
+  "github.com/lrita/cmap"
   log "github.com/sirupsen/logrus"
   "github.com/gammazero/deque"
   "github.com/vulogov/ThreadComputation/parser"
@@ -35,6 +36,14 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
   }
   if _, ok := l.TC.Vars.Load(func_name); ok {
     return
+  }
+  if l.TC.Ready() {
+    switch l.TC.Res.Q().Front().(type) {
+    case *cmap.Cmap:
+      if _, ok := l.TC.Res.Q().Front().(*cmap.Cmap).Load(func_name); ok {
+        return
+      }
+    }
   }
   if strings.HasPrefix(func_name, "`") {
     l.TC.InAttr += 1
@@ -117,6 +126,19 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
   if vdata, ok := l.TC.Vars.Load(func_name); ok {
     l.TC.Res.Set(vdata)
     return
+  }
+  if l.TC.Ready() {
+    switch l.TC.Res.Q().Front().(type) {
+    case *cmap.Cmap:
+      if dmdata, ok := l.TC.Res.Q().Front().(*cmap.Cmap).Load(func_name); ok {
+        if l.TC.Attrs.GLen() > 1 {
+          l.TC.Attrs.Set(dmdata)
+        } else {
+          l.TC.Res.Set(dmdata)
+        }
+        return
+      }
+    }
   }
   if code, ok := l.TC.UserFun.Load(func_name); ok {
     q   := l.TC.Attrs.Q()
