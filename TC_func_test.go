@@ -292,3 +292,15 @@ func TestFunc206(t *testing.T) {
 		t.Fatalf("@test[ ++[1] dup 5 > ?test] 0 test not working: %v", res)
 	}
 }
+
+func TestFunc207(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("@test[ ++[1] dup 5 > ?&] 0 test ")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "5" {
+		t.Fatalf("@test[ ++[1] dup 5 > ?&] 0 test not working: %v", res)
+	}
+}

@@ -119,7 +119,6 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     return
   }
   if code, ok := l.TC.UserFun.Load(func_name); ok {
-    l.TC.FNStack.PopFront()
     q   := l.TC.Attrs.Q()
     l.TC.Attrs.Del()
     for q.Len() > 0 {
@@ -178,6 +177,16 @@ func (tc *TCstate) ExecFunction(l *TCExecListener, func_name string, q *deque.De
   }
   if vdata, ok := tc.Vars.Load(func_name); ok {
     return vdata, nil
+  }
+  if code, ok := l.TC.UserFun.Load(func_name); ok {
+    l.TC.FNStack.PushFront(func_name)
+    for q.Len() > 0 {
+      e := q.PopFront()
+      l.TC.Res.Set(e)
+    }
+    l.TC.Eval(code.(string))
+    l.TC.FNStack.PopFront()
+    return nil, nil
   }
   lfun, ok := Functions.Load(func_name)
   if ok == false {

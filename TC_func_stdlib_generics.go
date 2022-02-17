@@ -72,6 +72,20 @@ func PrintStackFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) 
   return nil, nil
 }
 
+func PrintFunctionStackFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  fmt.Println("===Function Stack==============")
+  for x := 0; x < l.TC.FNStack.Len(); x++ {
+    e := l.TC.FNStack.At(x)
+    out, err := toString(e)
+    if err != nil {
+      return nil, err
+    }
+    fmt.Println(out)
+  }
+  fmt.Println("===============================")
+  return nil, nil
+}
+
 func PrintAllFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   if q.Len() > 0 {
     for q.Len() > 0 {
@@ -317,7 +331,7 @@ func UseFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
 }
 
 func LastFunFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
-  if l.TC.FNStack.Len() <= 1 {
+  if l.TC.FNStack.Len() < 1 || (l.TC.FNStack.Len() == 1 && l.TC.FNStack.Front().(string) == "&") {
     return nil, errors.New("stack is too shallow for & operator")
   }
   if l.TC.FNStack.Front().(string) == "&" {
@@ -334,6 +348,7 @@ func initStdlibGenerics() {
   SetFunction("print", PrintFunction)
   SetFunction("printAll", PrintAllFunction)
   SetFunction("printStack", PrintStackFunction)
+  SetFunction("printFStack", PrintFunctionStackFunction)
   SetFunction("stack", ToStackFunction)
   SetFunction("len", LenFunction)
   SetFunction("drop", DropFunction)
