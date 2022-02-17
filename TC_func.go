@@ -245,4 +245,5 @@ func initStdlib() {
   initStdlibSet()
   initStdlibMerge()
   initStdlibIn()
+  initStdlibDmap()
 }

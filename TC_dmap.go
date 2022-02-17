@@ -3,10 +3,12 @@ package ThreadComputation
 import (
   "fmt"
   "strings"
+  "errors"
   log "github.com/sirupsen/logrus"
   "github.com/srfrog/dict"
   "github.com/vulogov/ThreadComputation/parser"
   conv "github.com/cstockton/go-conv"
+  "github.com/gammazero/deque"
 )
 
 
@@ -67,4 +69,27 @@ func (l *TCExecListener) EnterKey_term(c *parser.Key_termContext) {
     val = strings.TrimPrefix(val, "\"")
   }
   v.(*dict.Dict).Set(key, val)
+}
+
+func TCSetVarsFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  if l.TC.Ready() {
+    e, err := l.TC.Res.Get()
+    if err != nil {
+      return nil, err
+    }
+    switch e.(type) {
+    case *dict.Dict:
+      for item := range e.(*dict.Dict).Items() {
+        l.TC.SetVariable(item.Key.(string), item.Value)
+      }
+      return nil, nil
+    default:
+      return nil, errors.New(fmt.Sprintf("invalid datatype in stack, for which we do not support conversion to variables: %T", e))
+    }
+  }
+  return nil, errors.New("invalid context for vars operator")
+}
+
+func initStdlibDmap() {
+  SetFunction("vars", TCSetVarsFunction)
 }
