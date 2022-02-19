@@ -11,6 +11,12 @@ import (
   "github.com/gammazero/deque"
 )
 
+func mergeDmaps(e1 *dict.Dict, e2 *dict.Dict) *dict.Dict {
+  for item := range e2.Items() {
+    e1.Set(item.Key.(string), item.Value)
+  }
+  return e1
+}
 
 func (l *TCExecListener) EnterDmap(c *parser.DmapContext) {
   if l.TC.Errors() > 0 {

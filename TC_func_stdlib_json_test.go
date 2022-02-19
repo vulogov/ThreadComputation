@@ -21,13 +21,11 @@ func TestJson2(t *testing.T) {
 }
 
 func TestJson3(t *testing.T) {
-	SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
 	tc = tc.Eval("{answer:42 msg: \"Hello world!\" pi:3.14 truth:#TRUE} json json print")
   if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())
 	}
-	SetVariable("tc.Debuglevel", "info")
 }
 
 func TestJson4(t *testing.T) {

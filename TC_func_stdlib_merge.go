@@ -2,6 +2,7 @@ package ThreadComputation
 
 import (
   "errors"
+  "github.com/srfrog/dict"
   "github.com/deckarep/golang-set"
   "github.com/gammazero/deque"
 )
@@ -32,6 +33,22 @@ func TCMergeFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
           s.(mapset.Set).Add(e)
         case mapset.Set:
           s = s.(mapset.Set).Union(e.(mapset.Set))
+        }
+      }
+      return s, nil
+    case *dict.Dict:
+      for q.Len() > 0 {
+        e := q.PopFront()
+        switch e.(type) {
+        case *dict.Dict:
+          s = mergeDmaps(s.(*dict.Dict), e.(*dict.Dict))
+        }
+      }
+      for l.TC.Res.Len() > 0 {
+        e := l.TC.Get()
+        switch e.(type) {
+        case *dict.Dict:
+          s = mergeDmaps(s.(*dict.Dict), e.(*dict.Dict))
         }
       }
       return s, nil

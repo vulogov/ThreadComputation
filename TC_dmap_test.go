@@ -51,3 +51,11 @@ func TestDmap5(t *testing.T) {
 		t.Fatalf("{answer:42} printStack vars answer failed: %v", res)
 	}
 }
+
+func TestDmap6(t *testing.T) {
+	tc := Init()
+	tc = tc.Eval("{answer:42} {truth:#TRUE} +++ print")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
