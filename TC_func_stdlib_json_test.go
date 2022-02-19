@@ -35,3 +35,11 @@ func TestJson4(t *testing.T) {
 		t.Fatalf(tc.Error())
 	}
 }
+
+func TestJson5(t *testing.T) {
+	tc := Init()
+	tc = tc.Eval("{answer:42} json[read[\"@/examples/sample.json\"]] +++[read[\"@/examples/sample3.json\"]] print")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}

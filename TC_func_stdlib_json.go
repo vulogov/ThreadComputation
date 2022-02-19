@@ -7,7 +7,12 @@ import (
 )
 
 
-
+func tcMergeDmapToJSON(e1 *gabs.Container, e2 *dict.Dict) *gabs.Container {
+  for item := range e2.Items() {
+    e1.Set(item.Value, item.Key.(string))
+  }
+  return e1
+}
 
 func TCNewJsonFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   res := gabs.New()
