@@ -57,7 +57,7 @@ func TCUnSetFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
       case mapset.Set:
         iter := s.(mapset.Set).Iterator()
         for e := range iter.C {
-          l.TC.Res.Set(e)
+          ReturnFromFunction(l, "unset", e)
         }
       }
     }
@@ -67,7 +67,7 @@ func TCUnSetFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
     case mapset.Set:
       iter := s.(mapset.Set).Iterator()
       for e := range iter.C {
-        l.TC.Res.Set(e)
+        ReturnFromFunction(l, "unset", e)
       }
     }
   }
