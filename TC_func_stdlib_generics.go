@@ -7,6 +7,7 @@ import (
   "github.com/deckarep/golang-set"
   "github.com/lrita/cmap"
   "github.com/srfrog/dict"
+  "github.com/Jeffail/gabs/v2"
 )
 
 func toString(data interface{}) (string, error) {
@@ -36,6 +37,8 @@ func toString(data interface{}) (string, error) {
     }
     out += " }"
     return out, nil
+  case *gabs.Container:
+    return data.(*gabs.Container).String(), nil
   case nil:
     return "#NIL", nil
   }

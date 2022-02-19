@@ -12,6 +12,7 @@ pre:
 	go get -u github.com/deckarep/golang-set
 	go get -u github.com/agnivade/levenshtein
 	go get -u github.com/srfrog/dict
+	go get -u github.com/Jeffail/gabs/v2/...
 
 build:
 	rm -rf ./parser
