@@ -11,10 +11,14 @@ func CompareFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   var e1 interface{}
   var e2 interface{}
 
-  if l.TC.Ready() && q.Len() == 0 && l.TC.Res.Len() >= 2 {
-    e1 = l.TC.Get()
-    e2 = l.TC.Get()
-  } else if l.TC.Ready() && q.Len() == 1 && l.TC.Res.Len() >= 1 {
+  if l.TC.Ready() && q.Len() == 0 {
+    if l.TC.Res.Len() >= 2 {
+      e1 = l.TC.Get()
+      e2 = l.TC.Get()
+    } else {
+      return nil, errors.New("expecting to have two elements for comparing")
+    }
+  } else if l.TC.Ready() && q.Len() == 1  {
     e1 = l.TC.Get()
     e2 = q.PopFront()
   } else if q.Len() == 2 {
@@ -23,7 +27,6 @@ func CompareFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   } else {
     return nil, errors.New("Inconclusive context for comparing")
   }
-
   fun_name := l.TC.FNStack.Front().(string)
   if fun_name == "=" {
     switch e1.(type) {
@@ -31,11 +34,15 @@ func CompareFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
       switch e2.(type) {
       case int64:
         return e1.(int64) == e2.(int64), nil
+      case float64:
+        return float64(e1.(int64)) == e2.(float64), nil
       }
     case float64:
       switch e2.(type) {
       case float64:
         return e1.(float64) == e2.(float64), nil
+      case int64:
+        return e1.(float64) == float64(e2.(int64)), nil
       }
     case string:
       switch e2.(type) {
@@ -59,11 +66,15 @@ func CompareFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
       switch e2.(type) {
       case int64:
         return e1.(int64) != e2.(int64), nil
+      case float64:
+        return float64(e1.(int64)) != e2.(float64), nil
       }
     case float64:
       switch e2.(type) {
       case float64:
         return e1.(float64) != e2.(float64), nil
+      case int64:
+        return e1.(float64) != float64(e2.(int64)), nil
       }
     case string:
       switch e2.(type) {
@@ -87,11 +98,15 @@ func CompareFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
       switch e2.(type) {
       case int64:
         return e1.(int64) < e2.(int64), nil
+      case float64:
+        return float64(e1.(int64)) < e2.(float64), nil
       }
     case float64:
       switch e2.(type) {
       case float64:
         return e1.(float64) < e2.(float64), nil
+      case int64:
+        return e1.(float64) < float64(e2.(int64)), nil
       }
     case string:
       switch e2.(type) {
@@ -105,11 +120,15 @@ func CompareFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
       switch e2.(type) {
       case int64:
         return e1.(int64) > e2.(int64), nil
+      case float64:
+        return float64(e1.(int64)) > e2.(float64), nil
       }
     case float64:
       switch e2.(type) {
       case float64:
         return e1.(float64) > e2.(float64), nil
+      case int64:
+        return e1.(float64) > float64(e2.(int64)), nil
       }
     case string:
       switch e2.(type) {
@@ -123,11 +142,15 @@ func CompareFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
       switch e2.(type) {
       case int64:
         return e1.(int64) >= e2.(int64), nil
+      case float64:
+        return float64(e1.(int64)) >= e2.(float64), nil
       }
     case float64:
       switch e2.(type) {
       case float64:
         return e1.(float64) >= e2.(float64), nil
+      case int64:
+        return e1.(float64) >= float64(e2.(int64)), nil
       }
     case string:
       switch e2.(type) {
@@ -141,11 +164,15 @@ func CompareFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
       switch e2.(type) {
       case int64:
         return e1.(int64) <= e2.(int64), nil
+      case float64:
+        return float64(e1.(int64)) <= e2.(float64), nil
       }
     case float64:
       switch e2.(type) {
       case float64:
         return e1.(float64) <= e2.(float64), nil
+      case int64:
+        return e1.(float64) <= float64(e2.(int64)), nil
       }
     case string:
       switch e2.(type) {
@@ -156,7 +183,7 @@ func CompareFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   } else {
     return nil, errors.New(fmt.Sprintf("Unknown compare operator: %v", fun_name))
   }
-  return nil, errors.New(fmt.Sprintf("Unknown context for compare operator"))
+  return nil, errors.New(fmt.Sprintf("Unknown context for compare operator: %v(%T) %v(%T)", e1, e1, e2, e2))
 }
 
 func LogicFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {

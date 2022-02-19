@@ -1,6 +1,7 @@
 package ThreadComputation
 
 import (
+  "io"
   "os"
   "fmt"
   "github.com/lrita/cmap"
@@ -12,7 +13,7 @@ import (
 
 var Vars      cmap.Cmap
 var Functions cmap.Cmap
-var VERSION = "1.4"
+var VERSION = "1.6"
 
 type TCExecListener struct {
   *parser.BaseThreadComputationListener
@@ -45,8 +46,33 @@ type tcExecErrorListener struct {
 }
 
 func Init() *TCstate {
-  log.SetOutput(os.Stderr)
-  log.SetLevel(log.InfoLevel)
+  out, err := GetVariable("tc.Logoutput")
+  if err != nil {
+    log.SetOutput(os.Stderr)
+  } else {
+    log.SetOutput(out.(io.Writer))
+  }
+  lvl, err :=  GetVariable("tc.Debuglevel")
+  if err != nil {
+    lvl = "info"
+  }
+  switch lvl {
+  case "trace":
+    log.SetLevel(log.TraceLevel)
+  case "debug":
+    log.SetLevel(log.DebugLevel)
+  case "info":
+    log.SetLevel(log.InfoLevel)
+  case "warning":
+    log.SetLevel(log.WarnLevel)
+  case "error":
+    log.SetLevel(log.ErrorLevel)
+  case "fatal":
+    log.SetLevel(log.FatalLevel)
+  default:
+    log.SetLevel(log.InfoLevel)
+  }
+  log.Debug("Creating TC")
   tc := &TCstate{
     InAttr:  0,
     InRef:   0,

@@ -62,7 +62,7 @@ func ReadFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
         if err != nil {
           return nil, err
         }
-        l.TC.Res.Set(data)
+        ReturnFromFunction(l, "read", data)
       default:
         break
       }

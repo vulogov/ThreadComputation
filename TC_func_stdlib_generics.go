@@ -3,10 +3,11 @@ package ThreadComputation
 import (
   "fmt"
   "errors"
-  "plugin"
   "github.com/gammazero/deque"
   "github.com/deckarep/golang-set"
   "github.com/lrita/cmap"
+  "github.com/srfrog/dict"
+  "github.com/Jeffail/gabs/v2"
 )
 
 func toString(data interface{}) (string, error) {
@@ -29,10 +30,19 @@ func toString(data interface{}) (string, error) {
     return out, nil
   case mapset.Set:
     return data.(mapset.Set).String(), nil
+  case *dict.Dict:
+    out := "{ "
+    for item := range data.(*dict.Dict).Items() {
+      out += fmt.Sprintf(" %v:%v ", item.Key, item.Value)
+    }
+    out += " }"
+    return out, nil
+  case *gabs.Container:
+    return data.(*gabs.Container).String(), nil
   case nil:
     return "#NIL", nil
   }
-  return "#ERROR", errors.New("Unknown data type in conversion to string")
+  return "#ERROR", errors.New(fmt.Sprintf("Unknown data type in conversion to string: %T", data))
 }
 
 func PrintFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
@@ -56,6 +66,34 @@ func PrintFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
       return data_out, nil
     }
   }
+  return nil, nil
+}
+
+func PrintStackFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  fmt.Println("===Stack==============")
+  for x := 0; x < l.TC.Res.Len(); x++ {
+    e := l.TC.Res.Q().At(x)
+    out, err := toString(e)
+    if err != nil {
+      return nil, err
+    }
+    fmt.Println(out)
+  }
+  fmt.Println("======================")
+  return nil, nil
+}
+
+func PrintFunctionStackFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  fmt.Println("===Function Stack==============")
+  for x := 0; x < l.TC.FNStack.Len(); x++ {
+    e := l.TC.FNStack.At(x)
+    out, err := toString(e)
+    if err != nil {
+      return nil, err
+    }
+    fmt.Println(out)
+  }
+  fmt.Println("===============================")
   return nil, nil
 }
 
@@ -303,26 +341,25 @@ func UseFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   return nil, errors.New("use function did not discover proper context")
 }
 
-func importModule(name string) error {
-  p, err := plugin.Open(name)
-  if err != nil {
-    return err
+func LastFunFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  if l.TC.FNStack.Len() < 1 || (l.TC.FNStack.Len() == 1 && l.TC.FNStack.Front().(string) == "&") {
+    return nil, errors.New("stack is too shallow for & operator")
   }
-  symbol, err := p.Lookup("InitModule")
-  if err != nil {
-    return err
+  if l.TC.FNStack.Front().(string) == "&" {
+    l.TC.FNStack.PopFront()
+    res, err := l.TC.ExecFunction(l, l.TC.FNStack.Front().(string), q)
+    l.TC.FNStack.PushFront("&")
+    return res, err
   }
-  plug, ok := symbol.(func())
-  if ok {
-    plug()
-  }
-  return nil
+  return nil, errors.New("invalid context for & operator")
 }
 
 
 func initStdlibGenerics() {
   SetFunction("print", PrintFunction)
   SetFunction("printAll", PrintAllFunction)
+  SetFunction("printStack", PrintStackFunction)
+  SetFunction("printFStack", PrintFunctionStackFunction)
   SetFunction("stack", ToStackFunction)
   SetFunction("len", LenFunction)
   SetFunction("drop", DropFunction)
@@ -337,4 +374,5 @@ func initStdlibGenerics() {
   SetFunction("!*", ExecuteAllFunction)
   SetFunction("attr", SetAttrsFunction)
   SetFunction("use", UseFunction)
+  SetFunction("&", LastFunFunction)
 }

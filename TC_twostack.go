@@ -2,7 +2,7 @@ package ThreadComputation
 
 import (
 	"fmt"
-
+	log "github.com/sirupsen/logrus"
 	"github.com/gammazero/deque"
 	"github.com/google/uuid"
 	"github.com/lrita/cmap"
@@ -89,6 +89,7 @@ func (ts *TwoStack) Set(data interface{}) {
 }
 
 func (ts *TwoStack) Get() (interface{}, error) {
+	log.Debugf("Getting from twostack len=%v, mode=%v, len=%v glen=%v", ts.R.Len(), ts.Mode, ts.Len(), ts.GLen())
 	if ts.R.Len() == 0 {
 		return nil, fmt.Errorf("Stack is to shallow for .Get() operation")
 	}
@@ -106,6 +107,7 @@ func (ts *TwoStack) Get() (interface{}, error) {
 }
 
 func (ts *TwoStack) Take() (interface{}, error) {
+	log.Debugf("Taking from twostack len=%v, mode=%v", ts.R.Len(), ts.Mode)
 	if ts.R.Len() == 0 {
 		return nil, fmt.Errorf("Stack is to shallow for .Take() operation")
 	}
@@ -123,6 +125,7 @@ func (ts *TwoStack) Take() (interface{}, error) {
 }
 
 func (ts *TwoStack) Add() {
+	log.Debugf("Adding new twostack mode=%v glen=%v", ts.Mode, ts.GLen())
 	if ts.Mode == true {
 		ts.R.PushBack(deque.New(0, minCap))
 	} else {
@@ -131,6 +134,7 @@ func (ts *TwoStack) Add() {
 }
 
 func (ts *TwoStack) addQ(q *deque.Deque) {
+	log.Debugf("Adding custom twostack mode=%v", ts.Mode)
 	if ts.Mode == true {
 		ts.R.PushBack(q)
 	} else {
@@ -139,6 +143,7 @@ func (ts *TwoStack) addQ(q *deque.Deque) {
 }
 
 func (ts *TwoStack) Del() {
+	log.Debugf("Delete twostack mode=%v glen=%v", ts.Mode, ts.GLen())
 	if ts.R.Len() > 0 {
 		if ts.Mode == true {
 			ts.R.PopBack()

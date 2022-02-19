@@ -158,7 +158,7 @@ func TestCmp11(t *testing.T) {
 	}
 	res := tc.GetAsString()
 	if res != "true" {
-		t.Fatalf("set.New[1 2] set.New[2 1] = failed: %v", res)
+		t.Fatalf("set.New[1 2] set.New[2 1] = failed: %v %T", res, res)
 	}
 }
 

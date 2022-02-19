@@ -41,3 +41,15 @@ func TestString3(t *testing.T) {
 		t.Fatalf("\"helLo\" lower title parse failed: %v", res)
 	}
 }
+
+func TestString4(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval("\"kitten\" distance[\"sitting\"]")
+	if tc1.Errors() != 0 {
+		t.Fatalf("\"kitten\" distance[\"sitting\"] parse failed")
+	}
+	res := tc.GetAsString()
+	if res != "3" {
+		t.Fatalf("\"kitten\" distance[\"sitting\"] parse failed: %v", res)
+	}
+}
