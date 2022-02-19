@@ -35,7 +35,7 @@ func TCInFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
     tq.PushFront(found)
   }
   for tq.Len() > 0 {
-    l.TC.Res.Set(tq.PopFront())
+    ReturnFromFunction(l, "in", tq.PopFront())
   }
   return nil, nil
 }
