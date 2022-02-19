@@ -48,13 +48,13 @@ func StringFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
       case string:
         switch l.TC.CurrentFunctionName() {
         case "strip":
-          l.TC.Res.Set(strings.Trim(s.(string), "\n \t\r"))
+          ReturnFromFunction(l, "strip", strings.Trim(s.(string), "\n \t\r"))
         case "title":
-          l.TC.Res.Set(strings.Title(s.(string)))
+          ReturnFromFunction(l, "title", strings.Title(s.(string)))
         case "lower":
-          l.TC.Res.Set(strings.ToLower(s.(string)))
+          ReturnFromFunction(l, "lower", strings.ToLower(s.(string)))
         case "upper":
-          l.TC.Res.Set(strings.ToUpper(s.(string)))
+          ReturnFromFunction(l, "upper", strings.ToUpper(s.(string)))
         default:
           break
         }
