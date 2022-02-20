@@ -8,6 +8,8 @@ import (
   log "github.com/sirupsen/logrus"
   "github.com/antlr/antlr4/runtime/Go/antlr"
   "github.com/gammazero/deque"
+  "github.com/deckarep/golang-set"
+  "github.com/google/uuid"
   "github.com/vulogov/ThreadComputation/parser"
 )
 
@@ -30,6 +32,8 @@ type TCstate struct {
   SkipFunction string
   Attrs       *TwoStack
   Res         *TwoStack
+  ResNames     deque.Deque
+  ResN         mapset.Set
   UFStack      deque.Deque
   UFNStack     deque.Deque
   FNStack      deque.Deque
@@ -80,8 +84,9 @@ func Init() *TCstate {
     errors:  0,
     Res:     InitTS(),
     Attrs:   InitTS(),
+    ResN:    mapset.NewSet(),
   }
-  tc.Res.Add()
+  tc.AddNewStack(uuid.NewString())
   return tc
 }
 

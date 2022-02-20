@@ -3,11 +3,13 @@ package ThreadComputation
 import (
   "fmt"
   "errors"
+  "github.com/google/uuid"
   "github.com/gammazero/deque"
 )
 
 func NewStackFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
-  l.TC.Res.Add()
+  bname := uuid.NewString()
+  AddNewStack(l, bname)
   if q.Len() > 0 {
     for q.Len() > 0 {
       e := q.PopFront()
@@ -62,8 +64,10 @@ func StackRotationFunction(l *TCExecListener, q *deque.Deque) (interface{}, erro
     for j := 0; j < x[i]; j++ {
       switch l.TC.CurrentFunctionName() {
       case "<-":
+        l.TC.RotateStackNames()
         l.TC.Res.Left()
       case "->":
+        l.TC.RotateStackNames()
         l.TC.Res.Right()
       case ">>":
         l.TC.Res.CRight()
