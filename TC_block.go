@@ -61,6 +61,11 @@ func (tc *TCstate) DropLastStack() error {
     tc.ResN.Remove(name)
   }
   tc.Res.Del()
+  if tc.Res.GLen() == 0 {
+    name = uuid.NewString()
+    log.Debugf("Stack is empty adter last delete, creating new empty stack: %v", name)
+    tc.AddNewStack(name)
+  }
   return nil
 }
 
