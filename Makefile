@@ -13,6 +13,7 @@ pre:
 	go get -u github.com/agnivade/levenshtein
 	go get -u github.com/srfrog/dict
 	go get -u github.com/Jeffail/gabs/v2/...
+	go get github.com/google/uuid
 
 build:
 	rm -rf ./parser
