@@ -81,6 +81,25 @@ func StackRotationFunction(l *TCExecListener, q *deque.Deque) (interface{}, erro
   return nil, nil
 }
 
+func TCStackDropFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  if q.Len() == 0 {
+    l.TC.DropLastStack()
+  } else {
+    for q.Len() > 0 {
+      n := q.PopFront()
+      switch n.(type) {
+      case string:
+        err := l.TC.PositionStack(n.(string))
+        if err != nil {
+          return nil, err
+        }
+        l.TC.DropLastStack()
+      }
+    }
+  }
+  return nil, nil
+}
+
 func initStdlibStack() {
   SetFunction("|", NewStackFunction)
   SetFunction("_", ReturnToStackFunction)
@@ -88,4 +107,5 @@ func initStdlibStack() {
   SetFunction("->", StackRotationFunction)
   SetFunction(">>", StackRotationFunction)
   SetFunction("<<", StackRotationFunction)
+  SetFunction(";", TCStackDropFunction)
 }

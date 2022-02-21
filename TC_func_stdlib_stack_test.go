@@ -124,3 +124,15 @@ func TestStack10(t *testing.T) {
 		t.Fatalf("-1 -2 -3 | 1 2 3 | 42 | 4 5 ->[1 2]  failed: %v and shall be 42", res)
 	}
 }
+
+func TestStack11(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval(" (42) 1 2 3 ;")
+	if tc1.Errors() != 0 {
+		t.Fatalf("(42) 1 2 3 ; parse failed")
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("(42) 1 2 3 ; failed: %v ", res)
+	}
+}

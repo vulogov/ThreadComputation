@@ -55,7 +55,7 @@ func (tc *TCstate) DropLastStack() error {
   if tc.ResNames.Len() == 0 {
     return errors.New("TwoStack is empty")
   }
-  name := tc.ResNames.PopFront()
+  name := tc.ResNames.PopFront().(string)
   log.Debugf("Dropping stack: %v", name)
   if tc.ResN.Contains(name) {
     tc.ResN.Remove(name)
