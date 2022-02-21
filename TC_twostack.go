@@ -32,6 +32,7 @@ func InitTS() *TwoStack {
 }
 
 func (ts *TwoStack) Left() {
+	log.Debug("Rotating Global Stack left")
 	ts.R.Rotate(-1)
 }
 
@@ -41,6 +42,7 @@ func (ts *TwoStack) CLeft() {
 }
 
 func (ts *TwoStack) Right() {
+	log.Debug("Rotating Global Stack right")
 	ts.R.Rotate(1)
 }
 
@@ -125,25 +127,24 @@ func (ts *TwoStack) Take() (interface{}, error) {
 }
 
 func (ts *TwoStack) Add() {
-	log.Debugf("Adding new twostack mode=%v glen=%v", ts.Mode, ts.GLen())
 	if ts.Mode == true {
 		ts.R.PushBack(deque.New(0, minCap))
 	} else {
 		ts.R.PushFront(deque.New(0, minCap))
 	}
+	log.Debugf("Adding new twostack mode=%v glen=%v", ts.Mode, ts.GLen())
 }
 
 func (ts *TwoStack) addQ(q *deque.Deque) {
-	log.Debugf("Adding custom twostack mode=%v", ts.Mode)
 	if ts.Mode == true {
 		ts.R.PushBack(q)
 	} else {
 		ts.R.PushFront(q)
 	}
+	log.Debugf("Adding custom twostack mode=%v", ts.Mode)
 }
 
 func (ts *TwoStack) Del() {
-	log.Debugf("Delete twostack mode=%v glen=%v", ts.Mode, ts.GLen())
 	if ts.R.Len() > 0 {
 		if ts.Mode == true {
 			ts.R.PopBack()
@@ -151,6 +152,7 @@ func (ts *TwoStack) Del() {
 			ts.R.PopFront()
 		}
 	}
+	log.Debugf("Delete twostack mode=%v glen=%v", ts.Mode, ts.GLen())
 }
 
 func (ts *TwoStack) GLen() int {

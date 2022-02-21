@@ -124,3 +124,41 @@ func TestStack10(t *testing.T) {
 		t.Fatalf("-1 -2 -3 | 1 2 3 | 42 | 4 5 ->[1 2]  failed: %v and shall be 42", res)
 	}
 }
+
+func TestStack11(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval(" (42) 1 2 3 ;")
+	if tc1.Errors() != 0 {
+		t.Fatalf("(42) 1 2 3 ; parse failed")
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("(42) 1 2 3 ; failed: %v ", res)
+	}
+}
+
+func TestStack12(t *testing.T) {
+	tc := Init()
+  tc1 := tc.Eval(" (42) :test(1 2 3) ;['test']")
+	if tc1.Errors() != 0 {
+		t.Fatalf("(42) :test(1 2 3) ;['test'] parse failed")
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("(42) :test(1 2 3) ;['test'] failed: %v ", res)
+	}
+}
+
+func TestStack13(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+  tc1 := tc.Eval(" :answer(42) :test(1 2 3) S['answer']")
+	if tc1.Errors() != 0 {
+		t.Fatalf(":answer(42) :test(1 2 3) S['answer'] parse failed")
+	}
+	// SetVariable("tc.Debuglevel", "info")
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf(":answer(42) :test(1 2 3) S['answer'] failed: %v ", res)
+	}
+}

@@ -5,6 +5,7 @@ import (
   "strings"
   "errors"
   "github.com/srfrog/dict"
+  "github.com/Jeffail/gabs/v2"
   log "github.com/sirupsen/logrus"
   "github.com/gammazero/deque"
   "github.com/vulogov/ThreadComputation/parser"
@@ -82,6 +83,11 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
         log.Debugf("will return key from dmap in stack: %v", func_name)
         return
       }
+    case *gabs.Container:
+      if l.TC.Res.Q().Front().(*gabs.Container).Exists() {
+        log.Debugf("will return key from json in stack: %v", func_name)
+        return
+      }
     }
   }
   if _, ok := l.TC.UserFun.Load(func_name); ok {
@@ -149,6 +155,12 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
         } else {
           l.TC.Res.Set(dmdata)
         }
+        return
+      }
+    case *gabs.Container:
+      if l.TC.Res.Q().Front().(*gabs.Container).Exists() {
+        jdata := l.TC.Res.Q().Front().(*gabs.Container).Path(func_name).Data()
+        ReturnFromFunction(l, func_name, jdata)
         return
       }
     }

@@ -44,7 +44,7 @@ ufun_term
 );
 
 dblock
- : '(' (param+=dblock_term)* ')'
+ : (':' bname=NAME)?'(' (param+=dblock_term)* ')'
 ;
 
 dmap
