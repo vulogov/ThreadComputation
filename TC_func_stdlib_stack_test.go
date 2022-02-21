@@ -148,3 +148,17 @@ func TestStack12(t *testing.T) {
 		t.Fatalf("(42) :test(1 2 3) ;['test'] failed: %v ", res)
 	}
 }
+
+func TestStack13(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+  tc1 := tc.Eval(" :answer(42) :test(1 2 3) S['answer']")
+	if tc1.Errors() != 0 {
+		t.Fatalf(":answer(42) :test(1 2 3) S['answer'] parse failed")
+	}
+	// SetVariable("tc.Debuglevel", "info")
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf(":answer(42) :test(1 2 3) S['answer'] failed: %v ", res)
+	}
+}

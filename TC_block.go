@@ -87,6 +87,7 @@ func (tc *TCstate) PositionStack(name string) error {
       log.Debugf("Stack positioned: %v", name)
       return nil
     }
+    tc.Res.Left()
     tc.RotateStackNames()
   }
 }

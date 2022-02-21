@@ -32,6 +32,7 @@ func InitTS() *TwoStack {
 }
 
 func (ts *TwoStack) Left() {
+	log.Debug("Rotating Global Stack left")
 	ts.R.Rotate(-1)
 }
 
@@ -41,6 +42,7 @@ func (ts *TwoStack) CLeft() {
 }
 
 func (ts *TwoStack) Right() {
+	log.Debug("Rotating Global Stack right")
 	ts.R.Rotate(1)
 }
 

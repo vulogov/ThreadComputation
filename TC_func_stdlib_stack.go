@@ -5,6 +5,7 @@ import (
   "errors"
   "github.com/google/uuid"
   "github.com/gammazero/deque"
+  log "github.com/sirupsen/logrus"
 )
 
 func NewStackFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
@@ -38,6 +39,7 @@ func ReturnToStackFunction(l *TCExecListener, q *deque.Deque) (interface{}, erro
     l.TC.Res.Left()
     for q.Len() > 0 {
       e := q.PopFront()
+      log.Debugf("stack[] pushes %T from args", e)
       l.TC.Res.Set(e)
     }
     l.TC.Res.Right()
@@ -100,6 +102,35 @@ func TCStackDropFunction(l *TCExecListener, q *deque.Deque) (interface{}, error)
   return nil, nil
 }
 
+func TCStackPositionFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  if q.Len() == 0 {
+    if l.TC.Ready() {
+      n := l.TC.Get()
+      switch n.(type) {
+      case string:
+        err := l.TC.PositionStack(n.(string))
+        if err != nil {
+          return nil, err
+        }
+      }
+    } else {
+      return nil, errors.New("unknown context for stack positioning")
+    }
+  } else {
+    for q.Len() > 0 {
+      n := q.PopFront()
+      switch n.(type) {
+      case string:
+        err := l.TC.PositionStack(n.(string))
+        if err != nil {
+          return nil, err
+        }
+      }
+    }
+  }
+  return nil, nil
+}
+
 func initStdlibStack() {
   SetFunction("|", NewStackFunction)
   SetFunction("_", ReturnToStackFunction)
@@ -108,4 +139,5 @@ func initStdlibStack() {
   SetFunction(">>", StackRotationFunction)
   SetFunction("<<", StackRotationFunction)
   SetFunction(";", TCStackDropFunction)
+  SetFunction("S", TCStackPositionFunction)
 }

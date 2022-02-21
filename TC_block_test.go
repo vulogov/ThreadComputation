@@ -25,11 +25,11 @@ func TestBlock2(t *testing.T) {
 }
 
 func TestBlock3(t *testing.T) {
-	SetVariable("tc.Debuglevel", "debug")
+	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
 	tc = tc.Eval("( 1 2 3 ) : test (4 5 6)")
   if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())
 	}
-	SetVariable("tc.Debuglevel", "info")
+	// SetVariable("tc.Debuglevel", "info")
 }
