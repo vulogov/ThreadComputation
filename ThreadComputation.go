@@ -15,7 +15,7 @@ import (
 
 var Vars      cmap.Cmap
 var Functions cmap.Cmap
-var VERSION = "1.7"
+var VERSION = "1.8"
 
 type TCExecListener struct {
   *parser.BaseThreadComputationListener
