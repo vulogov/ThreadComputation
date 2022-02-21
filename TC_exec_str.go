@@ -18,6 +18,10 @@ func (l *TCExecListener) EnterString_term(c *parser.String_termContext) {
     str = strings.TrimSuffix(str, "\"")
     str = strings.TrimPrefix(str, "\"")
   }
+  if strings.HasPrefix(str, "'") {
+    str = strings.TrimSuffix(str, "'")
+    str = strings.TrimPrefix(str, "'")
+  }
   if err == nil {
     if l.TC.InAttr < 1 {
       l.TC.Res.Set(str)
