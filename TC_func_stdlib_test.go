@@ -74,10 +74,10 @@ func TestStdlib7(t *testing.T) {
 }
 
 func TestStdlib8(t *testing.T) {
-	SetVariable("tc.Debuglevel", "debug")
+	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
   tc = tc.Eval("stack[1 2 3] len")
-	SetVariable("tc.Debuglevel", "info")
+	// SetVariable("tc.Debuglevel", "info")
 	res := tc.GetAsString()
   if res != "3" {
 		t.Fatalf("len function not working: %v", res)

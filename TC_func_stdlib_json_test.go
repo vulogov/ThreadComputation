@@ -43,3 +43,15 @@ func TestJson5(t *testing.T) {
 		t.Fatalf(tc.Error())
 	}
 }
+
+func TestJson6(t *testing.T) {
+	tc := Init()
+	tc = tc.Eval("{answer:42} json print answer")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("{answer:42} json print answer failed: %v", res)
+	}
+}
