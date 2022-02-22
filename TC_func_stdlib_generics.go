@@ -8,6 +8,7 @@ import (
   "github.com/lrita/cmap"
   "github.com/srfrog/dict"
   "github.com/Jeffail/gabs/v2"
+  "gonum.org/v1/gonum/mat"
 )
 
 func toString(data interface{}) (string, error) {
@@ -39,6 +40,9 @@ func toString(data interface{}) (string, error) {
     return out, nil
   case *gabs.Container:
     return data.(*gabs.Container).String(), nil
+  case *mat.Dense:
+    out := mat.Formatted(data.(*mat.Dense), mat.Prefix(""), mat.Squeeze())
+    return fmt.Sprintf("%v", out), nil
   case nil:
     return "#NIL", nil
   }

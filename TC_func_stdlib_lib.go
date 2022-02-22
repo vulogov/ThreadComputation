@@ -5,6 +5,25 @@ import (
   "github.com/gammazero/deque"
 )
 
+func getTwoValues(l *TCExecListener, q *deque.Deque) (interface{}, interface{}, error) {
+  if q.Len() >= 2 {
+    e1 := q.PopFront()
+    e2 := q.PopFront()
+    return e1, e2, nil
+  } else if q.Len() == 1 {
+    e1 := q.PopFront()
+    if l.TC.Ready() {
+      e2 := l.TC.Get()
+      return e1, e2, nil
+    }
+  } else if l.TC.Res.Len() >= 2 {
+    e1 := l.TC.Get()
+    e2 := l.TC.Get()
+    return e1, e2, nil
+  }
+  return nil, nil, errors.New("Can not get two values from known context")
+}
+
 func collectAllData(l *TCExecListener, q *deque.Deque) interface{} {
   var res interface{}
   var e   interface{}

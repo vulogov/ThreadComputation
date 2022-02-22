@@ -287,4 +287,5 @@ func initStdlib() {
   initStdlibIn()
   initStdlibDmap()
   initStdlibJson()
+  initStdlibMat()
 }
