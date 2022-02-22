@@ -8,7 +8,73 @@ import (
 )
 
 
+func getMatrixFromStack(l *TCExecListener, q *deque.Deque) (*mat.Dense, error) {
+  if l.TC.Ready() {
+    e := l.TC.Get()
+    switch e.(type) {
+    case *mat.Dense:
+      return e.(*mat.Dense), nil
+    }
+  }
+  return nil, errors.New("There is no matrix value on the stack")
+}
 
+func TCMatSetFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  var x interface{}
+  var y interface{}
+  var v interface{}
+
+  e, err := getMatrixFromStack(l, q)
+  if err != nil {
+    return nil, err
+  }
+  if q.Len() == 3 {
+    x = q.PopFront()
+    y = q.PopFront()
+    v = q.PopFront()
+  } else {
+    return nil, errors.New("matrix.Set[] must have three arguments: x, y, value")
+  }
+  switch x.(type) {
+  case int64:
+    switch y.(type) {
+    case int64:
+      switch v.(type) {
+      case int64:
+        e.Set(int(x.(int64)), int(y.(int64)), float64(v.(int64)))
+        return e, nil
+      case float64:
+        e.Set(int(x.(int64)), int(y.(int64)), v.(float64))
+        return e, nil
+      }
+    }
+  }
+  return nil, errors.New("matrix.Set[] can not determine a proper context")
+}
+
+func TCMatGetFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  var x interface{}
+  var y interface{}
+
+  e, err := getMatrixFromStack(l, q)
+  if err != nil {
+    return nil, err
+  }
+  if q.Len() == 2 {
+    x = q.PopFront()
+    y = q.PopFront()
+  } else {
+    return nil, errors.New("matrix.Get[] must have two arguments: x, y, value")
+  }
+  switch x.(type) {
+  case int64:
+    switch y.(type) {
+    case int64:
+      return e.At(int(x.(int64)),int(y.(int64))), nil
+    }
+  }
+  return nil, errors.New("matrix.Get[] can not determine a proper context")
+}
 
 func TCNewMatFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   var re1 int
@@ -45,8 +111,11 @@ func TCNewEmptyMatFunction(l *TCExecListener, q *deque.Deque) (interface{}, erro
   return res, nil
 }
 
+
 func initStdlibMat() {
   SetFunction("matrix", TCNewMatFunction)
+  SetFunction("matrix.Set", TCMatSetFunction)
+  SetFunction("matrix.Get", TCMatGetFunction)
   SetFunction("M", TCNewMatFunction)
   SetFunction("m", TCNewEmptyMatFunction)
 }
