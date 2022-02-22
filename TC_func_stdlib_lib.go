@@ -5,6 +5,32 @@ import (
   "github.com/gammazero/deque"
 )
 
+func getFloatArray(l *TCExecListener, q *deque.Deque) []float64 {
+  res := make([]float64, 0)
+  if q.Len() > 0 {
+    for q.Len() > 0 {
+      e := q.PopFront()
+      switch e.(type) {
+      case int64:
+        res = append(res, float64(e.(int64)))
+      case float64:
+        res = append(res, e.(float64))
+      }
+    }
+  } else if l.TC.Ready() {
+    for l.TC.Ready() {
+      e := l.TC.Get()
+      switch e.(type) {
+      case int64:
+        res = append(res, float64(e.(int64)))
+      case float64:
+        res = append(res, e.(float64))
+      }
+    }
+  }
+  return res
+}
+
 func getTwoValues(l *TCExecListener, q *deque.Deque) (interface{}, interface{}, error) {
   if q.Len() >= 2 {
     e1 := q.PopFront()

@@ -77,6 +77,26 @@ func TCMatGetFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   return nil, errors.New("matrix.Get[] can not determine a proper context")
 }
 
+func TCMakeMatFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  e, err := getMatrixFromStack(l, q)
+  if err != nil {
+    return nil, err
+  }
+  x, y := e.Dims()
+  data := getFloatArray(l, q)
+  if len(data) == (x*y) {
+    c := 0
+    for i := 0; i < x; i++ {
+      for j := 0; j < y; j++ {
+        e.Set(i,j,data[c])
+        c += 1
+      }
+    }
+    return e, nil
+  }
+  return nil, errors.New("matrix.Make[] can not determine a proper context")
+}
+
 func TCNewMatFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   var re1 int
   var re2 int
@@ -117,6 +137,7 @@ func initStdlibMat() {
   SetFunction("matrix", TCNewMatFunction)
   SetFunction("matrix.Set", TCMatSetFunction)
   SetFunction("matrix.Get", TCMatGetFunction)
+  SetFunction("matrix.Make", TCMakeMatFunction)
   SetFunction("M", TCNewMatFunction)
   SetFunction("m", TCNewEmptyMatFunction)
 }
