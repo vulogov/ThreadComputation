@@ -70,7 +70,7 @@ func TCMatGetFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   case int64:
     switch y.(type) {
     case int64:
-      ReturnToStackFunction(l, "matrix.Get", e)
+      ReturnFromFunction(l, "matrix.Get", e)
       return e.At(int(x.(int64)),int(y.(int64))), nil
     }
   }

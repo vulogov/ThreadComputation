@@ -9,6 +9,7 @@ import (
   "github.com/srfrog/dict"
   "github.com/Jeffail/gabs/v2"
   "gonum.org/v1/gonum/mat"
+  log "github.com/sirupsen/logrus"
 )
 
 func toString(data interface{}) (string, error) {
@@ -167,9 +168,30 @@ func DropFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
 }
 
 func DupFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
+  var e interface{}
+
   if l.TC.Ready() {
-    e := l.TC.Get()
-    l.TC.Res.Set(e)
+    e = l.TC.Get()
+    log.Debugf("duplicating %T from stack", e)
+    switch e.(type) {
+    case *mat.Dense:
+      l.TC.Res.Set(mat.DenseCopyOf(e.(*mat.Dense)))
+    default:
+      l.TC.Res.Set(e)
+    }
+    return e, nil
+  }
+  if q.Len() > 0 {
+    for q.Len() > 0 {
+      e = q.PopFront()
+      log.Debugf("duplicating %T to args", e)
+      switch e.(type) {
+      case *mat.Dense:
+        l.TC.Res.Set(mat.DenseCopyOf(e.(*mat.Dense)))
+      default:
+        l.TC.Res.Set(e)
+      }
+    }
     l.TC.Res.Set(e)
   }
   return nil, nil
