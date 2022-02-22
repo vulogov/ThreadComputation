@@ -63,3 +63,15 @@ func TestMat6(t *testing.T) {
 		t.Fatalf("6 5 4 3 2 1 M[2 3] matrix.Make print matrix.Get[1 0] failed: %v", res)
 	}
 }
+
+func TestMat7(t *testing.T) {
+	tc := Init()
+	tc = tc.Eval("M[2 2] matrix.Make[1 2 3 4] M[2 2] matrix.Make[1 2 3 4] + print matrix.Get[1 1]")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "8" {
+		t.Fatalf("M[2 2] matrix.Make[1 2 3 4] M[2 2] matrix.Make[1 2 3 4] + print matrix.Get[1 1] failed: %v", res)
+	}
+}
