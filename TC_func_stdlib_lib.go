@@ -2,6 +2,7 @@ package ThreadComputation
 
 import (
   "errors"
+  "gonum.org/v1/gonum/mat"
   "github.com/gammazero/deque"
 )
 
@@ -69,6 +70,9 @@ func collectAllData(l *TCExecListener, q *deque.Deque) interface{} {
   case string:
     res = make([]string, 0)
     t = 2
+  case *mat.Dense:
+    res = make([]*mat.Dense, 0)
+    t = 3
   default:
     return nil
   }
@@ -92,6 +96,10 @@ func collectAllData(l *TCExecListener, q *deque.Deque) interface{} {
         if t == 2 {
           res = append(res.([]string), v.(string))
         }
+      case *mat.Dense:
+        if t == 3 {
+          res = append(res.([]*mat.Dense), v.(*mat.Dense))
+        }
       }
     }
   }
@@ -114,8 +122,17 @@ func collectAllData(l *TCExecListener, q *deque.Deque) interface{} {
       if t == 2 {
         res = append(res.([]string), v.(string))
       }
+    case *mat.Dense:
+      if t == 3 {
+        res = append(res.([]*mat.Dense), v.(*mat.Dense))
+      }
     }
   }
+  return res
+}
+
+func appendDataToArray(v interface{}, res []interface{}) []interface{} {
+  res = append(res, v)
   return res
 }
 
@@ -138,10 +155,38 @@ func collectData(l *TCExecListener, q *deque.Deque) interface{} {
   case string:
     res = make([]string, 0)
     t = 2
+  case *mat.Dense:
+    res = make([]*mat.Dense, 0)
+    t = 3
   default:
     res = nil
   }
   if q.Len() > 0 {
+    if l.TC.Ready() {
+      v := l.TC.Get()
+      switch v.(type) {
+      case bool:
+        if t == 0 {
+          res = append(res.([]bool), v.(bool))
+        }
+      case int64:
+        if t == 1 {
+          res = append(res.([]float64), float64(v.(int64)))
+        }
+      case float64:
+        if t == 1 {
+          res = append(res.([]float64), float64(v.(float64)))
+        }
+      case string:
+        if t == 2 {
+          res = append(res.([]string), v.(string))
+        }
+      case *mat.Dense:
+        if t == 3 {
+          res = append(res.([]*mat.Dense), v.(*mat.Dense))
+        }
+      }
+    }
     for q.Len() > 0 {
       v := q.PopFront()
       switch v.(type) {
@@ -160,6 +205,10 @@ func collectData(l *TCExecListener, q *deque.Deque) interface{} {
       case string:
         if t == 2 {
           res = append(res.([]string), v.(string))
+        }
+      case *mat.Dense:
+        if t == 3 {
+          res = append(res.([]*mat.Dense), v.(*mat.Dense))
         }
       }
     }
@@ -182,6 +231,10 @@ func collectData(l *TCExecListener, q *deque.Deque) interface{} {
       case string:
         if t == 2 {
           res = append(res.([]string), v.(string))
+        }
+      case *mat.Dense:
+        if t == 3 {
+          res = append(res.([]*mat.Dense), v.(*mat.Dense))
         }
       }
     }

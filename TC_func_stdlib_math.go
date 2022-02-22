@@ -9,9 +9,6 @@ import (
   "gonum.org/v1/gonum/stat"
 )
 
-func AddFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
-  return applyAggFunToFloatArray(l, q, floats.Sum)
-}
 
 func ArithmeticAggFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   data := collectAllData(l, q).([]float64)
@@ -110,7 +107,7 @@ func MaxFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
 
 
 func initStdlibMath() {
-  SetFunction("+", AddFunction)
+  SetFunction("+", ArithmeticFunction)
   SetFunction("-", ArithmeticFunction)
   SetFunction("*", ArithmeticFunction)
   SetFunction("/", ArithmeticFunction)
