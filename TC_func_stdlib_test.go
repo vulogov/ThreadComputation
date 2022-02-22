@@ -522,3 +522,15 @@ func TestStdlibMath22(t *testing.T) {
 		t.Fatalf("20 20 ++[2] failed: %v", res)
 	}
 }
+
+func TestStdlibMath23(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("+['4' '2']")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("+['4' '2'] failed: %v", res)
+	}
+}
