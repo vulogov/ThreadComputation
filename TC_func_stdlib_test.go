@@ -186,6 +186,18 @@ func TestStdlibMath2(t *testing.T) {
 	}
 }
 
+func TestStdlibMath2v1(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("2 +[2]")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "4" {
+		t.Fatalf("2 +[2] had failed: %v", res)
+	}
+}
+
 func TestStdlibMath3(t *testing.T) {
 	tc := Init()
   tc = tc.Eval("-[43 1]")
@@ -508,5 +520,17 @@ func TestStdlibMath22(t *testing.T) {
 	res := tc.GetAsString()
 	if res != "42" {
 		t.Fatalf("20 20 ++[2] failed: %v", res)
+	}
+}
+
+func TestStdlibMath23(t *testing.T) {
+	tc := Init()
+  tc = tc.Eval("+['4' '2']")
+  if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("+['4' '2'] failed: %v", res)
 	}
 }

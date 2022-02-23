@@ -7,11 +7,9 @@ import (
   "math"
   "gonum.org/v1/gonum/floats"
   "gonum.org/v1/gonum/stat"
+  "gonum.org/v1/gonum/mat"
 )
 
-func AddFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
-  return applyAggFunToFloatArray(l, q, floats.Sum)
-}
 
 func ArithmeticAggFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
   data := collectAllData(l, q).([]float64)
@@ -40,23 +38,84 @@ func ArithmeticAggFunction(l *TCExecListener, q *deque.Deque) (interface{}, erro
 }
 
 func ArithmeticFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
-  data := collectData(l, q).([]float64)
+  var acc interface{}
+  var size int
+
+  data := collectData(l, q)
   if l.TC.Errors() > 0 {
     return nil, errors.New(l.TC.Error())
   }
-  acc := data[0]
-  for x := 1; x < len(data); x++ {
+  switch data.(type) {
+  case []int64:
+    acc = data.([]int64)[0]
+    size = len(data.([]int64))
+  case []float64:
+    acc = data.([]float64)[0]
+    size = len(data.([]float64))
+  case []bool:
+    acc = data.([]bool)[0]
+    size = len(data.([]bool))
+  case []string:
+    acc = data.([]string)[0]
+    size = len(data.([]string))
+  case []*mat.Dense:
+    acc = data.([]*mat.Dense)[0]
+    size = len(data.([]*mat.Dense))
+  default:
+    return nil, errors.New("unsupported data type for arithmetics")
+  }
+  for x := 1; x < size; x++ {
     switch l.TC.CurrentFunctionName() {
     case "+":
-      acc += data[x]
+      switch acc.(type) {
+      case int64:
+        acc = acc.(int64) + data.([]int64)[x]
+      case float64:
+        acc = acc.(float64) + data.([]float64)[x]
+      case bool:
+        acc = acc.(bool) && data.([]bool)[x]
+      case string:
+        acc = acc.(string) + data.([]string)[x]
+      case *mat.Dense:
+        acc.(*mat.Dense).Add(acc.(*mat.Dense), data.([]*mat.Dense)[x])
+      default:
+        return nil, errors.New("unsupported data type for arithmetics")
+      }
     case "-":
-      acc -= data[x]
+      switch acc.(type) {
+      case int64:
+        acc = acc.(int64) - data.([]int64)[x]
+      case float64:
+        acc = acc.(float64) - data.([]float64)[x]
+      case bool:
+        acc = acc.(bool) || data.([]bool)[x]
+      case *mat.Dense:
+        acc.(*mat.Dense).Sub(acc.(*mat.Dense), data.([]*mat.Dense)[x])
+      default:
+        return nil, errors.New("unsupported data type for arithmetics")
+      }
     case "*":
-      acc *= data[x]
+      switch acc.(type) {
+      case int64:
+        acc = acc.(int64) * data.([]int64)[x]
+      case float64:
+        acc = acc.(float64) * data.([]float64)[x]
+      case *mat.Dense:
+        acc.(*mat.Dense).MulElem(acc.(*mat.Dense), data.([]*mat.Dense)[x])
+      default:
+        return nil, errors.New("unsupported data type for arithmetics")
+      }
     case "/":
-      acc = acc / data[x]
-    default:
-      return nil, errors.New(fmt.Sprintf("Unknown arthmetic operator: %v", l.TC.CurrentFunctionName()))
+      switch acc.(type) {
+      case int64:
+        acc = acc.(int64) / data.([]int64)[x]
+      case float64:
+        acc = acc.(float64) / data.([]float64)[x]
+      case *mat.Dense:
+        acc.(*mat.Dense).DivElem(acc.(*mat.Dense), data.([]*mat.Dense)[x])
+      default:
+        return nil, errors.New("unsupported data type for arithmetics")
+      }
     }
   }
   return acc, nil
@@ -110,7 +169,7 @@ func MaxFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
 
 
 func initStdlibMath() {
-  SetFunction("+", AddFunction)
+  SetFunction("+", ArithmeticFunction)
   SetFunction("-", ArithmeticFunction)
   SetFunction("*", ArithmeticFunction)
   SetFunction("/", ArithmeticFunction)

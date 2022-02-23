@@ -35,6 +35,9 @@ type ThreadComputationListener interface {
 	// EnterDblock is called when entering the dblock production.
 	EnterDblock(c *DblockContext)
 
+	// EnterLblock is called when entering the lblock production.
+	EnterLblock(c *LblockContext)
+
 	// EnterDmap is called when entering the dmap production.
 	EnterDmap(c *DmapContext)
 
@@ -82,6 +85,9 @@ type ThreadComputationListener interface {
 
 	// ExitDblock is called when exiting the dblock production.
 	ExitDblock(c *DblockContext)
+
+	// ExitLblock is called when exiting the lblock production.
+	ExitLblock(c *LblockContext)
 
 	// ExitDmap is called when exiting the dmap production.
 	ExitDmap(c *DmapContext)
