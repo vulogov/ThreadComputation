@@ -11,6 +11,7 @@ root_term
    | vars
    | dblock
    | dmap
+   | lblock
 );
 
 fun
@@ -41,10 +42,15 @@ ufun_term
    | vars
    | dblock
    | dmap
+   | lblock
 );
 
 dblock
  : (':' bname=NAME)?'(' (param+=dblock_term)* ')'
+;
+
+lblock
+ : 'lambda\\' (param+=ufun_term)* '\\'
 ;
 
 dmap
