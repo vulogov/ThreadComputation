@@ -5,7 +5,7 @@
 
 ThreadComputation is a programmatic module implementing core interpreter and virtual machine for programming language BUND. Being a GoLang module, ThreadComputation can be embedded in your project, giving you ability to add Domain Specific Language to your application.
 
-##What is the BUND language ?
+## What is the BUND language ?
 
 BUND language is interpreted, dynamically typed, functional and stack-based language, implemented in Go, embeddable a extendable with GoLang. BUND build around two-dimentional stack engine acting like a storage for the functions call modeled with idea of threading macros in mind. What is the main features of the BUND:
 
@@ -21,11 +21,11 @@ BUND language is interpreted, dynamically typed, functional and stack-based lang
 - Prefix and postfix notations;
 - and more ...
 
-##How to use ThreadComputation module
+## How to use ThreadComputation module
 
 ThreadComputation module is hosted on GitHub, fully tested with automatic Actions call. You are welcome to [fork and contribute](https://github.com/vulogov/ThreadComputation) new functions and features of the BUND.
 
-###Installation
+### Installation
 
 ```
 go get github.com/vulogov/ThreadComputation
@@ -45,16 +45,52 @@ make rebuild
 
 will rebuild ANTLR4 code.
 
-###Use from inside Go code
+### Use from inside Go code
 
 ```golang
 import "github.com/vulogov/ThreadComputation"
 ```
 
-##Key concepts of the BUND
+After you imported the module, you have to create TC instance
 
-##To the source !
+```golang
+tc := ThreadComputation.Init()
+```
+
+This function call will create a BUND VM and initialize all structures for VM. Initial stack will be created for you.
+
+```golang
+tc = tc.Eval("BUND code goes here")
+```
+
+This call evaluates and executed a BUND code in created VM instance.
+
+```golang
+if tc.Errors() != 0 {
+  log.Fatalf(tc.Error())
+}
+```
+
+- Function tc.Errors() of BUND VM will return a number of errors from lexer, parser and run-time;
+- Function tc.Error() of BUND VM will return last error message.
+
+```golang
+if tc.Ready() {
+  res := tc.Get()
+}
+```
+
+This function will test if stack have any value to return and return that value as an interface{}.
+
+
+## Key concepts of the BUND
+
+## To the source !
 
 Information about [ThreadComputation package](https://pkg.go.dev/github.com/vulogov/ThreadComputation) is available on [https://pkg.go.dev](https://pkg.go.dev/github.com/vulogov/ThreadComputation)
 
 Source code available on GitHub: [https://github.com/vulogov/ThreadComputation](https://github.com/vulogov/ThreadComputation)
+
+## Get support
+
+[Here, you can open ticket](https://github.com/vulogov/ThreadComputation/issues).
