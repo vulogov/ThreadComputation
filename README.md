@@ -86,6 +86,8 @@ This function will test if stack have any value to return and return that value 
 ## Key concepts of the BUND language
 
 - Basics of the [BUND stack engine](Documentation/BUND_stack.md)
+- Work with [data](Documentation/BUND_data.md) in BUND 
+- BUND [functions](Documentation/BUND_fun.md) are the principal elements of the language
 
 ## To the source !
 

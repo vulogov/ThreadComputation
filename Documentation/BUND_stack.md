@@ -124,7 +124,12 @@ In this example, stack will be rotated one time to the right.
 
 ### What else you can do with data on the stack ?
 
-You can drop last value
+Sometimes, you have to convert data passed in function parameters to the data stored in stack. And function _stack[]_ will do that conversion for you.
+
+```
+stack[1 2 3]
+```
+The result of that call, will be data [3 2 1] stored in the stack. If you do need to remove some data from the stack, you can drop last value:
 
 ```
 3 42 1 ,
