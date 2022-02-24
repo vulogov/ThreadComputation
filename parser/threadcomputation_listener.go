@@ -38,6 +38,12 @@ type ThreadComputationListener interface {
 	// EnterLblock is called when entering the lblock production.
 	EnterLblock(c *LblockContext)
 
+	// EnterTrueblock is called when entering the trueblock production.
+	EnterTrueblock(c *TrueblockContext)
+
+	// EnterFalseblock is called when entering the falseblock production.
+	EnterFalseblock(c *FalseblockContext)
+
 	// EnterDmap is called when entering the dmap production.
 	EnterDmap(c *DmapContext)
 
@@ -88,6 +94,12 @@ type ThreadComputationListener interface {
 
 	// ExitLblock is called when exiting the lblock production.
 	ExitLblock(c *LblockContext)
+
+	// ExitTrueblock is called when exiting the trueblock production.
+	ExitTrueblock(c *TrueblockContext)
+
+	// ExitFalseblock is called when exiting the falseblock production.
+	ExitFalseblock(c *FalseblockContext)
 
 	// ExitDmap is called when exiting the dmap production.
 	ExitDmap(c *DmapContext)

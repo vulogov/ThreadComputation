@@ -53,6 +53,14 @@ lblock
  : 'lambda\\' (param+=ufun_term)* '\\'
 ;
 
+trueblock
+ : 'true\\' (param+=ufun_term)* '\\'
+;
+
+falseblock
+ : 'false\\' (param+=ufun_term)* '\\'
+;
+
 dmap
  : '{' (param+=key_term)* '}'
 ;
