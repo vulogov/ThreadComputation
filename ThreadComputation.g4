@@ -31,6 +31,7 @@ vars
 
 dblock_term
  : ( fun
+   | ufun
    | term
    | vars
    | dblock
