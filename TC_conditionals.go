@@ -13,6 +13,8 @@ func TCRunConditional(l *TCExecListener, conditional bool) {
     l.TC.UFNStack.PopFront()
     if l.TC.Ready() {
       for {
+        log.Debugf("Running conditional: %v", func_name)
+        l.TC.Eval(code.(string))
         e := l.TC.Get()
         log.Debugf("Get value from stack for conditional: %T", e)
         switch e.(type) {
@@ -20,12 +22,11 @@ func TCRunConditional(l *TCExecListener, conditional bool) {
           if e.(bool) == conditional {
             log.Debugf("Condition met for conditional: %v=%v %v", e, conditional, func_name)
             return
-          } else {
-            log.Debugf("Running conditional: %v", func_name)
-            l.TC.Eval(code.(string))
           }
         default:
+          log.Debugf("Return from conditional due to non-boolean data in stack: %T", e)
           ReturnFromFunction(l, "conditional", e)
+          return
         }
       }
     }
