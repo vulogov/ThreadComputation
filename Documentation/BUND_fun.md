@@ -55,3 +55,7 @@ User can define a function that can be used within an instance of BUND VM. User 
 @answer[42] answer
 ```
 In this example we are defining use3r function called _answer_ that will be executed within current VM context and stack and the only term in this function is a number 42. So, the outcome of this function execution will be the number 42 placed on top of the stack or arguments list.
+
+## Lambda or anonymous functions
+
+Lambda functions could be created using following syntax: *lambda\\ BUND terms \\*
