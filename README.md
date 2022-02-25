@@ -3,168 +3,118 @@
 
 # ThreadComputation
 
-ThreadComputation is a GoLang module, that been created with hope to simplify creation of the DSL languages based on thread computation. What is thread computing ? Essentially, it is an idea, that been explored in various flavors of Lisp, including Clojure, called threading macros. The idea behind threading macros is simple, imagine, that we are calling functions, passing return of one function as parameter to another, in a way that we do have a conveyer or thread function call. Example:
+ThreadComputation is a programmatic module implementing core interpreter and virtual machine for programming language BUND. Being a GoLang module, ThreadComputation can be embedded in your project, giving you ability to add Domain Specific Language to your application.
+
+## What is the BUND language ?
+
+BUND language is interpreted, dynamically typed, functional and stack-based language, implemented in Go, embeddable a extendable with GoLang. BUND build around two-dimentional stack engine acting like a storage for the functions call modeled with idea of threading macros in mind. What is the main features of the BUND:
+
+- Dynamic typing, with support for boolean, string, float, integer, set, map, matrix data types;
+- Transparent (or striving to be transparent) approach to operators that work seamlessly with all supported types;
+- URI-based access to external data;
+- Lambda and named functions;
+- Advanced operations with stack;
+- Named stacks supported by two-dimentional stack VM;
+- Very easy to write new functions in Go or in BUND;
+- On-the-fly function redefine;
+- Native support for map and json keys query;
+- Prefix and postfix notations;
+- and more ...
+
+## Show me 'Hello World!' now !
+
+The famous HelloWorld program will look like this:
 
 ```
-c( b( a() ) )
+print['Hello World!']
 ```
-In this example, function a is called, passing return as parameter of function b, which then called and passed it's return as a parameter to function c which is returning the result of computation. While, the idea of that "thread" or "conveyer" call is quite simple, the code is not quite readable and you do need to unfold the sequence of calls in reverse order in order to understand of what is calling what. Wouldn't it be simple, if we just have a syntax similar to this:
+In this example, we are calling function print and pass the string as a function argument. Alternatively, you can execute that code:
 
 ```
-a() b() c()
+'Hello world!' print
+```
+And in this example, you do not pass the string as argument and function print will take data from the stack. Or you can do something like that:
+
+```
++['Hello ' 'world!'] `print attr !
+```
+Here, first, you are creating string using concatenation, then create function reference, then dynamically assign arguments to the that reference than execute that reference. As you see, possibilitis of how you can greet the world are endless.
+ 
+
+## How to use ThreadComputation module
+
+ThreadComputation module is hosted on GitHub, fully tested with automatic Actions call. You are welcome to [fork and contribute](https://github.com/vulogov/ThreadComputation) new functions and features of the BUND.
+
+### Installation
+
+```
+go get github.com/vulogov/ThreadComputation
 ```
 
-Where a() is called and passing return value to b() and b() is passing return value to c() and return value of c() will be an outcome of computation. This syntax will be much easier to comprehend and therefore more error-proof. Lisp-like languages offering some solution for that problem but I've decided to step forward in different direction.
+or you can check out the module and run
 
-## First, to the source
+```
+make pre; make
+```
+
+If you are planning to change BUND syntax, you must have ANTLR4 for Go installed.
+
+```
+make rebuild
+```
+
+will rebuild ANTLR4 code.
+
+### Use from inside Go code
+
+```golang
+import "github.com/vulogov/ThreadComputation"
+```
+
+After you imported the module, you have to create TC instance
+
+```golang
+tc := ThreadComputation.Init()
+```
+
+This function call will create a BUND VM and initialize all structures for VM. Initial stack will be created for you.
+
+```golang
+tc = tc.Eval("BUND code goes here")
+```
+
+This call evaluates and executed a BUND code in created VM instance.
+
+```golang
+if tc.Errors() != 0 {
+  log.Fatalf(tc.Error())
+}
+```
+
+- Function tc.Errors() of BUND VM will return a number of errors from lexer, parser and run-time;
+- Function tc.Error() of BUND VM will return last error message.
+
+```golang
+if tc.Ready() {
+  res := tc.Get()
+}
+```
+
+This function will test if stack have any value to return and return that value as an interface{}.
+
+
+## Key concepts of the BUND language
+
+- Basics of the [BUND stack engine](Documentation/BUND_stack.md)
+- Work with [data](Documentation/BUND_data.md) in BUND
+- BUND [functions](Documentation/BUND_fun.md) are the principal elements of the language
+
+## To the source !
 
 Information about [ThreadComputation package](https://pkg.go.dev/github.com/vulogov/ThreadComputation) is available on [https://pkg.go.dev](https://pkg.go.dev/github.com/vulogov/ThreadComputation)
 
 Source code available on GitHub: [https://github.com/vulogov/ThreadComputation](https://github.com/vulogov/ThreadComputation)
 
-## What is exactly ThreadComputation module ?
+## Get support
 
-Imagine, that you are in despeate need of embeddable, simple and extendable DSL language for your GoLang application. Something you can use as your application query language or expression evaluation. Don't have to be a Turing complete, but easy to understand by your users, powerful and easily extendable. And ThreadComputation module is trying to fill that niche. Let me show you the code.
-
-```
-"Hello world !" print
-```
-
-This snippet of the code will print "Hello world!" on standard output. But wait, I've mentioned threading macros and this is looks like another implementaion of FORT language. Well, this is because ThreadComputation DLS doesn't making a difference, between data and a code. Just like a Lisp. And "execution" of the string, which is "Hello world!" will change the VM context. And of course, _print_ is a function, which is if not given any paramters will try to get data from VM context. And postfix notation is supported too. Example:
-
-```
-print["Hello world!"]
-```
-
-here, we are passing parameters to the function as an argument. Arguments are inclosed between _"["_ and _"]"_ and space separated. Example:
-
-```
-printAll["Hello world!" "and sorry, Dave"]
-```
-
-## The Stack
-
-Classic threading macros are passing the values as a first argument of the next function, but ThreadComputation is doing this through the reference to a context, and context stores the data in the stack, the FIFO structure.
-
-## Show me the Go code
-
-Let's do some RPN computations:
-
-```(language=Go)
-import "github.com/vulogov/ThreadComputation"
-
-...
-
-tc := ThreadComputation.Init()
-tc.Eval("2 2 + 6 -")
-fmt.Println(tc.Get())
-```
-
-- First, we are importing the the module.
-- Next, by calling _ThreadComputation.Init()_, we are creating VM instance.
-- _tc.Eval()_ will evaluate the code.
-- _tc.Get()_ will return the last return value of the last called function
-
-There are more GoLang module functions, but those are most common ones.
-
-How to extend the module ?
-
-## How to extend ThreadComputation ?
-
-ThreadComputation module by itself is not very useful. You have to add your own functions to it. Here is how. First, you define your function:
-
-```(language=Go)
-func TheUltimateAnswerFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
-  if q.Len() > 0 {
-    return q.PopFront(), nil
-  }
-  return 42, nil
-}
-```
-
-- This function takes two arguments: first is a reference to a evaluation context, where attribute _l.TC_ is a reference to execution context. Second, is a reference to optional parameters, as a queue.
-- This function will return value and error. If everything fine, error will be nil. The value will be pushed to the front of the context stack. Result of execution of the previous function will be always stored in the front of the context stack.
-- We are checking, if we are passing anything as an arguments to this function call, then we are returning the first argument after we popping this argument from the arguments queue. VM will place this value to the top of the stack.
-- And if no arguments passed, we are returning 42.
-
-Next, you shall registed this function in the list of global functions:
-
-```(language=Go)
-ThreadComputation.SetFunction("TheAnswer", TheUltimateAnswerFunction)
-```
-
-- First parameter is a name of the function as it will be known in DSL.
-- Second, is a reference to your function implementation.
-
-After that, you can use that function
-
-```
-TheAnswer
-```
-
-This call will place 42 into a top of the context stack, but if you pass an argument to the call, like that:
-
-```
-TheAnswer[3.14]
-```
-
-then value of the Pi will be returned to the stack.
-
-##ThreadComputation language
-
-What is the ThreadComputation language syntax ? It could be defined as combination of three types of terms:
-
-- Data definition
-- Variables declaration
-- Functions calling.
-
-### Data definition
-
-ThreadComputation is dynamically-typed language and there are four data types currently defined
-
-#### Boolean data type
-
-Described as ether #TRUE or #FALSE in DSL. Represented by _bool_ data type on the GoLang level.
-
-#### Integer data type
-
-Any combination of the digits will be converted to the integer number, represented by Int64 on the GoLang level.
-
-#### Float data type
-
-Numbers".(dot)"Numbers will be converted to the Float value, represented by Float64 on GlLang level.
-
-#### String data type
-
-"\"(quote)"CHARACTERS"\"(quote)" will be converted to the string value, represented by the String in GoLang.
-
-### Variables declaration
-
-You can take the data from top of the stack and store it as named variable in the execution context. For example:
-
-```
-42 $answer
-```
-
-This code will define variable with name *answer* and value _42_. When your function name during the call will be matching the context variable name, he variable value will be placed in the stack. Example:
-
-```
-42 $answer answer print
-```
-
-This code will print 42 on standard output.
-
-- First step, _42_ will store value in the stack;
-- Second step, _$answer_ will take value from the stack and define variable with name "answer" and value that been taken from the stack.
-- Third step, call _answer_ before checking global functions will check variable names and if found, return variable value to the stack.
-- Fourth step,  call of the function _print_ will take value from the stack and print it.
-
-### Functions calling
-
-Functions are called by it's name with optionally passing space separated arguments enclosed between _[_ and _]_. There are number of functions that already defined and can be considered as a "standard library" of the ThreadComputation language.
-
-#### Generic functions.
-
-- print, printAll - printing single or all elements of stack
-- Math functions + -  * /
-- Statistics function mean variance skew deviation
+[Here, you can open ticket](https://github.com/vulogov/ThreadComputation/issues).

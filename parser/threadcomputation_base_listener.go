@@ -81,6 +81,18 @@ func (s *BaseThreadComputationListener) EnterLblock(ctx *LblockContext) {}
 // ExitLblock is called when production lblock is exited.
 func (s *BaseThreadComputationListener) ExitLblock(ctx *LblockContext) {}
 
+// EnterTrueblock is called when production trueblock is entered.
+func (s *BaseThreadComputationListener) EnterTrueblock(ctx *TrueblockContext) {}
+
+// ExitTrueblock is called when production trueblock is exited.
+func (s *BaseThreadComputationListener) ExitTrueblock(ctx *TrueblockContext) {}
+
+// EnterFalseblock is called when production falseblock is entered.
+func (s *BaseThreadComputationListener) EnterFalseblock(ctx *FalseblockContext) {}
+
+// ExitFalseblock is called when production falseblock is exited.
+func (s *BaseThreadComputationListener) ExitFalseblock(ctx *FalseblockContext) {}
+
 // EnterDmap is called when production dmap is entered.
 func (s *BaseThreadComputationListener) EnterDmap(ctx *DmapContext) {}
 
