@@ -32,6 +32,13 @@ vars
 dblock_term
  : ( fun
    | term
+   | vars
+   | dblock
+   | dmap
+   | lblock
+   | trueblock
+   | falseblock
+   | filterblock
 );
 
 fun_term
