@@ -21,6 +21,26 @@ BUND language is interpreted, dynamically typed, functional and stack-based lang
 - Prefix and postfix notations;
 - and more ...
 
+## Show me 'Hello World!' now !
+
+The famous HelloWorld program will look like this:
+
+```
+print['Hello World!']
+```
+In this example, we are calling function print and pass the string as a function argument. Alternatively, you can execute that code:
+
+```
+'Hello world!' print
+```
+And in this example, you do not pass the string as argument and function print will take data from the stack. Or you can do something like that:
+
+```
++['Hello ' 'world!'] `print attr !
+```
+Here, first, you are creating string using concatenation, then create function reference, then dynamically assign arguments to the that reference than execute that reference. As you see, possibilitis of how you can greet the world are endless.
+ 
+
 ## How to use ThreadComputation module
 
 ThreadComputation module is hosted on GitHub, fully tested with automatic Actions call. You are welcome to [fork and contribute](https://github.com/vulogov/ThreadComputation) new functions and features of the BUND.
@@ -86,7 +106,7 @@ This function will test if stack have any value to return and return that value 
 ## Key concepts of the BUND language
 
 - Basics of the [BUND stack engine](Documentation/BUND_stack.md)
-- Work with [data](Documentation/BUND_data.md) in BUND 
+- Work with [data](Documentation/BUND_data.md) in BUND
 - BUND [functions](Documentation/BUND_fun.md) are the principal elements of the language
 
 ## To the source !
