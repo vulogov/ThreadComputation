@@ -37,6 +37,7 @@ type TCstate struct {
   UFStack      deque.Deque
   UFNStack     deque.Deque
   FNStack      deque.Deque
+  LastArgs    *deque.Deque
   Vars         cmap.Cmap
   Functions    cmap.Cmap
   UserFun      cmap.Cmap
@@ -82,6 +83,7 @@ func Init() *TCstate {
     InRef:   0,
     ToSkip:  false,
     errors:  0,
+    LastArgs: nil,
     Res:     InitTS(),
     Attrs:   InitTS(),
     ResN:    mapset.NewSet(),

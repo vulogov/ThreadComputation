@@ -105,6 +105,7 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
     log.Debugf("will call ether local or global function: %v", func_name)
 		l.TC.InAttr += 1
     l.TC.Attrs.Add()
+    l.TC.LastArgs = l.TC.Attrs.Q()
     l.TC.FNStack.PushFront(func_name)
   } else {
     l.TC.errmsg = fmt.Sprintf("Function: %v not found", func_name)
@@ -204,6 +205,11 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     res, err := fun(l, q)
     log.Debugf("function %v return res=%T, err=%v", func_name, res, err)
     l.TC.FNStack.PopFront()
+    if l.TC.Attrs.Len() == 0 {
+      l.TC.LastArgs = nil
+    } else {
+      l.TC.LastArgs = l.TC.Attrs.Q()
+    }
     if err != nil {
       l.TC.errmsg = err.Error()
       l.TC.errors += 1
@@ -224,6 +230,8 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
 }
 
 func (tc *TCstate) ExecFunction(l *TCExecListener, func_name string, q *deque.Deque) (interface {}, error) {
+  var last_q *deque.Deque
+
   if gvdata, ok := Vars.Load(func_name); ok {
     return gvdata, nil
   }
@@ -246,9 +254,12 @@ func (tc *TCstate) ExecFunction(l *TCExecListener, func_name string, q *deque.De
   }
   if ok {
     l.TC.FNStack.PushFront(func_name)
+    last_q = l.TC.LastArgs
+    l.TC.LastArgs = q
     fun := lfun.(TCFun)
     res, err := fun(l, q)
     l.TC.FNStack.PopFront()
+    l.TC.LastArgs = last_q
     return res, err
   } else {
     l.TC.errmsg = fmt.Sprintf("Function: %v not found", func_name)
