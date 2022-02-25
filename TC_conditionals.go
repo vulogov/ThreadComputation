@@ -12,10 +12,19 @@ func TCRunConditional(l *TCExecListener, conditional bool) {
     code := l.TC.UFStack.PopFront()
     l.TC.UFNStack.PopFront()
     if l.TC.Ready() {
+      e := l.TC.Get()
+      switch e.(type) {
+      case bool:
+        if e.(bool) == conditional {
+          log.Debugf("pre-condition met for conditional: %v=%v %v", e, conditional, func_name)
+          return
+        }
+      }
+      l.TC.Res.Set(e)
       for {
         log.Debugf("Running conditional: %v", func_name)
         l.TC.Eval(code.(string))
-        e := l.TC.Get()
+        e = l.TC.Get()
         log.Debugf("Get value from stack for conditional: %T", e)
         switch e.(type) {
         case bool:

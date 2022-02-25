@@ -31,3 +31,13 @@ func TestCond2(t *testing.T) {
 		t.Fatalf("10 true\\ -[1] dup print 0 >= \\  not working: %v", res)
 	}
 }
+
+func TestCond3(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+  tc = tc.Eval("#TRUE true\\  \\ ")
+	// SetVariable("tc.Debuglevel", "info")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
