@@ -56,6 +56,49 @@ User can define a function that can be used within an instance of BUND VM. User 
 ```
 In this example we are defining use3r function called _answer_ that will be executed within current VM context and stack and the only term in this function is a number 42. So, the outcome of this function execution will be the number 42 placed on top of the stack or arguments list.
 
+## References to a function.
+
+Before we venture to a quick discussion about anonymous functions, let's talk about function reference. Function reference is a pointer to a function with optional parameters. You can create function reference using "back-tick notation", yes, exactly like in LISP. Example:
+
+```
+`print[42] !
+```
+In this example _`print[42]_ will not trigger execution of the function print with parameter 42, but rather generated a reference to a function and place it in the stack or in arguments. Reference to a function is a data. Actual execution of the function if reference is available performed by operator _!_. And yes, _!_ is also a function and you can pass an arguments to a function referred by function reference in arguments:
+
+```
+`print ![42]
+```
+
+There are also operator _!*_ that takes a function references in arguments and executes them. Or take them from the stack and executes them. All of them.
+
+```
+!*[`print[41] `print[42]]
+```
+
+or
+
+```
+`print[41] `print[42] !*
+```
+
+You can create an argument to a function reference using function _attr[]_. This function will take values which will be used as function arguments ether from parameters or from stack. Example:
+
+```
+2 44 `- attr !
+```
+In this example, we will create a function reference to function _-_, then, function attr will take two values from stack and convert them to the arguments of that reference and then executes that function. What would you think will be on the stack ? And next example will do essentially the same:
+
+```
+`- attr[44 2] !
+```
+
+
+
 ## Lambda or anonymous functions
 
-Lambda functions could be created using following syntax: *lambda\\ BUND terms \\*
+Lambda functions could be created using following syntax: lambda\ BUND terms \. This construct leave a reference to a function on top of the stack or in arguments. And yes, you can use _!_ operator to execute that function. For example:
+
+```
+lambda\ 42 \ !
+```
+All this lambda function will do is to return number 42 to the stack or arguments.
