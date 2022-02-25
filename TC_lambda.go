@@ -7,15 +7,17 @@ import (
   "github.com/vulogov/ThreadComputation/parser"
 )
 
+func MakeTempFun(l *TCExecListener) {
+  func_name := uuid.NewString()
+  l.TC.UFNStack.PushFront(func_name)
+  l.TC.UFStack.PushFront("")
+}
 
 func (l *TCExecListener) EnterLblock(c *parser.LblockContext) {
   if l.TC.Errors() > 0 {
     return
   }
-  func_name := uuid.NewString()
-  l.TC.UFNStack.PushFront(func_name)
-  l.TC.UFStack.PushFront("")
-
+  MakeTempFun(l)
 }
 
 func (l *TCExecListener) ExitLblock(c *parser.LblockContext) {

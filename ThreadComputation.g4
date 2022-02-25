@@ -12,6 +12,8 @@ root_term
    | dblock
    | dmap
    | lblock
+   | trueblock
+   | falseblock
 );
 
 fun
