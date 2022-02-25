@@ -16,94 +16,102 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 28, 167,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 29, 181,
 	4, 2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 4, 5, 9, 5, 4, 6, 9, 6, 4, 7, 9, 7,
 	4, 8, 9, 8, 4, 9, 9, 9, 4, 10, 9, 10, 4, 11, 9, 11, 4, 12, 9, 12, 4, 13,
 	9, 13, 4, 14, 9, 14, 4, 15, 9, 15, 4, 16, 9, 16, 4, 17, 9, 17, 4, 18, 9,
-	18, 4, 19, 9, 19, 4, 20, 9, 20, 3, 2, 7, 2, 42, 10, 2, 12, 2, 14, 2, 45,
-	11, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 56,
-	10, 3, 3, 4, 3, 4, 3, 4, 7, 4, 61, 10, 4, 12, 4, 14, 4, 64, 11, 4, 3, 4,
-	5, 4, 67, 10, 4, 3, 5, 3, 5, 3, 5, 3, 5, 7, 5, 73, 10, 5, 12, 5, 14, 5,
-	76, 11, 5, 3, 5, 5, 5, 79, 10, 5, 3, 6, 3, 6, 3, 6, 3, 7, 3, 7, 5, 7, 86,
-	10, 7, 3, 8, 3, 8, 5, 8, 90, 10, 8, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9,
-	5, 9, 98, 10, 9, 3, 10, 3, 10, 5, 10, 102, 10, 10, 3, 10, 3, 10, 7, 10,
-	106, 10, 10, 12, 10, 14, 10, 109, 11, 10, 3, 10, 3, 10, 3, 11, 3, 11, 7,
-	11, 115, 10, 11, 12, 11, 14, 11, 118, 11, 11, 3, 11, 3, 11, 3, 12, 3, 12,
-	7, 12, 124, 10, 12, 12, 12, 14, 12, 127, 11, 12, 3, 12, 3, 12, 3, 13, 3,
-	13, 7, 13, 133, 10, 13, 12, 13, 14, 13, 136, 11, 13, 3, 13, 3, 13, 3, 14,
-	3, 14, 7, 14, 142, 10, 14, 12, 14, 14, 14, 145, 11, 14, 3, 14, 3, 14, 3,
-	15, 3, 15, 3, 16, 3, 16, 3, 17, 3, 17, 3, 18, 3, 18, 3, 19, 3, 19, 3, 19,
-	3, 19, 3, 20, 3, 20, 3, 20, 3, 20, 5, 20, 165, 10, 20, 3, 20, 2, 2, 21,
-	2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38,
-	2, 5, 4, 2, 16, 16, 18, 18, 3, 2, 24, 25, 5, 2, 19, 19, 21, 22, 24, 25,
-	2, 176, 2, 43, 3, 2, 2, 2, 4, 55, 3, 2, 2, 2, 6, 57, 3, 2, 2, 2, 8, 68,
-	3, 2, 2, 2, 10, 80, 3, 2, 2, 2, 12, 85, 3, 2, 2, 2, 14, 89, 3, 2, 2, 2,
-	16, 97, 3, 2, 2, 2, 18, 101, 3, 2, 2, 2, 20, 112, 3, 2, 2, 2, 22, 121,
-	3, 2, 2, 2, 24, 130, 3, 2, 2, 2, 26, 139, 3, 2, 2, 2, 28, 148, 3, 2, 2,
-	2, 30, 150, 3, 2, 2, 2, 32, 152, 3, 2, 2, 2, 34, 154, 3, 2, 2, 2, 36, 156,
-	3, 2, 2, 2, 38, 164, 3, 2, 2, 2, 40, 42, 5, 4, 3, 2, 41, 40, 3, 2, 2, 2,
-	42, 45, 3, 2, 2, 2, 43, 41, 3, 2, 2, 2, 43, 44, 3, 2, 2, 2, 44, 3, 3, 2,
-	2, 2, 45, 43, 3, 2, 2, 2, 46, 56, 5, 6, 4, 2, 47, 56, 5, 8, 5, 2, 48, 56,
-	5, 38, 20, 2, 49, 56, 5, 10, 6, 2, 50, 56, 5, 18, 10, 2, 51, 56, 5, 26,
-	14, 2, 52, 56, 5, 20, 11, 2, 53, 56, 5, 22, 12, 2, 54, 56, 5, 24, 13, 2,
-	55, 46, 3, 2, 2, 2, 55, 47, 3, 2, 2, 2, 55, 48, 3, 2, 2, 2, 55, 49, 3,
-	2, 2, 2, 55, 50, 3, 2, 2, 2, 55, 51, 3, 2, 2, 2, 55, 52, 3, 2, 2, 2, 55,
-	53, 3, 2, 2, 2, 55, 54, 3, 2, 2, 2, 56, 5, 3, 2, 2, 2, 57, 66, 9, 2, 2,
-	2, 58, 62, 7, 3, 2, 2, 59, 61, 5, 14, 8, 2, 60, 59, 3, 2, 2, 2, 61, 64,
-	3, 2, 2, 2, 62, 60, 3, 2, 2, 2, 62, 63, 3, 2, 2, 2, 63, 65, 3, 2, 2, 2,
-	64, 62, 3, 2, 2, 2, 65, 67, 7, 4, 2, 2, 66, 58, 3, 2, 2, 2, 66, 67, 3,
-	2, 2, 2, 67, 7, 3, 2, 2, 2, 68, 69, 7, 5, 2, 2, 69, 78, 9, 2, 2, 2, 70,
-	74, 7, 3, 2, 2, 71, 73, 5, 16, 9, 2, 72, 71, 3, 2, 2, 2, 73, 76, 3, 2,
-	2, 2, 74, 72, 3, 2, 2, 2, 74, 75, 3, 2, 2, 2, 75, 77, 3, 2, 2, 2, 76, 74,
-	3, 2, 2, 2, 77, 79, 7, 4, 2, 2, 78, 70, 3, 2, 2, 2, 78, 79, 3, 2, 2, 2,
-	79, 9, 3, 2, 2, 2, 80, 81, 7, 6, 2, 2, 81, 82, 7, 18, 2, 2, 82, 11, 3,
-	2, 2, 2, 83, 86, 5, 6, 4, 2, 84, 86, 5, 38, 20, 2, 85, 83, 3, 2, 2, 2,
-	85, 84, 3, 2, 2, 2, 86, 13, 3, 2, 2, 2, 87, 90, 5, 6, 4, 2, 88, 90, 5,
-	38, 20, 2, 89, 87, 3, 2, 2, 2, 89, 88, 3, 2, 2, 2, 90, 15, 3, 2, 2, 2,
-	91, 98, 5, 6, 4, 2, 92, 98, 5, 38, 20, 2, 93, 98, 5, 10, 6, 2, 94, 98,
-	5, 18, 10, 2, 95, 98, 5, 26, 14, 2, 96, 98, 5, 20, 11, 2, 97, 91, 3, 2,
-	2, 2, 97, 92, 3, 2, 2, 2, 97, 93, 3, 2, 2, 2, 97, 94, 3, 2, 2, 2, 97, 95,
-	3, 2, 2, 2, 97, 96, 3, 2, 2, 2, 98, 17, 3, 2, 2, 2, 99, 100, 7, 7, 2, 2,
-	100, 102, 7, 18, 2, 2, 101, 99, 3, 2, 2, 2, 101, 102, 3, 2, 2, 2, 102,
-	103, 3, 2, 2, 2, 103, 107, 7, 8, 2, 2, 104, 106, 5, 12, 7, 2, 105, 104,
-	3, 2, 2, 2, 106, 109, 3, 2, 2, 2, 107, 105, 3, 2, 2, 2, 107, 108, 3, 2,
-	2, 2, 108, 110, 3, 2, 2, 2, 109, 107, 3, 2, 2, 2, 110, 111, 7, 9, 2, 2,
-	111, 19, 3, 2, 2, 2, 112, 116, 7, 10, 2, 2, 113, 115, 5, 16, 9, 2, 114,
-	113, 3, 2, 2, 2, 115, 118, 3, 2, 2, 2, 116, 114, 3, 2, 2, 2, 116, 117,
-	3, 2, 2, 2, 117, 119, 3, 2, 2, 2, 118, 116, 3, 2, 2, 2, 119, 120, 7, 11,
-	2, 2, 120, 21, 3, 2, 2, 2, 121, 125, 7, 12, 2, 2, 122, 124, 5, 16, 9, 2,
-	123, 122, 3, 2, 2, 2, 124, 127, 3, 2, 2, 2, 125, 123, 3, 2, 2, 2, 125,
-	126, 3, 2, 2, 2, 126, 128, 3, 2, 2, 2, 127, 125, 3, 2, 2, 2, 128, 129,
-	7, 11, 2, 2, 129, 23, 3, 2, 2, 2, 130, 134, 7, 13, 2, 2, 131, 133, 5, 16,
-	9, 2, 132, 131, 3, 2, 2, 2, 133, 136, 3, 2, 2, 2, 134, 132, 3, 2, 2, 2,
-	134, 135, 3, 2, 2, 2, 135, 137, 3, 2, 2, 2, 136, 134, 3, 2, 2, 2, 137,
-	138, 7, 11, 2, 2, 138, 25, 3, 2, 2, 2, 139, 143, 7, 14, 2, 2, 140, 142,
-	5, 36, 19, 2, 141, 140, 3, 2, 2, 2, 142, 145, 3, 2, 2, 2, 143, 141, 3,
-	2, 2, 2, 143, 144, 3, 2, 2, 2, 144, 146, 3, 2, 2, 2, 145, 143, 3, 2, 2,
-	2, 146, 147, 7, 15, 2, 2, 147, 27, 3, 2, 2, 2, 148, 149, 7, 19, 2, 2, 149,
-	29, 3, 2, 2, 2, 150, 151, 7, 21, 2, 2, 151, 31, 3, 2, 2, 2, 152, 153, 7,
-	22, 2, 2, 153, 33, 3, 2, 2, 2, 154, 155, 9, 3, 2, 2, 155, 35, 3, 2, 2,
-	2, 156, 157, 7, 18, 2, 2, 157, 158, 7, 7, 2, 2, 158, 159, 9, 4, 2, 2, 159,
-	37, 3, 2, 2, 2, 160, 165, 5, 28, 15, 2, 161, 165, 5, 30, 16, 2, 162, 165,
-	5, 32, 17, 2, 163, 165, 5, 34, 18, 2, 164, 160, 3, 2, 2, 2, 164, 161, 3,
-	2, 2, 2, 164, 162, 3, 2, 2, 2, 164, 163, 3, 2, 2, 2, 165, 39, 3, 2, 2,
-	2, 18, 43, 55, 62, 66, 74, 78, 85, 89, 97, 101, 107, 116, 125, 134, 143,
-	164,
+	18, 4, 19, 9, 19, 4, 20, 9, 20, 4, 21, 9, 21, 3, 2, 7, 2, 44, 10, 2, 12,
+	2, 14, 2, 47, 11, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	3, 3, 3, 5, 3, 59, 10, 3, 3, 4, 3, 4, 3, 4, 7, 4, 64, 10, 4, 12, 4, 14,
+	4, 67, 11, 4, 3, 4, 5, 4, 70, 10, 4, 3, 5, 3, 5, 3, 5, 3, 5, 7, 5, 76,
+	10, 5, 12, 5, 14, 5, 79, 11, 5, 3, 5, 5, 5, 82, 10, 5, 3, 6, 3, 6, 3, 6,
+	3, 7, 3, 7, 5, 7, 89, 10, 7, 3, 8, 3, 8, 3, 8, 5, 8, 94, 10, 8, 3, 9, 3,
+	9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 5, 9, 103, 10, 9, 3, 10, 3, 10, 5, 10,
+	107, 10, 10, 3, 10, 3, 10, 7, 10, 111, 10, 10, 12, 10, 14, 10, 114, 11,
+	10, 3, 10, 3, 10, 3, 11, 3, 11, 7, 11, 120, 10, 11, 12, 11, 14, 11, 123,
+	11, 11, 3, 11, 3, 11, 3, 12, 3, 12, 7, 12, 129, 10, 12, 12, 12, 14, 12,
+	132, 11, 12, 3, 12, 3, 12, 3, 13, 3, 13, 7, 13, 138, 10, 13, 12, 13, 14,
+	13, 141, 11, 13, 3, 13, 3, 13, 3, 14, 3, 14, 7, 14, 147, 10, 14, 12, 14,
+	14, 14, 150, 11, 14, 3, 14, 3, 14, 3, 15, 3, 15, 7, 15, 156, 10, 15, 12,
+	15, 14, 15, 159, 11, 15, 3, 15, 3, 15, 3, 16, 3, 16, 3, 17, 3, 17, 3, 18,
+	3, 18, 3, 19, 3, 19, 3, 20, 3, 20, 3, 20, 3, 20, 3, 21, 3, 21, 3, 21, 3,
+	21, 5, 21, 179, 10, 21, 3, 21, 2, 2, 22, 2, 4, 6, 8, 10, 12, 14, 16, 18,
+	20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 2, 5, 4, 2, 17, 17, 19, 19,
+	3, 2, 25, 26, 5, 2, 20, 20, 22, 23, 25, 26, 2, 193, 2, 45, 3, 2, 2, 2,
+	4, 58, 3, 2, 2, 2, 6, 60, 3, 2, 2, 2, 8, 71, 3, 2, 2, 2, 10, 83, 3, 2,
+	2, 2, 12, 88, 3, 2, 2, 2, 14, 93, 3, 2, 2, 2, 16, 102, 3, 2, 2, 2, 18,
+	106, 3, 2, 2, 2, 20, 117, 3, 2, 2, 2, 22, 126, 3, 2, 2, 2, 24, 135, 3,
+	2, 2, 2, 26, 144, 3, 2, 2, 2, 28, 153, 3, 2, 2, 2, 30, 162, 3, 2, 2, 2,
+	32, 164, 3, 2, 2, 2, 34, 166, 3, 2, 2, 2, 36, 168, 3, 2, 2, 2, 38, 170,
+	3, 2, 2, 2, 40, 178, 3, 2, 2, 2, 42, 44, 5, 4, 3, 2, 43, 42, 3, 2, 2, 2,
+	44, 47, 3, 2, 2, 2, 45, 43, 3, 2, 2, 2, 45, 46, 3, 2, 2, 2, 46, 3, 3, 2,
+	2, 2, 47, 45, 3, 2, 2, 2, 48, 59, 5, 6, 4, 2, 49, 59, 5, 8, 5, 2, 50, 59,
+	5, 40, 21, 2, 51, 59, 5, 10, 6, 2, 52, 59, 5, 18, 10, 2, 53, 59, 5, 28,
+	15, 2, 54, 59, 5, 20, 11, 2, 55, 59, 5, 22, 12, 2, 56, 59, 5, 24, 13, 2,
+	57, 59, 5, 26, 14, 2, 58, 48, 3, 2, 2, 2, 58, 49, 3, 2, 2, 2, 58, 50, 3,
+	2, 2, 2, 58, 51, 3, 2, 2, 2, 58, 52, 3, 2, 2, 2, 58, 53, 3, 2, 2, 2, 58,
+	54, 3, 2, 2, 2, 58, 55, 3, 2, 2, 2, 58, 56, 3, 2, 2, 2, 58, 57, 3, 2, 2,
+	2, 59, 5, 3, 2, 2, 2, 60, 69, 9, 2, 2, 2, 61, 65, 7, 3, 2, 2, 62, 64, 5,
+	14, 8, 2, 63, 62, 3, 2, 2, 2, 64, 67, 3, 2, 2, 2, 65, 63, 3, 2, 2, 2, 65,
+	66, 3, 2, 2, 2, 66, 68, 3, 2, 2, 2, 67, 65, 3, 2, 2, 2, 68, 70, 7, 4, 2,
+	2, 69, 61, 3, 2, 2, 2, 69, 70, 3, 2, 2, 2, 70, 7, 3, 2, 2, 2, 71, 72, 7,
+	5, 2, 2, 72, 81, 9, 2, 2, 2, 73, 77, 7, 3, 2, 2, 74, 76, 5, 16, 9, 2, 75,
+	74, 3, 2, 2, 2, 76, 79, 3, 2, 2, 2, 77, 75, 3, 2, 2, 2, 77, 78, 3, 2, 2,
+	2, 78, 80, 3, 2, 2, 2, 79, 77, 3, 2, 2, 2, 80, 82, 7, 4, 2, 2, 81, 73,
+	3, 2, 2, 2, 81, 82, 3, 2, 2, 2, 82, 9, 3, 2, 2, 2, 83, 84, 7, 6, 2, 2,
+	84, 85, 7, 19, 2, 2, 85, 11, 3, 2, 2, 2, 86, 89, 5, 6, 4, 2, 87, 89, 5,
+	40, 21, 2, 88, 86, 3, 2, 2, 2, 88, 87, 3, 2, 2, 2, 89, 13, 3, 2, 2, 2,
+	90, 94, 5, 6, 4, 2, 91, 94, 5, 40, 21, 2, 92, 94, 5, 26, 14, 2, 93, 90,
+	3, 2, 2, 2, 93, 91, 3, 2, 2, 2, 93, 92, 3, 2, 2, 2, 94, 15, 3, 2, 2, 2,
+	95, 103, 5, 6, 4, 2, 96, 103, 5, 40, 21, 2, 97, 103, 5, 10, 6, 2, 98, 103,
+	5, 18, 10, 2, 99, 103, 5, 28, 15, 2, 100, 103, 5, 20, 11, 2, 101, 103,
+	5, 26, 14, 2, 102, 95, 3, 2, 2, 2, 102, 96, 3, 2, 2, 2, 102, 97, 3, 2,
+	2, 2, 102, 98, 3, 2, 2, 2, 102, 99, 3, 2, 2, 2, 102, 100, 3, 2, 2, 2, 102,
+	101, 3, 2, 2, 2, 103, 17, 3, 2, 2, 2, 104, 105, 7, 7, 2, 2, 105, 107, 7,
+	19, 2, 2, 106, 104, 3, 2, 2, 2, 106, 107, 3, 2, 2, 2, 107, 108, 3, 2, 2,
+	2, 108, 112, 7, 8, 2, 2, 109, 111, 5, 12, 7, 2, 110, 109, 3, 2, 2, 2, 111,
+	114, 3, 2, 2, 2, 112, 110, 3, 2, 2, 2, 112, 113, 3, 2, 2, 2, 113, 115,
+	3, 2, 2, 2, 114, 112, 3, 2, 2, 2, 115, 116, 7, 9, 2, 2, 116, 19, 3, 2,
+	2, 2, 117, 121, 7, 10, 2, 2, 118, 120, 5, 16, 9, 2, 119, 118, 3, 2, 2,
+	2, 120, 123, 3, 2, 2, 2, 121, 119, 3, 2, 2, 2, 121, 122, 3, 2, 2, 2, 122,
+	124, 3, 2, 2, 2, 123, 121, 3, 2, 2, 2, 124, 125, 7, 11, 2, 2, 125, 21,
+	3, 2, 2, 2, 126, 130, 7, 12, 2, 2, 127, 129, 5, 16, 9, 2, 128, 127, 3,
+	2, 2, 2, 129, 132, 3, 2, 2, 2, 130, 128, 3, 2, 2, 2, 130, 131, 3, 2, 2,
+	2, 131, 133, 3, 2, 2, 2, 132, 130, 3, 2, 2, 2, 133, 134, 7, 11, 2, 2, 134,
+	23, 3, 2, 2, 2, 135, 139, 7, 13, 2, 2, 136, 138, 5, 16, 9, 2, 137, 136,
+	3, 2, 2, 2, 138, 141, 3, 2, 2, 2, 139, 137, 3, 2, 2, 2, 139, 140, 3, 2,
+	2, 2, 140, 142, 3, 2, 2, 2, 141, 139, 3, 2, 2, 2, 142, 143, 7, 11, 2, 2,
+	143, 25, 3, 2, 2, 2, 144, 148, 7, 14, 2, 2, 145, 147, 5, 16, 9, 2, 146,
+	145, 3, 2, 2, 2, 147, 150, 3, 2, 2, 2, 148, 146, 3, 2, 2, 2, 148, 149,
+	3, 2, 2, 2, 149, 151, 3, 2, 2, 2, 150, 148, 3, 2, 2, 2, 151, 152, 7, 11,
+	2, 2, 152, 27, 3, 2, 2, 2, 153, 157, 7, 15, 2, 2, 154, 156, 5, 38, 20,
+	2, 155, 154, 3, 2, 2, 2, 156, 159, 3, 2, 2, 2, 157, 155, 3, 2, 2, 2, 157,
+	158, 3, 2, 2, 2, 158, 160, 3, 2, 2, 2, 159, 157, 3, 2, 2, 2, 160, 161,
+	7, 16, 2, 2, 161, 29, 3, 2, 2, 2, 162, 163, 7, 20, 2, 2, 163, 31, 3, 2,
+	2, 2, 164, 165, 7, 22, 2, 2, 165, 33, 3, 2, 2, 2, 166, 167, 7, 23, 2, 2,
+	167, 35, 3, 2, 2, 2, 168, 169, 9, 3, 2, 2, 169, 37, 3, 2, 2, 2, 170, 171,
+	7, 19, 2, 2, 171, 172, 7, 7, 2, 2, 172, 173, 9, 4, 2, 2, 173, 39, 3, 2,
+	2, 2, 174, 179, 5, 30, 16, 2, 175, 179, 5, 32, 17, 2, 176, 179, 5, 34,
+	18, 2, 177, 179, 5, 36, 19, 2, 178, 174, 3, 2, 2, 2, 178, 175, 3, 2, 2,
+	2, 178, 176, 3, 2, 2, 2, 178, 177, 3, 2, 2, 2, 179, 41, 3, 2, 2, 2, 19,
+	45, 58, 65, 69, 77, 81, 88, 93, 102, 106, 112, 121, 130, 139, 148, 157,
+	178,
 }
 var literalNames = []string{
 	"", "'['", "']'", "'@'", "'$'", "':'", "'('", "')'", "'lambda\\'", "'\\'",
-	"'true\\'", "'false\\'", "'{'", "'}'",
+	"'true\\'", "'false\\'", "'filter\\'", "'{'", "'}'",
 }
 var symbolicNames = []string{
-	"", "", "", "", "", "", "", "", "", "", "", "", "", "", "OPS", "OPS_START",
+	"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "OPS", "OPS_START",
 	"NAME", "INTEGER", "DECIMAL_INTEGER", "FLOAT_NUMBER", "STRING", "OP", "TRUE",
 	"FALSE", "BLOCK_COMMENT", "WhiteSpace", "NewLine",
 }
 
 var ruleNames = []string{
 	"expressions", "root_term", "fun", "ufun", "vars", "dblock_term", "fun_term",
-	"ufun_term", "dblock", "lblock", "trueblock", "falseblock", "dmap", "integer_term",
-	"float_term", "string_term", "boolean_term", "key_term", "term",
+	"ufun_term", "dblock", "lblock", "trueblock", "falseblock", "filterblock",
+	"dmap", "integer_term", "float_term", "string_term", "boolean_term", "key_term",
+	"term",
 }
 
 type ThreadComputationParser struct {
@@ -151,19 +159,20 @@ const (
 	ThreadComputationParserT__10           = 11
 	ThreadComputationParserT__11           = 12
 	ThreadComputationParserT__12           = 13
-	ThreadComputationParserOPS             = 14
-	ThreadComputationParserOPS_START       = 15
-	ThreadComputationParserNAME            = 16
-	ThreadComputationParserINTEGER         = 17
-	ThreadComputationParserDECIMAL_INTEGER = 18
-	ThreadComputationParserFLOAT_NUMBER    = 19
-	ThreadComputationParserSTRING          = 20
-	ThreadComputationParserOP              = 21
-	ThreadComputationParserTRUE            = 22
-	ThreadComputationParserFALSE           = 23
-	ThreadComputationParserBLOCK_COMMENT   = 24
-	ThreadComputationParserWhiteSpace      = 25
-	ThreadComputationParserNewLine         = 26
+	ThreadComputationParserT__13           = 14
+	ThreadComputationParserOPS             = 15
+	ThreadComputationParserOPS_START       = 16
+	ThreadComputationParserNAME            = 17
+	ThreadComputationParserINTEGER         = 18
+	ThreadComputationParserDECIMAL_INTEGER = 19
+	ThreadComputationParserFLOAT_NUMBER    = 20
+	ThreadComputationParserSTRING          = 21
+	ThreadComputationParserOP              = 22
+	ThreadComputationParserTRUE            = 23
+	ThreadComputationParserFALSE           = 24
+	ThreadComputationParserBLOCK_COMMENT   = 25
+	ThreadComputationParserWhiteSpace      = 26
+	ThreadComputationParserNewLine         = 27
 )
 
 // ThreadComputationParser rules.
@@ -180,13 +189,14 @@ const (
 	ThreadComputationParserRULE_lblock       = 9
 	ThreadComputationParserRULE_trueblock    = 10
 	ThreadComputationParserRULE_falseblock   = 11
-	ThreadComputationParserRULE_dmap         = 12
-	ThreadComputationParserRULE_integer_term = 13
-	ThreadComputationParserRULE_float_term   = 14
-	ThreadComputationParserRULE_string_term  = 15
-	ThreadComputationParserRULE_boolean_term = 16
-	ThreadComputationParserRULE_key_term     = 17
-	ThreadComputationParserRULE_term         = 18
+	ThreadComputationParserRULE_filterblock  = 12
+	ThreadComputationParserRULE_dmap         = 13
+	ThreadComputationParserRULE_integer_term = 14
+	ThreadComputationParserRULE_float_term   = 15
+	ThreadComputationParserRULE_string_term  = 16
+	ThreadComputationParserRULE_boolean_term = 17
+	ThreadComputationParserRULE_key_term     = 18
+	ThreadComputationParserRULE_term         = 19
 )
 
 // IExpressionsContext is an interface to support dynamic dispatch.
@@ -295,17 +305,17 @@ func (p *ThreadComputationParser) Expressions() (localctx IExpressionsContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(41)
+	p.SetState(43)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__2)|(1<<ThreadComputationParserT__3)|(1<<ThreadComputationParserT__4)|(1<<ThreadComputationParserT__5)|(1<<ThreadComputationParserT__7)|(1<<ThreadComputationParserT__9)|(1<<ThreadComputationParserT__10)|(1<<ThreadComputationParserT__11)|(1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
+	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__2)|(1<<ThreadComputationParserT__3)|(1<<ThreadComputationParserT__4)|(1<<ThreadComputationParserT__5)|(1<<ThreadComputationParserT__7)|(1<<ThreadComputationParserT__9)|(1<<ThreadComputationParserT__10)|(1<<ThreadComputationParserT__11)|(1<<ThreadComputationParserT__12)|(1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
 		{
-			p.SetState(38)
+			p.SetState(40)
 			p.Root_term()
 		}
 
-		p.SetState(43)
+		p.SetState(45)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 	}
@@ -441,6 +451,16 @@ func (s *Root_termContext) Falseblock() IFalseblockContext {
 	return t.(IFalseblockContext)
 }
 
+func (s *Root_termContext) Filterblock() IFilterblockContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IFilterblockContext)(nil)).Elem(), 0)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IFilterblockContext)
+}
+
 func (s *Root_termContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
@@ -485,62 +505,68 @@ func (p *ThreadComputationParser) Root_term() (localctx IRoot_termContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(53)
+	p.SetState(56)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case ThreadComputationParserOPS, ThreadComputationParserNAME:
 		{
-			p.SetState(44)
+			p.SetState(46)
 			p.Fun()
 		}
 
 	case ThreadComputationParserT__2:
 		{
-			p.SetState(45)
+			p.SetState(47)
 			p.Ufun()
 		}
 
 	case ThreadComputationParserINTEGER, ThreadComputationParserFLOAT_NUMBER, ThreadComputationParserSTRING, ThreadComputationParserTRUE, ThreadComputationParserFALSE:
 		{
-			p.SetState(46)
+			p.SetState(48)
 			p.Term()
 		}
 
 	case ThreadComputationParserT__3:
 		{
-			p.SetState(47)
+			p.SetState(49)
 			p.Vars()
 		}
 
 	case ThreadComputationParserT__4, ThreadComputationParserT__5:
 		{
-			p.SetState(48)
+			p.SetState(50)
 			p.Dblock()
 		}
 
-	case ThreadComputationParserT__11:
+	case ThreadComputationParserT__12:
 		{
-			p.SetState(49)
+			p.SetState(51)
 			p.Dmap()
 		}
 
 	case ThreadComputationParserT__7:
 		{
-			p.SetState(50)
+			p.SetState(52)
 			p.Lblock()
 		}
 
 	case ThreadComputationParserT__9:
 		{
-			p.SetState(51)
+			p.SetState(53)
 			p.Trueblock()
 		}
 
 	case ThreadComputationParserT__10:
 		{
-			p.SetState(52)
+			p.SetState(54)
 			p.Falseblock()
+		}
+
+	case ThreadComputationParserT__11:
+		{
+			p.SetState(55)
+			p.Filterblock()
 		}
 
 	default:
@@ -698,7 +724,7 @@ func (p *ThreadComputationParser) Fun() (localctx IFunContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(55)
+		p.SetState(58)
 
 		var _lt = p.GetTokenStream().LT(1)
 
@@ -715,22 +741,22 @@ func (p *ThreadComputationParser) Fun() (localctx IFunContext) {
 			p.Consume()
 		}
 	}
-	p.SetState(64)
+	p.SetState(67)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == ThreadComputationParserT__0 {
 		{
-			p.SetState(56)
+			p.SetState(59)
 			p.Match(ThreadComputationParserT__0)
 		}
-		p.SetState(60)
+		p.SetState(63)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
-		for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
+		for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__11)|(1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
 			{
-				p.SetState(57)
+				p.SetState(60)
 
 				var _x = p.Fun_term()
 
@@ -738,12 +764,12 @@ func (p *ThreadComputationParser) Fun() (localctx IFunContext) {
 			}
 			localctx.(*FunContext).param = append(localctx.(*FunContext).param, localctx.(*FunContext)._fun_term)
 
-			p.SetState(62)
+			p.SetState(65)
 			p.GetErrorHandler().Sync(p)
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
-			p.SetState(63)
+			p.SetState(66)
 			p.Match(ThreadComputationParserT__1)
 		}
 
@@ -900,11 +926,11 @@ func (p *ThreadComputationParser) Ufun() (localctx IUfunContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(66)
+		p.SetState(69)
 		p.Match(ThreadComputationParserT__2)
 	}
 	{
-		p.SetState(67)
+		p.SetState(70)
 
 		var _lt = p.GetTokenStream().LT(1)
 
@@ -921,22 +947,22 @@ func (p *ThreadComputationParser) Ufun() (localctx IUfunContext) {
 			p.Consume()
 		}
 	}
-	p.SetState(76)
+	p.SetState(79)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == ThreadComputationParserT__0 {
 		{
-			p.SetState(68)
+			p.SetState(71)
 			p.Match(ThreadComputationParserT__0)
 		}
-		p.SetState(72)
+		p.SetState(75)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
-		for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__3)|(1<<ThreadComputationParserT__4)|(1<<ThreadComputationParserT__5)|(1<<ThreadComputationParserT__7)|(1<<ThreadComputationParserT__11)|(1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
+		for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__3)|(1<<ThreadComputationParserT__4)|(1<<ThreadComputationParserT__5)|(1<<ThreadComputationParserT__7)|(1<<ThreadComputationParserT__11)|(1<<ThreadComputationParserT__12)|(1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
 			{
-				p.SetState(69)
+				p.SetState(72)
 
 				var _x = p.Ufun_term()
 
@@ -944,12 +970,12 @@ func (p *ThreadComputationParser) Ufun() (localctx IUfunContext) {
 			}
 			localctx.(*UfunContext).param = append(localctx.(*UfunContext).param, localctx.(*UfunContext)._ufun_term)
 
-			p.SetState(74)
+			p.SetState(77)
 			p.GetErrorHandler().Sync(p)
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
-			p.SetState(75)
+			p.SetState(78)
 			p.Match(ThreadComputationParserT__1)
 		}
 
@@ -1056,11 +1082,11 @@ func (p *ThreadComputationParser) Vars() (localctx IVarsContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(78)
+		p.SetState(81)
 		p.Match(ThreadComputationParserT__3)
 	}
 	{
-		p.SetState(79)
+		p.SetState(82)
 
 		var _m = p.Match(ThreadComputationParserNAME)
 
@@ -1172,19 +1198,19 @@ func (p *ThreadComputationParser) Dblock_term() (localctx IDblock_termContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(83)
+	p.SetState(86)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case ThreadComputationParserOPS, ThreadComputationParserNAME:
 		{
-			p.SetState(81)
+			p.SetState(84)
 			p.Fun()
 		}
 
 	case ThreadComputationParserINTEGER, ThreadComputationParserFLOAT_NUMBER, ThreadComputationParserSTRING, ThreadComputationParserTRUE, ThreadComputationParserFALSE:
 		{
-			p.SetState(82)
+			p.SetState(85)
 			p.Term()
 		}
 
@@ -1253,6 +1279,16 @@ func (s *Fun_termContext) Term() ITermContext {
 	return t.(ITermContext)
 }
 
+func (s *Fun_termContext) Filterblock() IFilterblockContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IFilterblockContext)(nil)).Elem(), 0)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IFilterblockContext)
+}
+
 func (s *Fun_termContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
@@ -1297,20 +1333,26 @@ func (p *ThreadComputationParser) Fun_term() (localctx IFun_termContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(87)
+	p.SetState(91)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case ThreadComputationParserOPS, ThreadComputationParserNAME:
 		{
-			p.SetState(85)
+			p.SetState(88)
 			p.Fun()
 		}
 
 	case ThreadComputationParserINTEGER, ThreadComputationParserFLOAT_NUMBER, ThreadComputationParserSTRING, ThreadComputationParserTRUE, ThreadComputationParserFALSE:
 		{
-			p.SetState(86)
+			p.SetState(89)
 			p.Term()
+		}
+
+	case ThreadComputationParserT__11:
+		{
+			p.SetState(90)
+			p.Filterblock()
 		}
 
 	default:
@@ -1418,6 +1460,16 @@ func (s *Ufun_termContext) Lblock() ILblockContext {
 	return t.(ILblockContext)
 }
 
+func (s *Ufun_termContext) Filterblock() IFilterblockContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IFilterblockContext)(nil)).Elem(), 0)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IFilterblockContext)
+}
+
 func (s *Ufun_termContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
@@ -1462,44 +1514,50 @@ func (p *ThreadComputationParser) Ufun_term() (localctx IUfun_termContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(95)
+	p.SetState(100)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case ThreadComputationParserOPS, ThreadComputationParserNAME:
 		{
-			p.SetState(89)
+			p.SetState(93)
 			p.Fun()
 		}
 
 	case ThreadComputationParserINTEGER, ThreadComputationParserFLOAT_NUMBER, ThreadComputationParserSTRING, ThreadComputationParserTRUE, ThreadComputationParserFALSE:
 		{
-			p.SetState(90)
+			p.SetState(94)
 			p.Term()
 		}
 
 	case ThreadComputationParserT__3:
 		{
-			p.SetState(91)
+			p.SetState(95)
 			p.Vars()
 		}
 
 	case ThreadComputationParserT__4, ThreadComputationParserT__5:
 		{
-			p.SetState(92)
+			p.SetState(96)
 			p.Dblock()
 		}
 
-	case ThreadComputationParserT__11:
+	case ThreadComputationParserT__12:
 		{
-			p.SetState(93)
+			p.SetState(97)
 			p.Dmap()
 		}
 
 	case ThreadComputationParserT__7:
 		{
-			p.SetState(94)
+			p.SetState(98)
 			p.Lblock()
+		}
+
+	case ThreadComputationParserT__11:
+		{
+			p.SetState(99)
+			p.Filterblock()
 		}
 
 	default:
@@ -1652,17 +1710,17 @@ func (p *ThreadComputationParser) Dblock() (localctx IDblockContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(99)
+	p.SetState(104)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == ThreadComputationParserT__4 {
 		{
-			p.SetState(97)
+			p.SetState(102)
 			p.Match(ThreadComputationParserT__4)
 		}
 		{
-			p.SetState(98)
+			p.SetState(103)
 
 			var _m = p.Match(ThreadComputationParserNAME)
 
@@ -1671,16 +1729,16 @@ func (p *ThreadComputationParser) Dblock() (localctx IDblockContext) {
 
 	}
 	{
-		p.SetState(101)
+		p.SetState(106)
 		p.Match(ThreadComputationParserT__5)
 	}
-	p.SetState(105)
+	p.SetState(110)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
 		{
-			p.SetState(102)
+			p.SetState(107)
 
 			var _x = p.Dblock_term()
 
@@ -1688,12 +1746,12 @@ func (p *ThreadComputationParser) Dblock() (localctx IDblockContext) {
 		}
 		localctx.(*DblockContext).param = append(localctx.(*DblockContext).param, localctx.(*DblockContext)._dblock_term)
 
-		p.SetState(107)
+		p.SetState(112)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(108)
+		p.SetState(113)
 		p.Match(ThreadComputationParserT__6)
 	}
 
@@ -1829,16 +1887,16 @@ func (p *ThreadComputationParser) Lblock() (localctx ILblockContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(110)
+		p.SetState(115)
 		p.Match(ThreadComputationParserT__7)
 	}
-	p.SetState(114)
+	p.SetState(119)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__3)|(1<<ThreadComputationParserT__4)|(1<<ThreadComputationParserT__5)|(1<<ThreadComputationParserT__7)|(1<<ThreadComputationParserT__11)|(1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
+	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__3)|(1<<ThreadComputationParserT__4)|(1<<ThreadComputationParserT__5)|(1<<ThreadComputationParserT__7)|(1<<ThreadComputationParserT__11)|(1<<ThreadComputationParserT__12)|(1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
 		{
-			p.SetState(111)
+			p.SetState(116)
 
 			var _x = p.Ufun_term()
 
@@ -1846,12 +1904,12 @@ func (p *ThreadComputationParser) Lblock() (localctx ILblockContext) {
 		}
 		localctx.(*LblockContext).param = append(localctx.(*LblockContext).param, localctx.(*LblockContext)._ufun_term)
 
-		p.SetState(116)
+		p.SetState(121)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(117)
+		p.SetState(122)
 		p.Match(ThreadComputationParserT__8)
 	}
 
@@ -1987,16 +2045,16 @@ func (p *ThreadComputationParser) Trueblock() (localctx ITrueblockContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(119)
+		p.SetState(124)
 		p.Match(ThreadComputationParserT__9)
 	}
-	p.SetState(123)
+	p.SetState(128)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__3)|(1<<ThreadComputationParserT__4)|(1<<ThreadComputationParserT__5)|(1<<ThreadComputationParserT__7)|(1<<ThreadComputationParserT__11)|(1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
+	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__3)|(1<<ThreadComputationParserT__4)|(1<<ThreadComputationParserT__5)|(1<<ThreadComputationParserT__7)|(1<<ThreadComputationParserT__11)|(1<<ThreadComputationParserT__12)|(1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
 		{
-			p.SetState(120)
+			p.SetState(125)
 
 			var _x = p.Ufun_term()
 
@@ -2004,12 +2062,12 @@ func (p *ThreadComputationParser) Trueblock() (localctx ITrueblockContext) {
 		}
 		localctx.(*TrueblockContext).param = append(localctx.(*TrueblockContext).param, localctx.(*TrueblockContext)._ufun_term)
 
-		p.SetState(125)
+		p.SetState(130)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(126)
+		p.SetState(131)
 		p.Match(ThreadComputationParserT__8)
 	}
 
@@ -2145,16 +2203,16 @@ func (p *ThreadComputationParser) Falseblock() (localctx IFalseblockContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(128)
+		p.SetState(133)
 		p.Match(ThreadComputationParserT__10)
 	}
-	p.SetState(132)
+	p.SetState(137)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__3)|(1<<ThreadComputationParserT__4)|(1<<ThreadComputationParserT__5)|(1<<ThreadComputationParserT__7)|(1<<ThreadComputationParserT__11)|(1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
+	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__3)|(1<<ThreadComputationParserT__4)|(1<<ThreadComputationParserT__5)|(1<<ThreadComputationParserT__7)|(1<<ThreadComputationParserT__11)|(1<<ThreadComputationParserT__12)|(1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
 		{
-			p.SetState(129)
+			p.SetState(134)
 
 			var _x = p.Ufun_term()
 
@@ -2162,12 +2220,170 @@ func (p *ThreadComputationParser) Falseblock() (localctx IFalseblockContext) {
 		}
 		localctx.(*FalseblockContext).param = append(localctx.(*FalseblockContext).param, localctx.(*FalseblockContext)._ufun_term)
 
-		p.SetState(134)
+		p.SetState(139)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(135)
+		p.SetState(140)
+		p.Match(ThreadComputationParserT__8)
+	}
+
+	return localctx
+}
+
+// IFilterblockContext is an interface to support dynamic dispatch.
+type IFilterblockContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// Get_ufun_term returns the _ufun_term rule contexts.
+	Get_ufun_term() IUfun_termContext
+
+	// Set_ufun_term sets the _ufun_term rule contexts.
+	Set_ufun_term(IUfun_termContext)
+
+	// GetParam returns the param rule context list.
+	GetParam() []IUfun_termContext
+
+	// SetParam sets the param rule context list.
+	SetParam([]IUfun_termContext)
+
+	// IsFilterblockContext differentiates from other interfaces.
+	IsFilterblockContext()
+}
+
+type FilterblockContext struct {
+	*antlr.BaseParserRuleContext
+	parser     antlr.Parser
+	_ufun_term IUfun_termContext
+	param      []IUfun_termContext
+}
+
+func NewEmptyFilterblockContext() *FilterblockContext {
+	var p = new(FilterblockContext)
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	p.RuleIndex = ThreadComputationParserRULE_filterblock
+	return p
+}
+
+func (*FilterblockContext) IsFilterblockContext() {}
+
+func NewFilterblockContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *FilterblockContext {
+	var p = new(FilterblockContext)
+
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = ThreadComputationParserRULE_filterblock
+
+	return p
+}
+
+func (s *FilterblockContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *FilterblockContext) Get_ufun_term() IUfun_termContext { return s._ufun_term }
+
+func (s *FilterblockContext) Set_ufun_term(v IUfun_termContext) { s._ufun_term = v }
+
+func (s *FilterblockContext) GetParam() []IUfun_termContext { return s.param }
+
+func (s *FilterblockContext) SetParam(v []IUfun_termContext) { s.param = v }
+
+func (s *FilterblockContext) AllUfun_term() []IUfun_termContext {
+	var ts = s.GetTypedRuleContexts(reflect.TypeOf((*IUfun_termContext)(nil)).Elem())
+	var tst = make([]IUfun_termContext, len(ts))
+
+	for i, t := range ts {
+		if t != nil {
+			tst[i] = t.(IUfun_termContext)
+		}
+	}
+
+	return tst
+}
+
+func (s *FilterblockContext) Ufun_term(i int) IUfun_termContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IUfun_termContext)(nil)).Elem(), i)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IUfun_termContext)
+}
+
+func (s *FilterblockContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *FilterblockContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *FilterblockContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(ThreadComputationListener); ok {
+		listenerT.EnterFilterblock(s)
+	}
+}
+
+func (s *FilterblockContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(ThreadComputationListener); ok {
+		listenerT.ExitFilterblock(s)
+	}
+}
+
+func (p *ThreadComputationParser) Filterblock() (localctx IFilterblockContext) {
+	this := p
+	_ = this
+
+	localctx = NewFilterblockContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 24, ThreadComputationParserRULE_filterblock)
+	var _la int
+
+	defer func() {
+		p.ExitRule()
+	}()
+
+	defer func() {
+		if err := recover(); err != nil {
+			if v, ok := err.(antlr.RecognitionException); ok {
+				localctx.SetException(v)
+				p.GetErrorHandler().ReportError(p, v)
+				p.GetErrorHandler().Recover(p, v)
+			} else {
+				panic(err)
+			}
+		}
+	}()
+
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(142)
+		p.Match(ThreadComputationParserT__11)
+	}
+	p.SetState(146)
+	p.GetErrorHandler().Sync(p)
+	_la = p.GetTokenStream().LA(1)
+
+	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__3)|(1<<ThreadComputationParserT__4)|(1<<ThreadComputationParserT__5)|(1<<ThreadComputationParserT__7)|(1<<ThreadComputationParserT__11)|(1<<ThreadComputationParserT__12)|(1<<ThreadComputationParserOPS)|(1<<ThreadComputationParserNAME)|(1<<ThreadComputationParserINTEGER)|(1<<ThreadComputationParserFLOAT_NUMBER)|(1<<ThreadComputationParserSTRING)|(1<<ThreadComputationParserTRUE)|(1<<ThreadComputationParserFALSE))) != 0 {
+		{
+			p.SetState(143)
+
+			var _x = p.Ufun_term()
+
+			localctx.(*FilterblockContext)._ufun_term = _x
+		}
+		localctx.(*FilterblockContext).param = append(localctx.(*FilterblockContext).param, localctx.(*FilterblockContext)._ufun_term)
+
+		p.SetState(148)
+		p.GetErrorHandler().Sync(p)
+		_la = p.GetTokenStream().LA(1)
+	}
+	{
+		p.SetState(149)
 		p.Match(ThreadComputationParserT__8)
 	}
 
@@ -2282,7 +2498,7 @@ func (p *ThreadComputationParser) Dmap() (localctx IDmapContext) {
 	_ = this
 
 	localctx = NewDmapContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 24, ThreadComputationParserRULE_dmap)
+	p.EnterRule(localctx, 26, ThreadComputationParserRULE_dmap)
 	var _la int
 
 	defer func() {
@@ -2303,16 +2519,16 @@ func (p *ThreadComputationParser) Dmap() (localctx IDmapContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(137)
-		p.Match(ThreadComputationParserT__11)
+		p.SetState(151)
+		p.Match(ThreadComputationParserT__12)
 	}
-	p.SetState(141)
+	p.SetState(155)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == ThreadComputationParserNAME {
 		{
-			p.SetState(138)
+			p.SetState(152)
 
 			var _x = p.Key_term()
 
@@ -2320,13 +2536,13 @@ func (p *ThreadComputationParser) Dmap() (localctx IDmapContext) {
 		}
 		localctx.(*DmapContext).param = append(localctx.(*DmapContext).param, localctx.(*DmapContext)._key_term)
 
-		p.SetState(143)
+		p.SetState(157)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(144)
-		p.Match(ThreadComputationParserT__12)
+		p.SetState(158)
+		p.Match(ThreadComputationParserT__13)
 	}
 
 	return localctx
@@ -2410,7 +2626,7 @@ func (p *ThreadComputationParser) Integer_term() (localctx IInteger_termContext)
 	_ = this
 
 	localctx = NewInteger_termContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 26, ThreadComputationParserRULE_integer_term)
+	p.EnterRule(localctx, 28, ThreadComputationParserRULE_integer_term)
 
 	defer func() {
 		p.ExitRule()
@@ -2430,7 +2646,7 @@ func (p *ThreadComputationParser) Integer_term() (localctx IInteger_termContext)
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(146)
+		p.SetState(160)
 
 		var _m = p.Match(ThreadComputationParserINTEGER)
 
@@ -2518,7 +2734,7 @@ func (p *ThreadComputationParser) Float_term() (localctx IFloat_termContext) {
 	_ = this
 
 	localctx = NewFloat_termContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 28, ThreadComputationParserRULE_float_term)
+	p.EnterRule(localctx, 30, ThreadComputationParserRULE_float_term)
 
 	defer func() {
 		p.ExitRule()
@@ -2538,7 +2754,7 @@ func (p *ThreadComputationParser) Float_term() (localctx IFloat_termContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(148)
+		p.SetState(162)
 
 		var _m = p.Match(ThreadComputationParserFLOAT_NUMBER)
 
@@ -2626,7 +2842,7 @@ func (p *ThreadComputationParser) String_term() (localctx IString_termContext) {
 	_ = this
 
 	localctx = NewString_termContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 30, ThreadComputationParserRULE_string_term)
+	p.EnterRule(localctx, 32, ThreadComputationParserRULE_string_term)
 
 	defer func() {
 		p.ExitRule()
@@ -2646,7 +2862,7 @@ func (p *ThreadComputationParser) String_term() (localctx IString_termContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(150)
+		p.SetState(164)
 
 		var _m = p.Match(ThreadComputationParserSTRING)
 
@@ -2738,7 +2954,7 @@ func (p *ThreadComputationParser) Boolean_term() (localctx IBoolean_termContext)
 	_ = this
 
 	localctx = NewBoolean_termContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 32, ThreadComputationParserRULE_boolean_term)
+	p.EnterRule(localctx, 34, ThreadComputationParserRULE_boolean_term)
 	var _la int
 
 	defer func() {
@@ -2759,7 +2975,7 @@ func (p *ThreadComputationParser) Boolean_term() (localctx IBoolean_termContext)
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(152)
+		p.SetState(166)
 
 		var _lt = p.GetTokenStream().LT(1)
 
@@ -2889,7 +3105,7 @@ func (p *ThreadComputationParser) Key_term() (localctx IKey_termContext) {
 	_ = this
 
 	localctx = NewKey_termContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 34, ThreadComputationParserRULE_key_term)
+	p.EnterRule(localctx, 36, ThreadComputationParserRULE_key_term)
 	var _la int
 
 	defer func() {
@@ -2910,18 +3126,18 @@ func (p *ThreadComputationParser) Key_term() (localctx IKey_termContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(154)
+		p.SetState(168)
 
 		var _m = p.Match(ThreadComputationParserNAME)
 
 		localctx.(*Key_termContext).KEY = _m
 	}
 	{
-		p.SetState(155)
+		p.SetState(169)
 		p.Match(ThreadComputationParserT__4)
 	}
 	{
-		p.SetState(156)
+		p.SetState(170)
 
 		var _lt = p.GetTokenStream().LT(1)
 
@@ -3045,7 +3261,7 @@ func (p *ThreadComputationParser) Term() (localctx ITermContext) {
 	_ = this
 
 	localctx = NewTermContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 36, ThreadComputationParserRULE_term)
+	p.EnterRule(localctx, 38, ThreadComputationParserRULE_term)
 
 	defer func() {
 		p.ExitRule()
@@ -3064,31 +3280,31 @@ func (p *ThreadComputationParser) Term() (localctx ITermContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(162)
+	p.SetState(176)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case ThreadComputationParserINTEGER:
 		{
-			p.SetState(158)
+			p.SetState(172)
 			p.Integer_term()
 		}
 
 	case ThreadComputationParserFLOAT_NUMBER:
 		{
-			p.SetState(159)
+			p.SetState(173)
 			p.Float_term()
 		}
 
 	case ThreadComputationParserSTRING:
 		{
-			p.SetState(160)
+			p.SetState(174)
 			p.String_term()
 		}
 
 	case ThreadComputationParserTRUE, ThreadComputationParserFALSE:
 		{
-			p.SetState(161)
+			p.SetState(175)
 			p.Boolean_term()
 		}
 

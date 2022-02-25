@@ -44,6 +44,9 @@ type ThreadComputationListener interface {
 	// EnterFalseblock is called when entering the falseblock production.
 	EnterFalseblock(c *FalseblockContext)
 
+	// EnterFilterblock is called when entering the filterblock production.
+	EnterFilterblock(c *FilterblockContext)
+
 	// EnterDmap is called when entering the dmap production.
 	EnterDmap(c *DmapContext)
 
@@ -100,6 +103,9 @@ type ThreadComputationListener interface {
 
 	// ExitFalseblock is called when exiting the falseblock production.
 	ExitFalseblock(c *FalseblockContext)
+
+	// ExitFilterblock is called when exiting the filterblock production.
+	ExitFilterblock(c *FilterblockContext)
 
 	// ExitDmap is called when exiting the dmap production.
 	ExitDmap(c *DmapContext)

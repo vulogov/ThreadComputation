@@ -14,6 +14,7 @@ root_term
    | lblock
    | trueblock
    | falseblock
+   | filterblock
 );
 
 fun
@@ -36,6 +37,7 @@ dblock_term
 fun_term
  : ( fun
    | term
+   | filterblock
 );
 
 ufun_term
@@ -45,6 +47,7 @@ ufun_term
    | dblock
    | dmap
    | lblock
+   | filterblock
 );
 
 dblock
@@ -61,6 +64,10 @@ trueblock
 
 falseblock
  : 'false\\' (param+=ufun_term)* '\\'
+;
+
+filterblock
+ : 'filter\\' (param+=ufun_term)* '\\'
 ;
 
 dmap

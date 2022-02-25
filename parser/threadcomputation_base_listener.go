@@ -93,6 +93,12 @@ func (s *BaseThreadComputationListener) EnterFalseblock(ctx *FalseblockContext) 
 // ExitFalseblock is called when production falseblock is exited.
 func (s *BaseThreadComputationListener) ExitFalseblock(ctx *FalseblockContext) {}
 
+// EnterFilterblock is called when production filterblock is entered.
+func (s *BaseThreadComputationListener) EnterFilterblock(ctx *FilterblockContext) {}
+
+// ExitFilterblock is called when production filterblock is exited.
+func (s *BaseThreadComputationListener) ExitFilterblock(ctx *FilterblockContext) {}
+
 // EnterDmap is called when production dmap is entered.
 func (s *BaseThreadComputationListener) EnterDmap(ctx *DmapContext) {}
 
