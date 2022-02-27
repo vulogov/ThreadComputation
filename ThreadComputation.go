@@ -45,6 +45,8 @@ type TCstate struct {
   UserFun      cmap.Cmap
   Wg           sync.WaitGroup
   Pool        *gohive.PoolService
+  StackList    cmap.Cmap
+  StackChan    cmap.Cmap
 }
 
 type tcExecErrorListener struct {

@@ -49,6 +49,25 @@ func (tc *TCstate) AddNewStack(name string) {
   tc.ResN.Add(name)
   tc.ResNames.PushFront(name)
   tc.Res.Add()
+  tc.StackList.Delete(name)
+  tc.StackChan.Delete(name)
+  tc.StackChan.Store(name, make(chan interface{}))
+  tc.StackList.Store(name, tc.Res.Q())
+}
+
+func (tc *TCstate) DelStack(name string) {
+  log.Debugf("Dropping stack: %v", name)
+  if tc.ResN.Contains(name) {
+    tc.ResN.Remove(name)
+  }
+  tc.StackList.Delete(name)
+  tc.StackChan.Delete(name)
+  tc.Res.Del()
+  if tc.Res.GLen() == 0 {
+    name = uuid.NewString()
+    log.Debugf("Stack is empty adter last delete, creating new empty stack: %v", name)
+    tc.AddNewStack(name)
+  }
 }
 
 func (tc *TCstate) DropLastStack() error {
@@ -56,16 +75,7 @@ func (tc *TCstate) DropLastStack() error {
     return errors.New("TwoStack is empty")
   }
   name := tc.ResNames.PopFront().(string)
-  log.Debugf("Dropping stack: %v", name)
-  if tc.ResN.Contains(name) {
-    tc.ResN.Remove(name)
-  }
-  tc.Res.Del()
-  if tc.Res.GLen() == 0 {
-    name = uuid.NewString()
-    log.Debugf("Stack is empty adter last delete, creating new empty stack: %v", name)
-    tc.AddNewStack(name)
-  }
+  tc.DelStack(name)
   return nil
 }
 
