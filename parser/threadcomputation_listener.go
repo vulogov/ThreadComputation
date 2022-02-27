@@ -50,6 +50,12 @@ type ThreadComputationListener interface {
 	// EnterSpawnblock is called when entering the spawnblock production.
 	EnterSpawnblock(c *SpawnblockContext)
 
+	// EnterSendblock is called when entering the sendblock production.
+	EnterSendblock(c *SendblockContext)
+
+	// EnterRecvblock is called when entering the recvblock production.
+	EnterRecvblock(c *RecvblockContext)
+
 	// EnterDmap is called when entering the dmap production.
 	EnterDmap(c *DmapContext)
 
@@ -112,6 +118,12 @@ type ThreadComputationListener interface {
 
 	// ExitSpawnblock is called when exiting the spawnblock production.
 	ExitSpawnblock(c *SpawnblockContext)
+
+	// ExitSendblock is called when exiting the sendblock production.
+	ExitSendblock(c *SendblockContext)
+
+	// ExitRecvblock is called when exiting the recvblock production.
+	ExitRecvblock(c *RecvblockContext)
 
 	// ExitDmap is called when exiting the dmap production.
 	ExitDmap(c *DmapContext)

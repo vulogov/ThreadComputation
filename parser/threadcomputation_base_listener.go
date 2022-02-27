@@ -105,6 +105,18 @@ func (s *BaseThreadComputationListener) EnterSpawnblock(ctx *SpawnblockContext) 
 // ExitSpawnblock is called when production spawnblock is exited.
 func (s *BaseThreadComputationListener) ExitSpawnblock(ctx *SpawnblockContext) {}
 
+// EnterSendblock is called when production sendblock is entered.
+func (s *BaseThreadComputationListener) EnterSendblock(ctx *SendblockContext) {}
+
+// ExitSendblock is called when production sendblock is exited.
+func (s *BaseThreadComputationListener) ExitSendblock(ctx *SendblockContext) {}
+
+// EnterRecvblock is called when production recvblock is entered.
+func (s *BaseThreadComputationListener) EnterRecvblock(ctx *RecvblockContext) {}
+
+// ExitRecvblock is called when production recvblock is exited.
+func (s *BaseThreadComputationListener) ExitRecvblock(ctx *RecvblockContext) {}
+
 // EnterDmap is called when production dmap is entered.
 func (s *BaseThreadComputationListener) EnterDmap(ctx *DmapContext) {}
 

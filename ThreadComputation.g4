@@ -84,6 +84,15 @@ spawnblock
  : 'spawn\\' (param+=ufun_term)* '\\'
 ;
 
+sendblock
+ : 'send\\' (param+=ufun_term)* '\\'
+;
+
+recvblock
+ : 'recv\\' (param+=ufun_term)* '\\'
+;
+
+
 dmap
  : '{' (param+=key_term)* '}'
 ;
