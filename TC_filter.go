@@ -16,16 +16,43 @@ func (l *TCExecListener) EnterFilterblock(c *parser.FilterblockContext) {
 }
 
 func TCRunFilterOnQ(l *TCExecListener, code string) bool {
+  var e interface{}
+  log.Debugf("Runing filter: %v", code)
   l.TC.Eval(code)
-  e :=  l.TC.Res.Q().Front()
+  if l.TC.LastArgs == nil {
+    if l.TC.Ready() {
+      e = l.TC.Get()
+    } else {
+      log.Debug("Filter did not leave any value, returning false")
+      return false
+    }
+  } else {
+    e = l.TC.LastArgs.PopFront()
+  }
   switch e.(type) {
   case bool:
-    e = l.TC.Get()
+    log.Debugf("Filter returned: %v", e.(bool))
     return e.(bool)
   default:
+    l.TC.Res.Set(e)
     return true
   }
   return false
+}
+
+func filterTCQueue(l *TCExecListener, code string, rq *deque.Deque, wq *deque.Deque) {
+  for wq.Len() > 0 {
+    e := wq.PopFront()
+    log.Debugf("Pushing %v to stack for filtering", e)
+    l.TC.Res.Set(e)
+    res := TCRunFilterOnQ(l, code)
+    if res {
+      log.Debugf("%T passed through filter", e)
+      rq.PushBack(e)
+    } else {
+      log.Debugf("%T not passed through filter", e)
+    }
+  }
 }
 
 func (l *TCExecListener) ExitFilterblock(c *parser.FilterblockContext) {
@@ -47,26 +74,12 @@ func (l *TCExecListener) ExitFilterblock(c *parser.FilterblockContext) {
         e := l.TC.Get()
         wq.PushBack(e)
       }
-      for wq.Len() > 0 {
-        e := wq.PopFront()
-        l.TC.Res.Set(e)
-        res := TCRunFilterOnQ(l, code)
-        if res {
-          log.Debugf("%T passed through filter", e)
-          rq.PushBack(e)
-        } else {
-          log.Debugf("%T not passed through filter", e)
-        }
-      }
+      filterTCQueue(l, code, &rq, &wq)
       for rq.Len() > 0 {
         e := rq.PopBack()
         l.TC.Res.Set(e)
       }
     }
-  } else {
-    if l.TC.FNStack.Len() > 0 {
-      log.Debugf("Applying filter to the list of function arguments: %v", l.TC.FNStack.Front().(string))
-    }
-  }
+  } 
   log.Debug("Exiting FILTER block")
 }

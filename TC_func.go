@@ -299,4 +299,5 @@ func initStdlib() {
   initStdlibDmap()
   initStdlibJson()
   initStdlibMat()
+  initStdlibGoRoutines()
 }

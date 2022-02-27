@@ -47,6 +47,9 @@ type ThreadComputationListener interface {
 	// EnterFilterblock is called when entering the filterblock production.
 	EnterFilterblock(c *FilterblockContext)
 
+	// EnterSpawnblock is called when entering the spawnblock production.
+	EnterSpawnblock(c *SpawnblockContext)
+
 	// EnterDmap is called when entering the dmap production.
 	EnterDmap(c *DmapContext)
 
@@ -106,6 +109,9 @@ type ThreadComputationListener interface {
 
 	// ExitFilterblock is called when exiting the filterblock production.
 	ExitFilterblock(c *FilterblockContext)
+
+	// ExitSpawnblock is called when exiting the spawnblock production.
+	ExitSpawnblock(c *SpawnblockContext)
 
 	// ExitDmap is called when exiting the dmap production.
 	ExitDmap(c *DmapContext)

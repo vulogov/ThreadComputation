@@ -38,6 +38,7 @@ func GetVariable(name string) (interface{}, error) {
 func initStdVars() {
   SetVariable("tc.Version", VERSION)
   SetVariable("tc.Maxfilesize", 16777216)
+  SetVariable("tc.Poolsize", 25)
   SetVariable("tc.Debuglevel", "info")
   SetVariable("tc.Logoutput", os.Stderr)
 }

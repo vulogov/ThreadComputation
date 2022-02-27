@@ -4,6 +4,7 @@ import (
   "io"
   "os"
   "fmt"
+  "sync"
   "github.com/lrita/cmap"
   log "github.com/sirupsen/logrus"
   "github.com/antlr/antlr4/runtime/Go/antlr"
@@ -11,6 +12,7 @@ import (
   "github.com/deckarep/golang-set"
   "github.com/google/uuid"
   "github.com/vulogov/ThreadComputation/parser"
+  "github.com/loveleshsharma/gohive"
 )
 
 var Vars      cmap.Cmap
@@ -41,6 +43,8 @@ type TCstate struct {
   Vars         cmap.Cmap
   Functions    cmap.Cmap
   UserFun      cmap.Cmap
+  Wg           sync.WaitGroup
+  Pool        *gohive.PoolService
 }
 
 type tcExecErrorListener struct {
@@ -51,6 +55,7 @@ type tcExecErrorListener struct {
 }
 
 func Init() *TCstate {
+  var pool_size interface{}
   out, err := GetVariable("tc.Logoutput")
   if err != nil {
     log.SetOutput(os.Stderr)
@@ -77,6 +82,10 @@ func Init() *TCstate {
   default:
     log.SetLevel(log.InfoLevel)
   }
+  pool_size, err = GetVariable("tc.Poolsize")
+  if err != nil {
+    pool_size = 25
+  }
   log.Debug("Creating TC")
   tc := &TCstate{
     InAttr:  0,
@@ -87,6 +96,7 @@ func Init() *TCstate {
     Res:     InitTS(),
     Attrs:   InitTS(),
     ResN:    mapset.NewSet(),
+    Pool:    gohive.NewFixedSizePool(pool_size.(int)),
   }
   tc.AddNewStack(uuid.NewString())
   return tc
@@ -119,6 +129,16 @@ func (tc *TCstate) Eval(code string) *TCstate {
 		log.Fatalf("Errors detected: %v", errorListener.errors)
 		return nil
 	}
+  return tc
+}
+
+func (tc *TCstate) GoEval(code string) *TCstate {
+  tc.Wg.Add(1)
+  task := func() {
+    defer tc.Wg.Done()
+    tc.Eval(code)
+  }
+  tc.Pool.Submit(task)
   return tc
 }
 

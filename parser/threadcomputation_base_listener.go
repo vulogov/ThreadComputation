@@ -99,6 +99,12 @@ func (s *BaseThreadComputationListener) EnterFilterblock(ctx *FilterblockContext
 // ExitFilterblock is called when production filterblock is exited.
 func (s *BaseThreadComputationListener) ExitFilterblock(ctx *FilterblockContext) {}
 
+// EnterSpawnblock is called when production spawnblock is entered.
+func (s *BaseThreadComputationListener) EnterSpawnblock(ctx *SpawnblockContext) {}
+
+// ExitSpawnblock is called when production spawnblock is exited.
+func (s *BaseThreadComputationListener) ExitSpawnblock(ctx *SpawnblockContext) {}
+
 // EnterDmap is called when production dmap is entered.
 func (s *BaseThreadComputationListener) EnterDmap(ctx *DmapContext) {}
 
