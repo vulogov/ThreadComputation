@@ -49,10 +49,10 @@ func TestGR4(t *testing.T) {
 }
 
 func TestGR5(t *testing.T) {
-	SetVariable("tc.Debuglevel", "debug")
+	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
   tc1 := tc.Eval(":test() 42 send['test'] S['test'] recv")
-	SetVariable("tc.Debuglevel", "info")
+	// SetVariable("tc.Debuglevel", "info")
 	if tc1.Errors() != 0 {
 		t.Fatalf(":test() 42 send['test'] S['test'] recv parse failed")
 	}
