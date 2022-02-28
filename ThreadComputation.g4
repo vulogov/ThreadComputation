@@ -58,6 +58,8 @@ ufun_term
    | lblock
    | filterblock
    | spawnblock
+   | sendblock
+   | recvblock
 );
 
 dblock

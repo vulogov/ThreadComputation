@@ -46,18 +46,23 @@ func (tc *TCstate) AddNewStack(name string) {
     log.Debugf("Can not create new stack as it is already exists: %v", name)
     return
   }
+  chcap, err := GetVariable("tc.Chancapacity")
+  if err != nil {
+    chcap = 4096
+  }
   tc.ResN.Add(name)
   tc.ResNames.PushFront(name)
   tc.Res.Add()
   tc.StackList.Delete(name)
   tc.StackChan.Delete(name)
-  tc.StackChan.Store(name, make(chan interface{}))
+  tc.StackChan.Store(name, make(chan interface{}, chcap.(int)))
   tc.StackList.Store(name, tc.Res.Q())
 }
 
 func (tc *TCstate) DelStack(name string) {
   log.Debugf("Dropping stack: %v", name)
   if tc.ResN.Contains(name) {
+    tc.ResNames.PopFront()
     tc.ResN.Remove(name)
   }
   tc.StackList.Delete(name)
