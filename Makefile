@@ -14,6 +14,7 @@ pre:
 	go get -u github.com/srfrog/dict
 	go get -u github.com/Jeffail/gabs/v2/...
 	go get github.com/google/uuid
+	go get github.com/loveleshsharma/gohive
 
 build:
 	rm -rf ./parser

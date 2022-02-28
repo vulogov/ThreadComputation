@@ -5,10 +5,10 @@ import (
 )
 
 func TestCond1(t *testing.T) {
-	// SetVariable("tc.Debuglevel", "debug")
+	SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
   tc = tc.Eval("0 false\\ +[1] dup print 10 > \\ ")
-	// SetVariable("tc.Debuglevel", "info")
+	SetVariable("tc.Debuglevel", "info")
 	if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())
 	}

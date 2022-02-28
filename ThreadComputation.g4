@@ -14,6 +14,8 @@ root_term
    | lblock
    | trueblock
    | falseblock
+   | filterblock
+   | spawnblock
 );
 
 fun
@@ -30,7 +32,16 @@ vars
 
 dblock_term
  : ( fun
+   | ufun
    | term
+   | vars
+   | dblock
+   | dmap
+   | lblock
+   | trueblock
+   | falseblock
+   | filterblock
+   | spawnblock
 );
 
 fun_term
@@ -62,6 +73,23 @@ trueblock
 falseblock
  : 'false\\' (param+=ufun_term)* '\\'
 ;
+
+filterblock
+ : 'filter\\' (param+=ufun_term)* '\\'
+;
+
+spawnblock
+ : 'spawn\\' (param+=ufun_term)* '\\'
+;
+
+sendblock
+ : 'send\\' (param+=ufun_term)* '\\'
+;
+
+recvblock
+ : 'recv\\' (param+=ufun_term)* '\\'
+;
+
 
 dmap
  : '{' (param+=key_term)* '}'
