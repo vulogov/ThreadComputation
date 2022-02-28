@@ -37,6 +37,8 @@ type TCstate struct {
   ResNames     deque.Deque
   ResN         mapset.Set
   UFStack      deque.Deque
+  BStack       deque.Deque
+  BNStack      deque.Deque
   UFNStack     deque.Deque
   FNStack      deque.Deque
   LastArgs    *deque.Deque
