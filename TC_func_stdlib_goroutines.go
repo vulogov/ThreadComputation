@@ -31,6 +31,9 @@ func (l *TCExecListener) EnterSpawnblock(c *parser.SpawnblockContext) {
   if l.TC.Errors() > 0 {
     return
   }
+  if l.TC.AddToUserFun("spawn\\") == true {
+    return
+  }
   MakeTempFun(l)
 }
 
@@ -40,6 +43,11 @@ func (l *TCExecListener) ExitSpawnblock(c *parser.SpawnblockContext) {
   if l.TC.Errors() > 0 {
     return
   }
+
+  if l.TC.AddToUserFun("\\") == true {
+    return
+  }
+
   log.Debug("Exiting SPAWN")
   if l.TC.UFStack.Len() > 0 {
     func_name = l.TC.UFNStack.Front().(string)
@@ -55,6 +63,11 @@ func (l *TCExecListener) EnterSendblock(c *parser.SendblockContext) {
   if l.TC.Errors() > 0 {
     return
   }
+
+  if l.TC.AddToUserFun("send\\") == true {
+    return
+  }
+
   MakeTempFun(l)
 }
 
@@ -62,6 +75,9 @@ func (l *TCExecListener) ExitSendblock(c *parser.SendblockContext) {
   var func_name string
 
   if l.TC.Errors() > 0 {
+    return
+  }
+  if l.TC.AddToUserFun("\\") == true {
     return
   }
   log.Debug("Exiting SEND")
@@ -79,6 +95,9 @@ func (l *TCExecListener) EnterRecvblock(c *parser.RecvblockContext) {
   if l.TC.Errors() > 0 {
     return
   }
+  if l.TC.AddToUserFun("recv\\") == true {
+    return
+  }
   MakeTempFun(l)
 }
 
@@ -86,6 +105,9 @@ func (l *TCExecListener) ExitRecvblock(c *parser.RecvblockContext) {
   var func_name string
 
   if l.TC.Errors() > 0 {
+    return
+  }
+  if l.TC.AddToUserFun("\\") == true {
     return
   }
   log.Debug("Exiting RECV")

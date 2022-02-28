@@ -56,10 +56,6 @@ ufun_term
    | dblock
    | dmap
    | lblock
-   | filterblock
-   | spawnblock
-   | sendblock
-   | recvblock
 );
 
 dblock
