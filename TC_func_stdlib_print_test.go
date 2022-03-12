@@ -4,44 +4,42 @@ import (
 	"testing"
 )
 
-func TestStdlibStack1(t *testing.T) {
+func TestStdlibPrint1(t *testing.T) {
 	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
 	// SetVariable("tc.Debuglevel", "info")
-	tc = tc.Eval("42 len")
+	tc = tc.Eval("42 print")
 	if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())
 	}
-	res := tc.GetAsString()
-  if res != "1" {
-    t.Fatalf("Not pushed to stack: %v", res)
-  }
 }
 
-func TestStdlibStack2(t *testing.T) {
+func TestStdlibPrint2(t *testing.T) {
 	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
 	// SetVariable("tc.Debuglevel", "info")
-	tc = tc.Eval("stack[1 2 42]")
+	tc = tc.Eval("42 println[1 2 3]")
 	if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())
 	}
-	res := tc.GetAsString()
-  if res != "42" {
-    t.Fatalf("Not pushed to stack: %v", res)
-  }
 }
 
-func TestStdlibStack3(t *testing.T) {
+func TestStdlibPrint3(t *testing.T) {
 	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
 	// SetVariable("tc.Debuglevel", "info")
-	tc = tc.Eval("stack[1 2 stack[3 4 42]]")
+	tc = tc.Eval("'one=%v two=%v three=%v' printlnf[1 2 3]")
 	if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())
 	}
-	res := tc.GetAsString()
-  if res != "42" {
-    t.Fatalf("Not pushed to stack: %v", res)
-  }
+}
+
+func TestStdlibPrint4(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("40 41 42 ~print")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
 }

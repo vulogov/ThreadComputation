@@ -39,12 +39,6 @@ func (s *BaseThreadComputationListener) EnterFun(ctx *FunContext) {}
 // ExitFun is called when production fun is exited.
 func (s *BaseThreadComputationListener) ExitFun(ctx *FunContext) {}
 
-// EnterUfun is called when production ufun is entered.
-func (s *BaseThreadComputationListener) EnterUfun(ctx *UfunContext) {}
-
-// ExitUfun is called when production ufun is exited.
-func (s *BaseThreadComputationListener) ExitUfun(ctx *UfunContext) {}
-
 // EnterVars is called when production vars is entered.
 func (s *BaseThreadComputationListener) EnterVars(ctx *VarsContext) {}
 
@@ -63,59 +57,11 @@ func (s *BaseThreadComputationListener) EnterFun_term(ctx *Fun_termContext) {}
 // ExitFun_term is called when production fun_term is exited.
 func (s *BaseThreadComputationListener) ExitFun_term(ctx *Fun_termContext) {}
 
-// EnterUfun_term is called when production ufun_term is entered.
-func (s *BaseThreadComputationListener) EnterUfun_term(ctx *Ufun_termContext) {}
-
-// ExitUfun_term is called when production ufun_term is exited.
-func (s *BaseThreadComputationListener) ExitUfun_term(ctx *Ufun_termContext) {}
-
 // EnterDblock is called when production dblock is entered.
 func (s *BaseThreadComputationListener) EnterDblock(ctx *DblockContext) {}
 
 // ExitDblock is called when production dblock is exited.
 func (s *BaseThreadComputationListener) ExitDblock(ctx *DblockContext) {}
-
-// EnterLblock is called when production lblock is entered.
-func (s *BaseThreadComputationListener) EnterLblock(ctx *LblockContext) {}
-
-// ExitLblock is called when production lblock is exited.
-func (s *BaseThreadComputationListener) ExitLblock(ctx *LblockContext) {}
-
-// EnterTrueblock is called when production trueblock is entered.
-func (s *BaseThreadComputationListener) EnterTrueblock(ctx *TrueblockContext) {}
-
-// ExitTrueblock is called when production trueblock is exited.
-func (s *BaseThreadComputationListener) ExitTrueblock(ctx *TrueblockContext) {}
-
-// EnterFalseblock is called when production falseblock is entered.
-func (s *BaseThreadComputationListener) EnterFalseblock(ctx *FalseblockContext) {}
-
-// ExitFalseblock is called when production falseblock is exited.
-func (s *BaseThreadComputationListener) ExitFalseblock(ctx *FalseblockContext) {}
-
-// EnterFilterblock is called when production filterblock is entered.
-func (s *BaseThreadComputationListener) EnterFilterblock(ctx *FilterblockContext) {}
-
-// ExitFilterblock is called when production filterblock is exited.
-func (s *BaseThreadComputationListener) ExitFilterblock(ctx *FilterblockContext) {}
-
-// EnterSpawnblock is called when production spawnblock is entered.
-func (s *BaseThreadComputationListener) EnterSpawnblock(ctx *SpawnblockContext) {}
-
-// ExitSpawnblock is called when production spawnblock is exited.
-func (s *BaseThreadComputationListener) ExitSpawnblock(ctx *SpawnblockContext) {}
-
-// EnterSendblock is called when production sendblock is entered.
-func (s *BaseThreadComputationListener) EnterSendblock(ctx *SendblockContext) {}
-
-// ExitSendblock is called when production sendblock is exited.
-func (s *BaseThreadComputationListener) ExitSendblock(ctx *SendblockContext) {}
-
-// EnterRecvblock is called when production recvblock is entered.
-func (s *BaseThreadComputationListener) EnterRecvblock(ctx *RecvblockContext) {}
-
-// ExitRecvblock is called when production recvblock is exited.
-func (s *BaseThreadComputationListener) ExitRecvblock(ctx *RecvblockContext) {}
 
 // EnterDmap is called when production dmap is entered.
 func (s *BaseThreadComputationListener) EnterDmap(ctx *DmapContext) {}
@@ -123,38 +69,8 @@ func (s *BaseThreadComputationListener) EnterDmap(ctx *DmapContext) {}
 // ExitDmap is called when production dmap is exited.
 func (s *BaseThreadComputationListener) ExitDmap(ctx *DmapContext) {}
 
-// EnterInteger_term is called when production integer_term is entered.
-func (s *BaseThreadComputationListener) EnterInteger_term(ctx *Integer_termContext) {}
-
-// ExitInteger_term is called when production integer_term is exited.
-func (s *BaseThreadComputationListener) ExitInteger_term(ctx *Integer_termContext) {}
-
-// EnterFloat_term is called when production float_term is entered.
-func (s *BaseThreadComputationListener) EnterFloat_term(ctx *Float_termContext) {}
-
-// ExitFloat_term is called when production float_term is exited.
-func (s *BaseThreadComputationListener) ExitFloat_term(ctx *Float_termContext) {}
-
-// EnterString_term is called when production string_term is entered.
-func (s *BaseThreadComputationListener) EnterString_term(ctx *String_termContext) {}
-
-// ExitString_term is called when production string_term is exited.
-func (s *BaseThreadComputationListener) ExitString_term(ctx *String_termContext) {}
-
-// EnterBoolean_term is called when production boolean_term is entered.
-func (s *BaseThreadComputationListener) EnterBoolean_term(ctx *Boolean_termContext) {}
-
-// ExitBoolean_term is called when production boolean_term is exited.
-func (s *BaseThreadComputationListener) ExitBoolean_term(ctx *Boolean_termContext) {}
-
 // EnterKey_term is called when production key_term is entered.
 func (s *BaseThreadComputationListener) EnterKey_term(ctx *Key_termContext) {}
 
 // ExitKey_term is called when production key_term is exited.
 func (s *BaseThreadComputationListener) ExitKey_term(ctx *Key_termContext) {}
-
-// EnterTerm is called when production term is entered.
-func (s *BaseThreadComputationListener) EnterTerm(ctx *TermContext) {}
-
-// ExitTerm is called when production term is exited.
-func (s *BaseThreadComputationListener) ExitTerm(ctx *TermContext) {}

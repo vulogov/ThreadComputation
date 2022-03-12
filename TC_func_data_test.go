@@ -4,25 +4,11 @@ import (
 	"testing"
 )
 
-func TestStdlibStack1(t *testing.T) {
+func TestFD1(t *testing.T) {
 	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
 	// SetVariable("tc.Debuglevel", "info")
-	tc = tc.Eval("42 len")
-	if tc.Errors() != 0 {
-		t.Fatalf(tc.Error())
-	}
-	res := tc.GetAsString()
-  if res != "1" {
-    t.Fatalf("Not pushed to stack: %v", res)
-  }
-}
-
-func TestStdlibStack2(t *testing.T) {
-	// SetVariable("tc.Debuglevel", "debug")
-	tc := Init()
-	// SetVariable("tc.Debuglevel", "info")
-	tc = tc.Eval("stack[1 2 42]")
+	tc = tc.Eval("42")
 	if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())
 	}
@@ -32,16 +18,44 @@ func TestStdlibStack2(t *testing.T) {
   }
 }
 
-func TestStdlibStack3(t *testing.T) {
+func TestFD2(t *testing.T) {
 	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
 	// SetVariable("tc.Debuglevel", "info")
-	tc = tc.Eval("stack[1 2 stack[3 4 42]]")
+	tc = tc.Eval("3.14")
 	if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())
 	}
 	res := tc.GetAsString()
-  if res != "42" {
+  if res != "3.14" {
+    t.Fatalf("Not pushed to stack: %v", res)
+  }
+}
+
+func TestFD3(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("true[]")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+  if res != "true" {
+    t.Fatalf("Not pushed to stack: %v", res)
+  }
+}
+
+func TestFD4(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("'Hello'")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+  if res != "Hello" {
     t.Fatalf("Not pushed to stack: %v", res)
   }
 }

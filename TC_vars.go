@@ -1,26 +1,20 @@
 package ThreadComputation
 
 import (
-  "os"
-  "errors"
   "fmt"
+  "errors"
   "github.com/vulogov/ThreadComputation/parser"
 )
-
 
 func (l *TCExecListener) EnterVars(c *parser.VarsContext) {
   if l.TC.Errors() > 0 {
     return
   }
-  if l.TC.AddToUserFun(fmt.Sprintf("$%v",c.GetVname().GetText())) {
-    return
-  }
-  if l.TC.Ready() {
-    vname := c.GetVname().GetText()
-    l.TC.Vars.Delete(vname)
-    e := l.TC.Get()
-    l.TC.Vars.Store(vname, e)
-  }
+}
+
+func (tc *TCstate) SetVariable(name string, data interface{}) {
+  tc.Vars.Delete(name)
+  tc.Vars.Store(name, data)
 }
 
 func SetVariable(name string, data interface{}) {
@@ -35,11 +29,8 @@ func GetVariable(name string) (interface{}, error) {
   return nil, errors.New(fmt.Sprintf("Variable %v not found", name))
 }
 
+
+
 func initStdVars() {
-  SetVariable("tc.Version", VERSION)
-  SetVariable("tc.Maxfilesize", 16777216)
-  SetVariable("tc.Chancapacity", 102400)
-  SetVariable("tc.Poolsize", 25)
-  SetVariable("tc.Debuglevel", "info")
-  SetVariable("tc.Logoutput", os.Stderr)
+
 }
