@@ -45,3 +45,48 @@ func TestStdlibStack3(t *testing.T) {
     t.Fatalf("Not pushed to stack: %v", res)
   }
 }
+
+func TestStdlibStack4(t *testing.T) {
+  tc := Init()
+  tc = tc.Eval("stack[1 2 3] clr len")
+  res := tc.GetAsString()
+  if  res != "0" {
+    t.Fatalf("clr function not working: %v", res)
+  }
+}
+
+func TestStdlibStack5(t *testing.T) {
+  tc := Init()
+  tc = tc.Eval("1 2 3 clr[42]")
+  res := tc.GetAsString()
+  if  res != "42" {
+    t.Fatalf("clr function not working: %v", res)
+  }
+}
+
+func TestStdlibStack6(t *testing.T) {
+  tc := Init()
+  tc = tc.Eval("42 dup len")
+  res := tc.GetAsString()
+  if  res != "2" {
+    t.Fatalf("dup function not working: %v", res)
+  }
+}
+
+func TestStdlibStack7(t *testing.T) {
+  tc := Init()
+  tc = tc.Eval("42 , len")
+  res := tc.GetAsString()
+  if  res != "0" {
+    t.Fatalf("in stack drop function not working: %v", res)
+  }
+}
+
+func TestStdlibStack8(t *testing.T) {
+  tc := Init()
+  tc = tc.Eval("stack[1 , 42 ] len")
+  res := tc.GetAsString()
+  if  res != "1" {
+    t.Fatalf("ina args drop function not working: %v", res)
+  }
+}

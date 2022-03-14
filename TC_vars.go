@@ -1,6 +1,7 @@
 package ThreadComputation
 
 import (
+  "os"
   "fmt"
   "errors"
   "github.com/vulogov/ThreadComputation/parser"
@@ -32,5 +33,10 @@ func GetVariable(name string) (interface{}, error) {
 
 
 func initStdVars() {
-
+  SetVariable("tc.Version", VERSION)
+  SetVariable("tc.Maxfilesize", 16777216)
+  SetVariable("tc.Chancapacity", 102400)
+  SetVariable("tc.Poolsize", 25)
+  SetVariable("tc.Debuglevel", "info")
+  SetVariable("tc.Logoutput", os.Stderr)
 }

@@ -2,6 +2,7 @@ package ThreadComputation
 
 import (
   "fmt"
+  "strings"
   "github.com/gammazero/deque"
 )
 
@@ -30,9 +31,35 @@ func TCStrFormatFunction(l *TCExecListener, name string, q *deque.Deque) (interf
   return nil, nil
 }
 
-
+func TCStrStringFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  for q.Len() > 0 {
+      s := q.PopFront()
+      switch s.(type) {
+      case string:
+        switch name {
+        case "str.strip":
+          ReturnFromFunction(l, "str.strip", strings.Trim(s.(string), "\n \t\r"))
+        case "str.title":
+          ReturnFromFunction(l, "str.title", strings.Title(s.(string)))
+        case "str.lower":
+          ReturnFromFunction(l, "str.lower", strings.ToLower(s.(string)))
+        case "str.upper":
+          ReturnFromFunction(l, "str.upper", strings.ToUpper(s.(string)))
+        default:
+          break
+        }
+      default:
+        break
+      }
+    }
+    return nil, nil
+}
 
 
 func init() {
   SetFunction("str.format", TCStrFormatFunction)
+  SetFunction("str.strip", TCStrStringFunction)
+  SetFunction("str.title", TCStrStringFunction)
+  SetFunction("str.lower", TCStrStringFunction)
+  SetFunction("str.upper", TCStrStringFunction)
 }

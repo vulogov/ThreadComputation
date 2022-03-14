@@ -17,6 +17,69 @@ func TCLenFunction(l *TCExecListener, name string, q *deque.Deque) (interface{},
   return 0, nil
 }
 
+func TCClrFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if l.TC.Ready() {
+    for l.TC.Ready() {
+      l.TC.Get()
+    }
+    for q.Len() > 0 {
+      e := q.PopFront()
+      l.TC.Set(e)
+    }
+  } else if l.TC.HaveAttrs() {
+    aq := l.TC.Attrs.Q()
+    for aq.Len() > 0 {
+      aq.PopFront()
+    }
+    for q.Len() > 0 {
+      e := q.PopFront()
+      aq.PushBack(e)
+    }
+  }
+  return nil, nil
+}
+
+func TCDupFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if l.TC.HaveAttrs() {
+    aq := l.TC.Attrs.Q()
+    for q.Len() > 0 {
+      e := q.PopFront()
+      fun := GetCloneCallback(e)
+      if fun == nil {
+        continue
+      }
+      e1 := fun(e)
+      if e1 != nil {
+        aq.PushFront(e)
+        aq.PushFront(e1)
+      }
+    }
+  } else {
+    for q.Len() > 0 {
+      e := q.PopFront()
+      fun := GetCloneCallback(e)
+      if fun == nil {
+        continue
+      }
+      e1 := fun(e)
+      if e1 != nil {
+        l.TC.Set(e)
+        l.TC.Set(e1)
+      }
+    }
+  }
+  return nil, nil
+}
+
+func TCDropFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if l.TC.HaveAttrs() {
+    l.TC.Attrs.Q().PopFront()
+  } else if l.TC.Ready() {
+    l.TC.Get()
+  }
+  return nil, nil
+}
+
 func ToStackFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
   if q.Len() == 0 {
     return nil, nil
@@ -31,4 +94,9 @@ func ToStackFunction(l *TCExecListener, name string, q *deque.Deque) (interface{
 func init() {
   SetCommand("len", TCLenFunction)
   SetCommand("stack", ToStackFunction)
+  SetCommand("clr", TCClrFunction)
+  SetFunction("dup", TCDupFunction)
+  SetFunction("^", TCDupFunction)
+  SetCommand("drop", TCDropFunction)
+  SetCommand(",", TCDropFunction)
 }
