@@ -10,6 +10,10 @@ import (
   "github.com/gammazero/deque"
 )
 
+func ReadFile(uri string) (string, error) {
+  return readVfsFile(uri)
+}
+
 func readVfsFile(uri string) (string, error) {
   var n int
   max_filesize, _ := GetVariable("tc.Maxfilesize")
