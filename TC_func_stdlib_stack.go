@@ -2,6 +2,7 @@ package ThreadComputation
 
 import (
   "github.com/gammazero/deque"
+  "github.com/google/uuid"
 )
 
 
@@ -91,6 +92,18 @@ func ToStackFunction(l *TCExecListener, name string, q *deque.Deque) (interface{
   return nil, nil
 }
 
+func TCNewStackFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  bname := uuid.NewString()
+  AddNewStack(l, bname)
+  if q.Len() > 0 {
+    for q.Len() > 0 {
+      e := q.PopFront()
+      l.TC.Res.Set(e)
+    }
+  }
+  return nil, nil
+}
+
 func init() {
   SetCommand("len", TCLenFunction)
   SetCommand("stack", ToStackFunction)
@@ -99,4 +112,5 @@ func init() {
   SetFunction("^", TCDupFunction)
   SetCommand("drop", TCDropFunction)
   SetCommand(",", TCDropFunction)
+  SetCommand("|", TCNewStackFunction)
 }

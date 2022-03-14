@@ -90,3 +90,15 @@ func TestStdlibStack8(t *testing.T) {
     t.Fatalf("ina args drop function not working: %v", res)
   }
 }
+
+func TestStdlibStack9(t *testing.T) {
+  tc := Init()
+	tc1 := tc.Eval("1 2 3 | 42")
+  if tc1.Errors() != 0 {
+          t.Fatalf("1 2 3 | 42 parse failed")
+  }
+  res := tc.GetAsString()
+  if res != "42" {
+          t.Fatalf("data in stack is not in order: %v and shall be 42", res)
+  }
+}
