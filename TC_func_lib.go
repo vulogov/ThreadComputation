@@ -31,10 +31,10 @@ func (tc *TCstate) GetFunction(name string) TCFun {
 }
 
 func (tc *TCstate) HaveFunction(name string) bool {
-  if _, ok := Functions.Load(name); ok {
+  if _, ok := tc.Functions.Load(name); ok {
     return true
   }
-  if _, ok := tc.Functions.Load(name); ok {
+  if _, ok := Functions.Load(name); ok {
     return true
   }
   return false
