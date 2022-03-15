@@ -37,7 +37,7 @@ var parserATN = []uint16{
 	44, 7, 11, 2, 2, 36, 40, 7, 3, 2, 2, 37, 39, 5, 12, 7, 2, 38, 37, 3, 2,
 	2, 2, 39, 42, 3, 2, 2, 2, 40, 38, 3, 2, 2, 2, 40, 41, 3, 2, 2, 2, 41, 43,
 	3, 2, 2, 2, 42, 40, 3, 2, 2, 2, 43, 45, 7, 4, 2, 2, 44, 36, 3, 2, 2, 2,
-	44, 45, 3, 2, 2, 2, 45, 7, 3, 2, 2, 2, 46, 47, 7, 5, 2, 2, 47, 48, 7, 13,
+	44, 45, 3, 2, 2, 2, 45, 7, 3, 2, 2, 2, 46, 47, 7, 5, 2, 2, 47, 48, 7, 11,
 	2, 2, 48, 9, 3, 2, 2, 2, 49, 54, 5, 6, 4, 2, 50, 54, 5, 8, 5, 2, 51, 54,
 	5, 14, 8, 2, 52, 54, 5, 16, 9, 2, 53, 49, 3, 2, 2, 2, 53, 50, 3, 2, 2,
 	2, 53, 51, 3, 2, 2, 2, 53, 52, 3, 2, 2, 2, 54, 11, 3, 2, 2, 2, 55, 59,
@@ -638,11 +638,11 @@ type IVarsContext interface {
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
-	// GetVname returns the vname token.
-	GetVname() antlr.Token
+	// GetFname returns the fname token.
+	GetFname() antlr.Token
 
-	// SetVname sets the vname token.
-	SetVname(antlr.Token)
+	// SetFname sets the fname token.
+	SetFname(antlr.Token)
 
 	// IsVarsContext differentiates from other interfaces.
 	IsVarsContext()
@@ -651,7 +651,7 @@ type IVarsContext interface {
 type VarsContext struct {
 	*antlr.BaseParserRuleContext
 	parser antlr.Parser
-	vname  antlr.Token
+	fname  antlr.Token
 }
 
 func NewEmptyVarsContext() *VarsContext {
@@ -676,12 +676,12 @@ func NewVarsContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokin
 
 func (s *VarsContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *VarsContext) GetVname() antlr.Token { return s.vname }
+func (s *VarsContext) GetFname() antlr.Token { return s.fname }
 
-func (s *VarsContext) SetVname(v antlr.Token) { s.vname = v }
+func (s *VarsContext) SetFname(v antlr.Token) { s.fname = v }
 
-func (s *VarsContext) NAME() antlr.TerminalNode {
-	return s.GetToken(ThreadComputationParserNAME, 0)
+func (s *VarsContext) FUNC_NAME() antlr.TerminalNode {
+	return s.GetToken(ThreadComputationParserFUNC_NAME, 0)
 }
 
 func (s *VarsContext) GetRuleContext() antlr.RuleContext {
@@ -735,9 +735,9 @@ func (p *ThreadComputationParser) Vars() (localctx IVarsContext) {
 	{
 		p.SetState(45)
 
-		var _m = p.Match(ThreadComputationParserNAME)
+		var _m = p.Match(ThreadComputationParserFUNC_NAME)
 
-		localctx.(*VarsContext).vname = _m
+		localctx.(*VarsContext).fname = _m
 	}
 
 	return localctx

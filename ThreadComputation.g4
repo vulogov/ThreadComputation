@@ -16,7 +16,7 @@ fun
 ;
 
 vars
- : '$' vname=NAME
+ : '$' fname=FUNC_NAME
 ;
 
 dblock_term
@@ -42,7 +42,6 @@ dmap
 ;
 
 key_term: KEY=NAME ':' VALUE=fun_term ;
-
 
 FUNC_NAME
   : (NAME|OPS|INTEGER|FLOAT_NUMBER|STRING)
@@ -103,6 +102,7 @@ MOD
   : '?'
   | '`'
   | '~'
+  | '@'
   ;
 
 BLOCK_COMMENT

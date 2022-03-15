@@ -56,13 +56,27 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     mod = nil
   }
   func_name := c.GetFname().GetText()
+
   if mod != nil && mod == "`" {
     log.Debugf("Reference to the function %v will be processed", func_name)
     return
   }
 
   q = l.Attrs()
-  if l.TC.HaveCommand(func_name) {
+  //
+  // First, check if variable exists
+  //
+  if l.TC.HasVariable(func_name) || q.Len() > 0 {
+    if q.Len() > 0 {
+      e := q.PopFront()
+      l.TC.SetVariable(func_name, e)
+    }
+    data, _ := l.TC.GetVariable(func_name)
+    ReturnFromFunction(l, func_name, data)
+  } else if l.TC.HaveCommand(func_name) {
+    //
+    // Next, if command exists
+    //
     log.Debugf("Command %v will be applied only to attributes", func_name)
     fun := l.TC.GetCommand(func_name)
     res, err := fun(l, func_name, q)
@@ -74,6 +88,9 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
       }
     }
   } else {
+    //
+    // Otherwise assiming it is a function or values
+    //
     if l.TC.HaveFunction(func_name) {
       if l.TC.Ready() || l.TC.HaveAttrs() {
         if mod != nil && mod == "~" {
