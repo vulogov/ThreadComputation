@@ -23,8 +23,11 @@ dblock_term
 fun_term
  : ( fun
    | dmap
+   | pos_term
 );
 
+pos_term
+ : '#' pname=NAME ;
 
 dblock
  : (':' bname=NAME)?'(' (param+=dblock_term)* ')'

@@ -30,20 +30,23 @@ type TCstate struct {
   TC          *TCstate
   errors       int
   errmsg       string
-  InAttr       int
-  InRef        int
-  Attrs       *TwoStack
-  EvAttrs      deque.Deque
-  Res         *TwoStack
-  ResNames     deque.Deque
-  ResN         mapset.Set
-  Vars         cmap.Cmap
-  Functions    cmap.Cmap
-  Commands     cmap.Cmap
-  StackList    cmap.Cmap
-  StackChan    cmap.Cmap
-  Wg           sync.WaitGroup
-  Pool        *gohive.PoolService
+  InAttr       int          // How deep we are in attributes
+  InRef        int          // If we are in reference
+  Attrs       *TwoStack     // Creating attributes
+  EvAttrs      deque.Deque  // Evaluating attributes
+  Res         *TwoStack     // Main stack
+  ResNames     deque.Deque  // stack of stack names
+  ResN         mapset.Set   // set of stack names
+  Vars         cmap.Cmap    // variables
+  Functions    cmap.Cmap    // Functions
+  UFunctions   cmap.Cmap    // User Functions
+  Commands     cmap.Cmap    // Commands
+  UFStack      deque.Deque  // Stack of User-defined functions
+  UFNStack     deque.Deque  // Stack of names User-defined functions
+  StackList    cmap.Cmap    // Reference to stacks
+  StackChan    cmap.Cmap    // Reference to stack channels
+  Wg           sync.WaitGroup // Global wait group
+  Pool        *gohive.PoolService // Global execution pool
 }
 
 type tcExecErrorListener struct {

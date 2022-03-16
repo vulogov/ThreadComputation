@@ -23,6 +23,9 @@ type ThreadComputationListener interface {
 	// EnterFun_term is called when entering the fun_term production.
 	EnterFun_term(c *Fun_termContext)
 
+	// EnterPos_term is called when entering the pos_term production.
+	EnterPos_term(c *Pos_termContext)
+
 	// EnterDblock is called when entering the dblock production.
 	EnterDblock(c *DblockContext)
 
@@ -46,6 +49,9 @@ type ThreadComputationListener interface {
 
 	// ExitFun_term is called when exiting the fun_term production.
 	ExitFun_term(c *Fun_termContext)
+
+	// ExitPos_term is called when exiting the pos_term production.
+	ExitPos_term(c *Pos_termContext)
 
 	// ExitDblock is called when exiting the dblock production.
 	ExitDblock(c *DblockContext)

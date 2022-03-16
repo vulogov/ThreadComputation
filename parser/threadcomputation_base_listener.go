@@ -51,6 +51,12 @@ func (s *BaseThreadComputationListener) EnterFun_term(ctx *Fun_termContext) {}
 // ExitFun_term is called when production fun_term is exited.
 func (s *BaseThreadComputationListener) ExitFun_term(ctx *Fun_termContext) {}
 
+// EnterPos_term is called when production pos_term is entered.
+func (s *BaseThreadComputationListener) EnterPos_term(ctx *Pos_termContext) {}
+
+// ExitPos_term is called when production pos_term is exited.
+func (s *BaseThreadComputationListener) ExitPos_term(ctx *Pos_termContext) {}
+
 // EnterDblock is called when production dblock is entered.
 func (s *BaseThreadComputationListener) EnterDblock(ctx *DblockContext) {}
 
