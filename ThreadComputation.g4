@@ -6,7 +6,6 @@ expressions
 
 root_term
  : ( fun
-   | vars
    | dblock
    | dmap
 );
@@ -15,20 +14,14 @@ fun
  : (mod=MOD)? fname=FUNC_NAME ('[' (param+=fun_term)* ']')?
 ;
 
-vars
- : '$' fname=FUNC_NAME
-;
-
 dblock_term
  : ( fun
-   | vars
    | dblock
    | dmap
 );
 
 fun_term
  : ( fun
-   | vars
    | dmap
 );
 
@@ -44,7 +37,11 @@ dmap
 key_term: KEY=NAME ':' VALUE=fun_term ;
 
 FUNC_NAME
-  : (NAME|OPS|INTEGER|FLOAT_NUMBER|STRING)
+  : NAME
+  | OPS
+  | INTEGER
+  | FLOAT_NUMBER
+  | STRING
   ;
 
 OPS
@@ -103,6 +100,7 @@ MOD
   | '`'
   | '~'
   | '@'
+  | '$'
   ;
 
 BLOCK_COMMENT
@@ -149,6 +147,5 @@ fragment ID_START
 
 fragment ID_CONTINUE
  : ID_START
- | [0-9]
  | '.'
  ;

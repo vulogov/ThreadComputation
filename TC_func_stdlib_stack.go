@@ -1,6 +1,7 @@
 package ThreadComputation
 
 import (
+  log "github.com/sirupsen/logrus"
   "github.com/gammazero/deque"
   "github.com/google/uuid"
 )
@@ -87,6 +88,7 @@ func ToStackFunction(l *TCExecListener, name string, q *deque.Deque) (interface{
   }
   for q.Len() > 0 {
     e:= q.PopFront()
+    log.Debugf("Taking from atts[%v]: %v", q.Len(), e)
     ReturnFromFunction(l, name, e)
   }
   return nil, nil

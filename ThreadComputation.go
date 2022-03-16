@@ -33,6 +33,7 @@ type TCstate struct {
   InAttr       int
   InRef        int
   Attrs       *TwoStack
+  EvAttrs      deque.Deque
   Res         *TwoStack
   ResNames     deque.Deque
   ResN         mapset.Set

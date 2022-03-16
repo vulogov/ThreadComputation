@@ -5,26 +5,23 @@ import (
   "fmt"
   "errors"
   log "github.com/sirupsen/logrus"
-  "github.com/vulogov/ThreadComputation/parser"
+  "github.com/gammazero/deque"
 )
 
-func (l *TCExecListener) ExitVars(c *parser.VarsContext) {
-  if l.TC.Errors() > 0 {
+func FuncSetVariable(l *TCExecListener, func_name string, q *deque.Deque) {
+  var e interface{}
+  log.Debugf("Variable for %v will be processed", func_name)
+  if q.Len() > 0 {
+    e = q.PopFront()
+  } else if l.TC.HaveAttrs() {
+    e = l.TC.Attrs.Q().PopFront()
+  } else if l.TC.Ready() {
+    e = l.TC.Get()
+  } else {
+    l.TC.SetError("Can not get the value of $%v", func_name)
     return
   }
-  var_name := c.GetFname().GetText()
-  if l.TC.HaveAttrs() {
-    log.Debugf("Variable %v will be taken from attributes", var_name)
-    v := l.TC.Attrs.Q().PopBack()
-    l.TC.SetVariable(var_name, v)
-  } else if l.TC.Ready() {
-    log.Debugf("Variable %v will be taken from stack", var_name)
-    v := l.TC.Get()
-    l.TC.SetVariable(var_name, v)
-  } else {
-    log.Debugf("Variable %v will be taken from nowhere", var_name)
-    l.SetError("Can not get variable %v value in context", var_name)
-  }
+  l.TC.SetVariable(func_name, e)
 }
 
 func (tc *TCstate) SetVariable(name string, data interface{}) {

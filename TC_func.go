@@ -56,17 +56,26 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     mod = nil
   }
   func_name := c.GetFname().GetText()
+  log.Debugf("fname=%v, type=%v", func_name, c.GetFname().GetTokenType())
+  q = l.Attrs()
+  l.TC.EvAttrs.PushFront(q)
 
   if mod != nil && mod == "`" {
     log.Debugf("Reference to the function %v will be processed", func_name)
     return
   }
+  if mod != nil && mod == "?" {
+    log.Debugf("Conditional for %v will be processed", func_name)
+    return
+  }
+  if mod != nil && mod == "$" {
+    FuncSetVariable(l, func_name, q)
+  }
 
-  q = l.Attrs()
   //
   // First, check if variable exists
   //
-  if l.TC.HasVariable(func_name) || q.Len() > 0 {
+  if l.TC.HasVariable(func_name)  {
     if q.Len() > 0 {
       e := q.PopFront()
       l.TC.SetVariable(func_name, e)
@@ -119,12 +128,9 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
         e = ApplyToFunction(l, e, q)
         ReturnFromFunction(l, func_name, e)
       } else {
-        l.SetError("%v is not recognozed as function", func_name)
+        l.SetError("%v is not recognized as function", func_name)
       }
     }
   }
-  if mod != nil && mod == "?" {
-    log.Debugf("Conditional for %v will be processed", func_name)
-    return
-  }
+  l.TC.EvAttrs.PopFront()
 }
