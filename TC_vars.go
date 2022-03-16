@@ -14,7 +14,7 @@ func FuncSetVariable(l *TCExecListener, func_name string, q *deque.Deque) {
   if q.Len() > 0 {
     e = q.PopFront()
   } else if l.TC.HaveAttrs() {
-    e = l.TC.Attrs.Q().PopFront()
+    e, _ = l.TC.Attrs.Take()
   } else if l.TC.Ready() {
     e = l.TC.Get()
   } else {
