@@ -19,10 +19,10 @@ func TestUserfun1(t *testing.T) {
 }
 
 func TestUserfun2(t *testing.T) {
-	SetVariable("tc.Debuglevel", "debug")
+	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
 	tc = tc.Eval("@answer[42] stack[ answer ]")
-	SetVariable("tc.Debuglevel", "info")
+	// SetVariable("tc.Debuglevel", "info")
 	if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())
 	}
