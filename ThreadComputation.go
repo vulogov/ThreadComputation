@@ -17,7 +17,9 @@ import (
 
 var Vars      cmap.Cmap
 var Functions cmap.Cmap
-var VERSION = "1.10"
+var Commands  cmap.Cmap
+var Callbacks cmap.Cmap
+var VERSION = "1.11"
 
 type TCExecListener struct {
   *parser.BaseThreadComputationListener
@@ -28,25 +30,23 @@ type TCstate struct {
   TC          *TCstate
   errors       int
   errmsg       string
-  InAttr       int
-  InRef        int
-  ToSkip       bool
-  SkipFunction string
-  Attrs       *TwoStack
-  Res         *TwoStack
-  ResNames     deque.Deque
-  ResN         mapset.Set
-  UFStack      deque.Deque
-  UFNStack     deque.Deque
-  FNStack      deque.Deque
-  LastArgs    *deque.Deque
-  Vars         cmap.Cmap
-  Functions    cmap.Cmap
-  UserFun      cmap.Cmap
-  Wg           sync.WaitGroup
-  Pool        *gohive.PoolService
-  StackList    cmap.Cmap
-  StackChan    cmap.Cmap
+  InAttr       int          // How deep we are in attributes
+  InRef        int          // If we are in reference
+  Attrs       *TwoStack     // Creating attributes
+  EvAttrs      deque.Deque  // Evaluating attributes
+  Res         *TwoStack     // Main stack
+  ResNames     deque.Deque  // stack of stack names
+  ResN         mapset.Set   // set of stack names
+  Vars         cmap.Cmap    // variables
+  Functions    cmap.Cmap    // Functions
+  UFunctions   cmap.Cmap    // User Functions
+  Commands     cmap.Cmap    // Commands
+  UFStack      deque.Deque  // Stack of User-defined functions
+  UFNStack     deque.Deque  // Stack of names User-defined functions
+  StackList    cmap.Cmap    // Reference to stacks
+  StackChan    cmap.Cmap    // Reference to stack channels
+  Wg           sync.WaitGroup // Global wait group
+  Pool        *gohive.PoolService // Global execution pool
 }
 
 type tcExecErrorListener struct {
@@ -92,9 +92,7 @@ func Init() *TCstate {
   tc := &TCstate{
     InAttr:  0,
     InRef:   0,
-    ToSkip:  false,
     errors:  0,
-    LastArgs: nil,
     Res:     InitTS(),
     Attrs:   InitTS(),
     ResN:    mapset.NewSet(),
@@ -105,6 +103,7 @@ func Init() *TCstate {
 }
 
 func (tc *TCstate) Eval(code string) *TCstate {
+  log.Debugf("Eval: %v", code)
   errorListener := new(tcExecErrorListener)
   errorListener.code = &code
   _input := antlr.NewInputStream(code)
@@ -163,6 +162,13 @@ func (tc *TCstate) Get() interface{} {
   return nil
 }
 
+func (tc *TCstate) Set(x interface{}) {
+  if tc.Res.GLen() == 0 {
+    return
+  }
+  tc.Res.Set(x)
+}
+
 func (tc *TCstate) GetAsString() string {
   res := tc.Get()
   if res != nil {
@@ -185,22 +191,24 @@ func (tc *TCstate) HaveAttrs() bool {
   return true
 }
 
-func (tc *TCstate) CurrentFunctionName() string {
-  if tc.FNStack.Len() > 0 {
-    return tc.FNStack.Front().(string)
-  } else {
-    return "#MAIN"
-  }
+// func (tc *TCstate) CurrentFunctionName() string {
+//   if tc.FNStack.Len() > 0 {
+//     return tc.FNStack.Front().(string)
+//   } else {
+//     return "#MAIN"
+//   }
+// }
+
+
+
+func (tc *TCstate) SetError(msg string, args ...interface{}) {
+  tc.errmsg = fmt.Sprintf(msg, args...)
+  tc.errors += 1
+  log.Errorf(tc.errmsg)
 }
 
-func (tc *TCstate) SetFunction(name string, fun TCFun) {
-  tc.Functions.Delete(name)
-  tc.Functions.Store(name, fun)
-}
-
-func (tc *TCstate) SetVariable(name string, data interface{}) {
-  tc.Vars.Delete(name)
-  tc.Vars.Store(name, data)
+func (l *TCExecListener) SetError(msg string, args ...interface{}) {
+  l.TC.SetError(msg, args...)
 }
 
 func (l *tcExecErrorListener) SyntaxError(recognizer antlr.Recognizer, offendingSymbol interface{}, line, column int, msg string, e antlr.RecognitionException) {

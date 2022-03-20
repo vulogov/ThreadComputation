@@ -43,7 +43,7 @@ func TestVfs3(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Error detecting CWD")
 	}
-	script := fmt.Sprintf("\"file://%s/examples/hello.txt\" read strip", cwd)
+	script := fmt.Sprintf("\"file://%s/examples/hello.txt\" read str.strip", cwd)
 	tc := Init()
   tc1 := tc.Eval(script)
 	if tc1.Errors() != 0 {
@@ -57,24 +57,24 @@ func TestVfs3(t *testing.T) {
 
 func TestVfs4(t *testing.T) {
 	tc := Init()
-  tc1 := tc.Eval("\"@/examples/hello.txt\" read strip")
+  tc1 := tc.Eval("\"@/examples/hello.txt\" read str.strip")
 	if tc1.Errors() != 0 {
-		t.Fatalf("\"@/examples/hello.txt\" read strip parse failed")
+		t.Fatalf("\"@/examples/hello.txt\" read str.strip parse failed")
 	}
 	res := tc.GetAsString()
 	if res != "Hello world!" {
-		t.Fatalf("\"@/examples/hello.txt\" read strip had failed: %v", res)
+		t.Fatalf("\"@/examples/hello.txt\" read str.strip had failed: %v", res)
 	}
 }
 
 func TestVfs5(t *testing.T) {
 	tc := Init()
-  tc1 := tc.Eval("\"https://raw.githubusercontent.com/vulogov/ThreadComputation/main/examples/hello.txt\" read strip")
+  tc1 := tc.Eval("\"https://raw.githubusercontent.com/vulogov/ThreadComputation/main/examples/hello.txt\" read str.strip")
 	if tc1.Errors() != 0 {
-		t.Fatalf("\"https://raw.githubusercontent.com/vulogov/ThreadComputation/main/examples/hello.txt\" read strip parse failed")
+		t.Fatalf("\"https://raw.githubusercontent.com/vulogov/ThreadComputation/main/examples/hello.txt\" read str.strip parse failed")
 	}
 	res := tc.GetAsString()
 	if res != "Hello world!" {
-		t.Fatalf("\"https://raw.githubusercontent.com/vulogov/ThreadComputation/main/examples/hello.txt\" read strip had failed: %v", res)
+		t.Fatalf("\"https://raw.githubusercontent.com/vulogov/ThreadComputation/main/examples/hello.txt\" read str.strip had failed: %v", res)
 	}
 }

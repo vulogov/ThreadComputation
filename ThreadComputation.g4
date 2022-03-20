@@ -6,116 +6,51 @@ expressions
 
 root_term
  : ( fun
-   | ufun
-   | term
-   | vars
    | dblock
    | dmap
-   | lblock
-   | trueblock
-   | falseblock
-   | filterblock
-   | spawnblock
 );
 
 fun
- : fname=(NAME|OPS) ('[' (param+=fun_term)* ']')?
-;
-
-ufun
- : '@' fname=(NAME|OPS) ('[' (param+=ufun_term)* ']')?
-;
-
-vars
- : '$' vname=NAME
+ : (mod=MOD)? fname=FUNC_NAME ('[' (param+=fun_term)* ']')?
 ;
 
 dblock_term
  : ( fun
-   | ufun
-   | term
-   | vars
    | dblock
    | dmap
-   | lblock
-   | trueblock
-   | falseblock
-   | filterblock
-   | spawnblock
 );
 
 fun_term
  : ( fun
-   | term
+   | dmap
+   | pos_term
 );
 
-ufun_term
- : ( fun
-   | term
-   | vars
-   | dblock
-   | dmap
-   | lblock
-);
+pos_term
+ : '#' pname=NAME ;
 
 dblock
  : (':' bname=NAME)?'(' (param+=dblock_term)* ')'
 ;
 
-lblock
- : 'lambda\\' (param+=ufun_term)* '\\'
-;
-
-trueblock
- : 'true\\' (param+=ufun_term)* '\\'
-;
-
-falseblock
- : 'false\\' (param+=ufun_term)* '\\'
-;
-
-filterblock
- : 'filter\\' (param+=ufun_term)* '\\'
-;
-
-spawnblock
- : 'spawn\\' (param+=ufun_term)* '\\'
-;
-
-sendblock
- : 'send\\' (param+=ufun_term)* '\\'
-;
-
-recvblock
- : 'recv\\' (param+=ufun_term)* '\\'
-;
-
-
 dmap
  : '{' (param+=key_term)* '}'
 ;
 
-integer_term: VALUE=INTEGER ;
-float_term: VALUE=FLOAT_NUMBER ;
-string_term: VALUE=STRING ;
-boolean_term: VALUE=(TRUE|FALSE) ;
-key_term: KEY=NAME ':' VALUE=(INTEGER|FLOAT_NUMBER|STRING|TRUE|FALSE) ;
+key_term: KEY=NAME ':' VALUE=fun_term ;
 
-term
- : ( integer_term
-    | float_term
-    | string_term
-    | boolean_term
-);
+FUNC_NAME
+  : NAME
+  | OPS
+  | INTEGER
+  | FLOAT_NUMBER
+  | STRING
+  ;
 
 OPS
-  : (OPS_START)? (OP)+
+  : (OP)+
   ;
-OPS_START
-  : (
-    '`'
-  | '?'
-  );
+
 NAME
   : ID_START ID_CONTINUE*
   ;
@@ -146,7 +81,6 @@ OP
   | '^'
   | '&'
   | '!'
-  | '~'
   | '↑'
   | '↓'
   | '×'
@@ -164,16 +98,12 @@ OP
   | '∧'
   ;
 
-TRUE
-  : '#true'
-  | '#True'
-  | '#TRUE'
-  ;
-
-FALSE
-  : '#false'
-  | '#False'
-  | '#FALSE'
+MOD
+  : '?'
+  | '`'
+  | '~'
+  | '@'
+  | '$'
   ;
 
 BLOCK_COMMENT
@@ -216,12 +146,9 @@ fragment SHORT_STRING
 fragment ID_START
  : ([A-Z]|[a-z])
  | [a-z]
- | '`'
- | '?'
  ;
 
 fragment ID_CONTINUE
  : ID_START
- | [0-9]
  | '.'
  ;

@@ -2,30 +2,44 @@ package ThreadComputation
 
 import (
   "os"
-  "errors"
   "fmt"
-  "github.com/vulogov/ThreadComputation/parser"
+  "errors"
+  log "github.com/sirupsen/logrus"
+  "github.com/gammazero/deque"
 )
 
+func FuncSetVariable(l *TCExecListener, func_name string, q *deque.Deque) {
+  var e interface{}
+  log.Debugf("Variable for %v will be processed", func_name)
+  if q.Len() > 0 {
+    e = q.PopFront()
+  } else if l.TC.HaveAttrs() {
+    e, _ = l.TC.Attrs.Take()
+  } else if l.TC.Ready() {
+    e = l.TC.Get()
+  } else {
+    l.TC.SetError("Can not get the value of $%v", func_name)
+    return
+  }
+  l.TC.SetVariable(func_name, e)
+}
 
-func (l *TCExecListener) EnterVars(c *parser.VarsContext) {
-  if l.TC.Errors() > 0 {
-    return
-  }
-  if l.TC.AddToUserFun(fmt.Sprintf("$%v",c.GetVname().GetText())) {
-    return
-  }
-  if l.TC.Ready() {
-    vname := c.GetVname().GetText()
-    l.TC.Vars.Delete(vname)
-    e := l.TC.Get()
-    l.TC.Vars.Store(vname, e)
-  }
+func (tc *TCstate) SetVariable(name string, data interface{}) {
+  log.Debugf("variable %v->%v", data, name)
+  tc.Vars.Delete(name)
+  tc.Vars.Store(name, data)
 }
 
 func SetVariable(name string, data interface{}) {
   Vars.Delete(name)
   Vars.Store(name, data)
+}
+
+func (tc *TCstate) GetVariable(name string) (interface{}, error) {
+  if data, ok := tc.Vars.Load(name); ok {
+    return data, nil
+  }
+  return GetVariable(name)
 }
 
 func GetVariable(name string) (interface{}, error) {
@@ -34,6 +48,18 @@ func GetVariable(name string) (interface{}, error) {
   }
   return nil, errors.New(fmt.Sprintf("Variable %v not found", name))
 }
+
+func (tc *TCstate) HasVariable(name string) bool {
+  if _, ok := tc.Vars.Load(name); ok {
+    return true
+  }
+  if _, ok := Vars.Load(name); ok {
+    return true
+  }
+  return false
+}
+
+
 
 func initStdVars() {
   SetVariable("tc.Version", VERSION)

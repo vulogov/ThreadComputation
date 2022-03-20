@@ -1,0 +1,5 @@
+package ThreadComputation
+
+func initStdlib() {
+
+}

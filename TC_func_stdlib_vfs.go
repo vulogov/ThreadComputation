@@ -10,6 +10,10 @@ import (
   "github.com/gammazero/deque"
 )
 
+func ReadFile(uri string) (string, error) {
+  return readVfsFile(uri)
+}
+
 func readVfsFile(uri string) (string, error) {
   var n int
   max_filesize, _ := GetVariable("tc.Maxfilesize")
@@ -52,36 +56,21 @@ func readVfsFile(uri string) (string, error) {
   return "", errors.New("read request did not detect a proper context")
 }
 
-func ReadFunction(l *TCExecListener, q *deque.Deque) (interface{}, error) {
-  if q.Len() > 0 {
-    for q.Len() > 0 {
-      fn := q.PopFront()
-      switch fn.(type) {
-      case string:
-        data, err := readVfsFile(fn.(string))
-        if err != nil {
-          return nil, err
-        }
-        ReturnFromFunction(l, "read", data)
-      default:
-        break
+func TCReadFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  for q.Len() > 0 {
+    fname := q.PopFront()
+    switch fname.(type) {
+    case string:
+      data, err := readVfsFile(fname.(string))
+      if err != nil {
+        return nil, err
       }
-    }
-    return nil, nil
-  } else {
-    if l.TC.Ready() {
-      fn := l.TC.Get()
-      switch fn.(type) {
-      case string:
-        return readVfsFile(fn.(string))
-      }
+      ReturnFromFunction(l, "read", data)
     }
   }
-  return nil, errors.New("read function did not discover proper context")
+  return nil, nil
 }
 
-
-
-func initStdlibVfs() {
-  SetFunction("read", ReadFunction)
+func init() {
+  SetFunction("read", TCReadFunction)
 }
