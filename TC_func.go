@@ -1,6 +1,7 @@
 package ThreadComputation
 
 import (
+  "fmt"
   "strings"
   log "github.com/sirupsen/logrus"
   "github.com/gammazero/deque"
@@ -26,6 +27,11 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
     return
   }
   func_name := c.GetFname().GetText()
+  if mod != nil && mod == "@" {
+    log.Debugf("User function %v will be created", func_name)
+    l.TC.StartUserFun(func_name)
+    return
+  }
   if mod != nil && mod == "?" {
     log.Debugf("Conditional for %v will be created", func_name)
     return
@@ -35,6 +41,7 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
     return
   }
   log.Debugf("open call: %v\\%v", mod, func_name)
+  l.TC.MakeUserFun(func_name)
   l.TC.InAttr += 1
   l.TC.Attrs.Add()
 }
@@ -59,7 +66,12 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
   log.Debugf("fname=%v, type=%v", func_name, c.GetFname().GetTokenType())
   q = l.Attrs()
   l.TC.EvAttrs.PushFront(q)
-
+  if mod != nil && mod == "@" {
+    log.Debugf("Function %v will be created", func_name)
+    l.TC.FinishUserFun()
+    l.TC.EndUserFun()
+    return
+  }
   if mod != nil && mod == "`" {
     log.Debugf("Reference to the function %v will be processed", func_name)
     return
@@ -68,7 +80,13 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     log.Debugf("Conditional for %v will be processed", func_name)
     return
   }
+  //
+  // If name prepend with '$' it is considered to be variable
+  //
   if mod != nil && mod == "$" {
+    if l.TC.AddToUserFun(fmt.Sprintf("$%v ", func_name)) {
+      return
+    }
     FuncSetVariable(l, func_name, q)
   }
 
@@ -82,6 +100,19 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     }
     data, _ := l.TC.GetVariable(func_name)
     ReturnFromFunction(l, func_name, data)
+  } else if l.TC.IsUserFunction(func_name) {
+    //
+    // User function exists
+    //
+    code, err := l.TC.GetUserFunCode(func_name)
+    if err != nil {
+      l.SetError("Getting user function code %v returned error: %v", func_name, err)
+      return
+    }
+    log.Debugf("Evaluating user function: %v", func_name)
+    l.TC.Eval(code)
+    l.TC.EvAttrs.PopFront()
+    return
   } else if l.TC.HaveCommand(func_name) {
     //
     // Next, if command exists
