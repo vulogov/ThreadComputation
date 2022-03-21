@@ -18,9 +18,9 @@ func readVfsFile(uri string) (string, error) {
   var n int
   max_filesize, _ := GetVariable("tc.Maxfilesize")
   buf := make([]byte, max_filesize.(int))
-  if strings.HasPrefix(uri, "@") {
+  if strings.HasPrefix(uri, "./") {
     cwd, _ := os.Getwd()
-    uri = strings.TrimPrefix(uri, "@")
+    uri = strings.TrimPrefix(uri, ".")
     uri = fmt.Sprintf("file://%v/%v", cwd, uri)
   }
   if strings.HasPrefix(uri, "http") || strings.HasPrefix(uri, "https") {
