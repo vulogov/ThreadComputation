@@ -102,3 +102,31 @@ func TestStdlibStack9(t *testing.T) {
           t.Fatalf("data in stack is not in order: %v and shall be 42", res)
   }
 }
+
+func TestStdlibStack10(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+  tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc1 := tc.Eval("41 [A: 42 ;; [B: 43 ;; S[\"A\"]")
+  if tc1.Errors() != 0 {
+          t.Fatalf("41 [A: 42 ;; [B: 43 ;; S[\"A\"] parse failed")
+  }
+  res := tc.GetAsString()
+  if res != "42" {
+          t.Fatalf("41 [A: 42 ;; [B: 43 ;; S[\"A\"]: %v and shall be 42", res)
+  }
+}
+
+func TestStdlibStack11(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+  tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc1 := tc.Eval("41 [A: 42 ;; [B: 43 ;; S")
+  if tc1.Errors() != 0 {
+          t.Fatalf("41 [A: 42 ;; [B: 43 ;; S parse failed")
+  }
+  res := tc.GetAsString()
+  if res == "B" {
+          t.Fatalf("41 [A: 42 ;; [B: 43 ;; S: %v and shall not be B", res)
+  }
+}
