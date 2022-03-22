@@ -136,6 +136,12 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
         if mod != nil && mod == "~" {
           log.Debugf("Function %v will be applied to all data in stack", func_name)
           q = AllValuesFromStackAndAttr(l, q)
+        } else if mod != nil && mod == "∘" {
+          log.Debugf("Function %v will be applied to ether data in stack or in attrs", func_name)
+          q = AllValuesFromStackOrAttr(l, q)
+        } else if mod != nil && mod == "∀" {
+          log.Debugf("Function %v will be applied to all data in stack and in attrs", func_name)
+          q = AllValuesFromStackAndAttr(l, q)
         } else {
           log.Debugf("Function %v will be applied to a single element in stack", func_name)
           q = SingleValueFromStackAndAttr(l, q)
