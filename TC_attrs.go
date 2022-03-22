@@ -12,3 +12,18 @@ func (l *TCExecListener) Attrs() *deque.Deque {
   }
   return deque.New()
 }
+
+func AttrsToArray(q *deque.Deque) []interface{} {
+  var res []interface{}
+  for x := 0; x < q.Len(); x++ {
+    res = append(res, q.At(x))
+  }
+  return res
+}
+
+func (l *TCExecListener) LastEvAttr() *deque.Deque {
+  if l.TC.EvAttrs.Len() > 0 {
+    return l.TC.EvAttrs.Front().(*deque.Deque)
+  }
+  return nil
+}

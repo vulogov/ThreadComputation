@@ -60,7 +60,24 @@ func TCPrintflnFunction(l *TCExecListener, name string, q *deque.Deque) (interfa
 }
 
 func TCnewlineFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
-  ReturnFromFunction(l, "newline", "\n")
+  if q.Len() > 0 {
+    for q.Len() > 0 {
+      e := q.PopFront()
+      fun := GetConverterCallback(e)
+      if fun == nil {
+        log.Debugf("print error: Can not get convert for %T", e)
+        continue
+      }
+      switch e.(type) {
+      case string:
+        fmt.Printf("%v\n", e.(string))
+      default:
+        fmt.Printf("%v\n", fun(e, String))
+      }
+    }
+  } else {
+    ReturnFromFunction(l, "newline", "\n")
+  }
   return nil, nil
 }
 
@@ -70,5 +87,5 @@ func init() {
   SetFunction("println", TCPrintlnFunction)
   SetFunction("printf", TCPrintfFunction)
   SetFunction("printlnf", TCPrintflnFunction)
-  SetFunction("newline", TCPrintflnFunction)
+  SetCommand("newline", TCPrintflnFunction)
 }

@@ -57,13 +57,13 @@ func TestVfs3(t *testing.T) {
 
 func TestVfs4(t *testing.T) {
 	tc := Init()
-  tc1 := tc.Eval("\"@/examples/hello.txt\" read str.strip")
+  tc1 := tc.Eval("\"./examples/hello.txt\" read str.strip")
 	if tc1.Errors() != 0 {
-		t.Fatalf("\"@/examples/hello.txt\" read str.strip parse failed")
+		t.Fatalf("\"./examples/hello.txt\" read str.strip parse failed")
 	}
 	res := tc.GetAsString()
 	if res != "Hello world!" {
-		t.Fatalf("\"@/examples/hello.txt\" read str.strip had failed: %v", res)
+		t.Fatalf("\"./examples/hello.txt\" read str.strip had failed: %v", res)
 	}
 }
 
