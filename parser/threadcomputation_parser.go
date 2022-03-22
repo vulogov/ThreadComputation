@@ -16,51 +16,52 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 23, 108,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 23, 109,
 	4, 2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 4, 5, 9, 5, 4, 6, 9, 6, 4, 7, 9, 7,
 	4, 8, 9, 8, 4, 9, 9, 9, 4, 10, 9, 10, 4, 11, 9, 11, 4, 12, 9, 12, 3, 2,
 	7, 2, 26, 10, 2, 12, 2, 14, 2, 29, 11, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
 	5, 3, 36, 10, 3, 3, 4, 3, 4, 3, 4, 3, 4, 7, 4, 42, 10, 4, 12, 4, 14, 4,
 	45, 11, 4, 3, 4, 3, 4, 3, 5, 5, 5, 50, 10, 5, 3, 5, 3, 5, 3, 5, 7, 5, 55,
 	10, 5, 12, 5, 14, 5, 58, 11, 5, 3, 5, 5, 5, 61, 10, 5, 3, 6, 3, 6, 3, 6,
-	5, 6, 66, 10, 6, 3, 7, 3, 7, 3, 7, 3, 7, 5, 7, 72, 10, 7, 3, 8, 3, 8, 3,
-	8, 5, 8, 77, 10, 8, 3, 9, 3, 9, 3, 9, 3, 10, 3, 10, 5, 10, 84, 10, 10,
-	3, 10, 3, 10, 7, 10, 88, 10, 10, 12, 10, 14, 10, 91, 11, 10, 3, 10, 3,
-	10, 3, 11, 3, 11, 7, 11, 97, 10, 11, 12, 11, 14, 11, 100, 11, 11, 3, 11,
-	3, 11, 3, 12, 3, 12, 3, 12, 3, 12, 3, 12, 2, 2, 13, 2, 4, 6, 8, 10, 12,
-	14, 16, 18, 20, 22, 2, 2, 2, 115, 2, 27, 3, 2, 2, 2, 4, 35, 3, 2, 2, 2,
-	6, 37, 3, 2, 2, 2, 8, 49, 3, 2, 2, 2, 10, 65, 3, 2, 2, 2, 12, 71, 3, 2,
-	2, 2, 14, 76, 3, 2, 2, 2, 16, 78, 3, 2, 2, 2, 18, 83, 3, 2, 2, 2, 20, 94,
-	3, 2, 2, 2, 22, 103, 3, 2, 2, 2, 24, 26, 5, 4, 3, 2, 25, 24, 3, 2, 2, 2,
-	26, 29, 3, 2, 2, 2, 27, 25, 3, 2, 2, 2, 27, 28, 3, 2, 2, 2, 28, 3, 3, 2,
-	2, 2, 29, 27, 3, 2, 2, 2, 30, 36, 5, 8, 5, 2, 31, 36, 5, 18, 10, 2, 32,
-	36, 5, 20, 11, 2, 33, 36, 5, 6, 4, 2, 34, 36, 5, 16, 9, 2, 35, 30, 3, 2,
-	2, 2, 35, 31, 3, 2, 2, 2, 35, 32, 3, 2, 2, 2, 35, 33, 3, 2, 2, 2, 35, 34,
-	3, 2, 2, 2, 36, 5, 3, 2, 2, 2, 37, 38, 7, 3, 2, 2, 38, 39, 7, 12, 2, 2,
-	39, 43, 7, 4, 2, 2, 40, 42, 5, 10, 6, 2, 41, 40, 3, 2, 2, 2, 42, 45, 3,
-	2, 2, 2, 43, 41, 3, 2, 2, 2, 43, 44, 3, 2, 2, 2, 44, 46, 3, 2, 2, 2, 45,
-	43, 3, 2, 2, 2, 46, 47, 7, 5, 2, 2, 47, 7, 3, 2, 2, 2, 48, 50, 7, 20, 2,
-	2, 49, 48, 3, 2, 2, 2, 49, 50, 3, 2, 2, 2, 50, 51, 3, 2, 2, 2, 51, 60,
-	7, 12, 2, 2, 52, 56, 7, 3, 2, 2, 53, 55, 5, 14, 8, 2, 54, 53, 3, 2, 2,
-	2, 55, 58, 3, 2, 2, 2, 56, 54, 3, 2, 2, 2, 56, 57, 3, 2, 2, 2, 57, 59,
+	3, 6, 5, 6, 67, 10, 6, 3, 7, 3, 7, 3, 7, 3, 7, 5, 7, 73, 10, 7, 3, 8, 3,
+	8, 3, 8, 5, 8, 78, 10, 8, 3, 9, 3, 9, 3, 9, 3, 10, 3, 10, 5, 10, 85, 10,
+	10, 3, 10, 3, 10, 7, 10, 89, 10, 10, 12, 10, 14, 10, 92, 11, 10, 3, 10,
+	3, 10, 3, 11, 3, 11, 7, 11, 98, 10, 11, 12, 11, 14, 11, 101, 11, 11, 3,
+	11, 3, 11, 3, 12, 3, 12, 3, 12, 3, 12, 3, 12, 2, 2, 13, 2, 4, 6, 8, 10,
+	12, 14, 16, 18, 20, 22, 2, 2, 2, 117, 2, 27, 3, 2, 2, 2, 4, 35, 3, 2, 2,
+	2, 6, 37, 3, 2, 2, 2, 8, 49, 3, 2, 2, 2, 10, 66, 3, 2, 2, 2, 12, 72, 3,
+	2, 2, 2, 14, 77, 3, 2, 2, 2, 16, 79, 3, 2, 2, 2, 18, 84, 3, 2, 2, 2, 20,
+	95, 3, 2, 2, 2, 22, 104, 3, 2, 2, 2, 24, 26, 5, 4, 3, 2, 25, 24, 3, 2,
+	2, 2, 26, 29, 3, 2, 2, 2, 27, 25, 3, 2, 2, 2, 27, 28, 3, 2, 2, 2, 28, 3,
+	3, 2, 2, 2, 29, 27, 3, 2, 2, 2, 30, 36, 5, 8, 5, 2, 31, 36, 5, 18, 10,
+	2, 32, 36, 5, 20, 11, 2, 33, 36, 5, 6, 4, 2, 34, 36, 5, 16, 9, 2, 35, 30,
+	3, 2, 2, 2, 35, 31, 3, 2, 2, 2, 35, 32, 3, 2, 2, 2, 35, 33, 3, 2, 2, 2,
+	35, 34, 3, 2, 2, 2, 36, 5, 3, 2, 2, 2, 37, 38, 7, 3, 2, 2, 38, 39, 7, 12,
+	2, 2, 39, 43, 7, 4, 2, 2, 40, 42, 5, 10, 6, 2, 41, 40, 3, 2, 2, 2, 42,
+	45, 3, 2, 2, 2, 43, 41, 3, 2, 2, 2, 43, 44, 3, 2, 2, 2, 44, 46, 3, 2, 2,
+	2, 45, 43, 3, 2, 2, 2, 46, 47, 7, 5, 2, 2, 47, 7, 3, 2, 2, 2, 48, 50, 7,
+	20, 2, 2, 49, 48, 3, 2, 2, 2, 49, 50, 3, 2, 2, 2, 50, 51, 3, 2, 2, 2, 51,
+	60, 7, 12, 2, 2, 52, 56, 7, 3, 2, 2, 53, 55, 5, 14, 8, 2, 54, 53, 3, 2,
+	2, 2, 55, 58, 3, 2, 2, 2, 56, 54, 3, 2, 2, 2, 56, 57, 3, 2, 2, 2, 57, 59,
 	3, 2, 2, 2, 58, 56, 3, 2, 2, 2, 59, 61, 7, 6, 2, 2, 60, 52, 3, 2, 2, 2,
-	60, 61, 3, 2, 2, 2, 61, 9, 3, 2, 2, 2, 62, 66, 5, 8, 5, 2, 63, 66, 5, 6,
-	4, 2, 64, 66, 5, 20, 11, 2, 65, 62, 3, 2, 2, 2, 65, 63, 3, 2, 2, 2, 65,
-	64, 3, 2, 2, 2, 66, 11, 3, 2, 2, 2, 67, 72, 5, 8, 5, 2, 68, 72, 5, 18,
-	10, 2, 69, 72, 5, 20, 11, 2, 70, 72, 5, 16, 9, 2, 71, 67, 3, 2, 2, 2, 71,
-	68, 3, 2, 2, 2, 71, 69, 3, 2, 2, 2, 71, 70, 3, 2, 2, 2, 72, 13, 3, 2, 2,
-	2, 73, 77, 5, 8, 5, 2, 74, 77, 5, 20, 11, 2, 75, 77, 5, 16, 9, 2, 76, 73,
-	3, 2, 2, 2, 76, 74, 3, 2, 2, 2, 76, 75, 3, 2, 2, 2, 77, 15, 3, 2, 2, 2,
-	78, 79, 7, 7, 2, 2, 79, 80, 7, 12, 2, 2, 80, 17, 3, 2, 2, 2, 81, 82, 7,
-	4, 2, 2, 82, 84, 7, 14, 2, 2, 83, 81, 3, 2, 2, 2, 83, 84, 3, 2, 2, 2, 84,
-	85, 3, 2, 2, 2, 85, 89, 7, 8, 2, 2, 86, 88, 5, 12, 7, 2, 87, 86, 3, 2,
-	2, 2, 88, 91, 3, 2, 2, 2, 89, 87, 3, 2, 2, 2, 89, 90, 3, 2, 2, 2, 90, 92,
-	3, 2, 2, 2, 91, 89, 3, 2, 2, 2, 92, 93, 7, 9, 2, 2, 93, 19, 3, 2, 2, 2,
-	94, 98, 7, 10, 2, 2, 95, 97, 5, 22, 12, 2, 96, 95, 3, 2, 2, 2, 97, 100,
-	3, 2, 2, 2, 98, 96, 3, 2, 2, 2, 98, 99, 3, 2, 2, 2, 99, 101, 3, 2, 2, 2,
-	100, 98, 3, 2, 2, 2, 101, 102, 7, 11, 2, 2, 102, 21, 3, 2, 2, 2, 103, 104,
-	7, 14, 2, 2, 104, 105, 7, 4, 2, 2, 105, 106, 5, 14, 8, 2, 106, 23, 3, 2,
-	2, 2, 14, 27, 35, 43, 49, 56, 60, 65, 71, 76, 83, 89, 98,
+	60, 61, 3, 2, 2, 2, 61, 9, 3, 2, 2, 2, 62, 67, 5, 8, 5, 2, 63, 67, 5, 6,
+	4, 2, 64, 67, 5, 20, 11, 2, 65, 67, 5, 16, 9, 2, 66, 62, 3, 2, 2, 2, 66,
+	63, 3, 2, 2, 2, 66, 64, 3, 2, 2, 2, 66, 65, 3, 2, 2, 2, 67, 11, 3, 2, 2,
+	2, 68, 73, 5, 8, 5, 2, 69, 73, 5, 18, 10, 2, 70, 73, 5, 20, 11, 2, 71,
+	73, 5, 16, 9, 2, 72, 68, 3, 2, 2, 2, 72, 69, 3, 2, 2, 2, 72, 70, 3, 2,
+	2, 2, 72, 71, 3, 2, 2, 2, 73, 13, 3, 2, 2, 2, 74, 78, 5, 8, 5, 2, 75, 78,
+	5, 20, 11, 2, 76, 78, 5, 16, 9, 2, 77, 74, 3, 2, 2, 2, 77, 75, 3, 2, 2,
+	2, 77, 76, 3, 2, 2, 2, 78, 15, 3, 2, 2, 2, 79, 80, 7, 7, 2, 2, 80, 81,
+	7, 12, 2, 2, 81, 17, 3, 2, 2, 2, 82, 83, 7, 4, 2, 2, 83, 85, 7, 14, 2,
+	2, 84, 82, 3, 2, 2, 2, 84, 85, 3, 2, 2, 2, 85, 86, 3, 2, 2, 2, 86, 90,
+	7, 8, 2, 2, 87, 89, 5, 12, 7, 2, 88, 87, 3, 2, 2, 2, 89, 92, 3, 2, 2, 2,
+	90, 88, 3, 2, 2, 2, 90, 91, 3, 2, 2, 2, 91, 93, 3, 2, 2, 2, 92, 90, 3,
+	2, 2, 2, 93, 94, 7, 9, 2, 2, 94, 19, 3, 2, 2, 2, 95, 99, 7, 10, 2, 2, 96,
+	98, 5, 22, 12, 2, 97, 96, 3, 2, 2, 2, 98, 101, 3, 2, 2, 2, 99, 97, 3, 2,
+	2, 2, 99, 100, 3, 2, 2, 2, 100, 102, 3, 2, 2, 2, 101, 99, 3, 2, 2, 2, 102,
+	103, 7, 11, 2, 2, 103, 21, 3, 2, 2, 2, 104, 105, 7, 14, 2, 2, 105, 106,
+	7, 4, 2, 2, 106, 107, 5, 14, 8, 2, 107, 23, 3, 2, 2, 2, 14, 27, 35, 43,
+	49, 56, 60, 66, 72, 77, 84, 90, 99,
 }
 var literalNames = []string{
 	"", "'['", "':'", "';;'", "']'", "'#'", "'('", "')'", "'{'", "'}'",
@@ -450,11 +451,11 @@ type INsContext interface {
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
-	// GetName returns the name token.
-	GetName() antlr.Token
+	// GetNsname returns the nsname token.
+	GetNsname() antlr.Token
 
-	// SetName sets the name token.
-	SetName(antlr.Token)
+	// SetNsname sets the nsname token.
+	SetNsname(antlr.Token)
 
 	// Get_ns_term returns the _ns_term rule contexts.
 	Get_ns_term() INs_termContext
@@ -475,7 +476,7 @@ type INsContext interface {
 type NsContext struct {
 	*antlr.BaseParserRuleContext
 	parser   antlr.Parser
-	name     antlr.Token
+	nsname   antlr.Token
 	_ns_term INs_termContext
 	param    []INs_termContext
 }
@@ -502,9 +503,9 @@ func NewNsContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingS
 
 func (s *NsContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *NsContext) GetName() antlr.Token { return s.name }
+func (s *NsContext) GetNsname() antlr.Token { return s.nsname }
 
-func (s *NsContext) SetName(v antlr.Token) { s.name = v }
+func (s *NsContext) SetNsname(v antlr.Token) { s.nsname = v }
 
 func (s *NsContext) Get_ns_term() INs_termContext { return s._ns_term }
 
@@ -595,7 +596,7 @@ func (p *ThreadComputationParser) Ns() (localctx INsContext) {
 
 		var _m = p.Match(ThreadComputationParserFUNC_NAME)
 
-		localctx.(*NsContext).name = _m
+		localctx.(*NsContext).nsname = _m
 	}
 	{
 		p.SetState(37)
@@ -605,7 +606,7 @@ func (p *ThreadComputationParser) Ns() (localctx INsContext) {
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
-	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__0)|(1<<ThreadComputationParserT__7)|(1<<ThreadComputationParserFUNC_NAME)|(1<<ThreadComputationParserMOD))) != 0 {
+	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__0)|(1<<ThreadComputationParserT__4)|(1<<ThreadComputationParserT__7)|(1<<ThreadComputationParserFUNC_NAME)|(1<<ThreadComputationParserMOD))) != 0 {
 		{
 			p.SetState(38)
 
@@ -910,6 +911,16 @@ func (s *Ns_termContext) Dmap() IDmapContext {
 	return t.(IDmapContext)
 }
 
+func (s *Ns_termContext) Pos_term() IPos_termContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IPos_termContext)(nil)).Elem(), 0)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IPos_termContext)
+}
+
 func (s *Ns_termContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
@@ -954,7 +965,7 @@ func (p *ThreadComputationParser) Ns_term() (localctx INs_termContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(63)
+	p.SetState(64)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
@@ -974,6 +985,12 @@ func (p *ThreadComputationParser) Ns_term() (localctx INs_termContext) {
 		{
 			p.SetState(62)
 			p.Dmap()
+		}
+
+	case ThreadComputationParserT__4:
+		{
+			p.SetState(63)
+			p.Pos_term()
 		}
 
 	default:
@@ -1105,31 +1122,31 @@ func (p *ThreadComputationParser) Dblock_term() (localctx IDblock_termContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(69)
+	p.SetState(70)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case ThreadComputationParserFUNC_NAME, ThreadComputationParserMOD:
 		{
-			p.SetState(65)
+			p.SetState(66)
 			p.Fun()
 		}
 
 	case ThreadComputationParserT__1, ThreadComputationParserT__5:
 		{
-			p.SetState(66)
+			p.SetState(67)
 			p.Dblock()
 		}
 
 	case ThreadComputationParserT__7:
 		{
-			p.SetState(67)
+			p.SetState(68)
 			p.Dmap()
 		}
 
 	case ThreadComputationParserT__4:
 		{
-			p.SetState(68)
+			p.SetState(69)
 			p.Pos_term()
 		}
 
@@ -1252,25 +1269,25 @@ func (p *ThreadComputationParser) Fun_term() (localctx IFun_termContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(74)
+	p.SetState(75)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case ThreadComputationParserFUNC_NAME, ThreadComputationParserMOD:
 		{
-			p.SetState(71)
+			p.SetState(72)
 			p.Fun()
 		}
 
 	case ThreadComputationParserT__7:
 		{
-			p.SetState(72)
+			p.SetState(73)
 			p.Dmap()
 		}
 
 	case ThreadComputationParserT__4:
 		{
-			p.SetState(73)
+			p.SetState(74)
 			p.Pos_term()
 		}
 
@@ -1379,11 +1396,11 @@ func (p *ThreadComputationParser) Pos_term() (localctx IPos_termContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(76)
+		p.SetState(77)
 		p.Match(ThreadComputationParserT__4)
 	}
 	{
-		p.SetState(77)
+		p.SetState(78)
 
 		var _m = p.Match(ThreadComputationParserFUNC_NAME)
 
@@ -1536,17 +1553,17 @@ func (p *ThreadComputationParser) Dblock() (localctx IDblockContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(81)
+	p.SetState(82)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == ThreadComputationParserT__1 {
 		{
-			p.SetState(79)
+			p.SetState(80)
 			p.Match(ThreadComputationParserT__1)
 		}
 		{
-			p.SetState(80)
+			p.SetState(81)
 
 			var _m = p.Match(ThreadComputationParserNAME)
 
@@ -1555,16 +1572,16 @@ func (p *ThreadComputationParser) Dblock() (localctx IDblockContext) {
 
 	}
 	{
-		p.SetState(83)
+		p.SetState(84)
 		p.Match(ThreadComputationParserT__5)
 	}
-	p.SetState(87)
+	p.SetState(88)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	for ((_la)&-(0x1f+1)) == 0 && ((1<<uint(_la))&((1<<ThreadComputationParserT__1)|(1<<ThreadComputationParserT__4)|(1<<ThreadComputationParserT__5)|(1<<ThreadComputationParserT__7)|(1<<ThreadComputationParserFUNC_NAME)|(1<<ThreadComputationParserMOD))) != 0 {
 		{
-			p.SetState(84)
+			p.SetState(85)
 
 			var _x = p.Dblock_term()
 
@@ -1572,12 +1589,12 @@ func (p *ThreadComputationParser) Dblock() (localctx IDblockContext) {
 		}
 		localctx.(*DblockContext).param = append(localctx.(*DblockContext).param, localctx.(*DblockContext)._dblock_term)
 
-		p.SetState(89)
+		p.SetState(90)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(90)
+		p.SetState(91)
 		p.Match(ThreadComputationParserT__6)
 	}
 
@@ -1713,16 +1730,16 @@ func (p *ThreadComputationParser) Dmap() (localctx IDmapContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(92)
+		p.SetState(93)
 		p.Match(ThreadComputationParserT__7)
 	}
-	p.SetState(96)
+	p.SetState(97)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == ThreadComputationParserNAME {
 		{
-			p.SetState(93)
+			p.SetState(94)
 
 			var _x = p.Key_term()
 
@@ -1730,12 +1747,12 @@ func (p *ThreadComputationParser) Dmap() (localctx IDmapContext) {
 		}
 		localctx.(*DmapContext).param = append(localctx.(*DmapContext).param, localctx.(*DmapContext)._key_term)
 
-		p.SetState(98)
+		p.SetState(99)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
-		p.SetState(99)
+		p.SetState(100)
 		p.Match(ThreadComputationParserT__8)
 	}
 
@@ -1861,18 +1878,18 @@ func (p *ThreadComputationParser) Key_term() (localctx IKey_termContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(101)
+		p.SetState(102)
 
 		var _m = p.Match(ThreadComputationParserNAME)
 
 		localctx.(*Key_termContext).KEY = _m
 	}
 	{
-		p.SetState(102)
+		p.SetState(103)
 		p.Match(ThreadComputationParserT__1)
 	}
 	{
-		p.SetState(103)
+		p.SetState(104)
 
 		var _x = p.Fun_term()
 

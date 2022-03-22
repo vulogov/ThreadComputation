@@ -13,7 +13,7 @@ root_term
 );
 
 ns
- : '[' name=FUNC_NAME ':' (param+=ns_term)* ';;'
+ : '[' nsname=FUNC_NAME ':' (param+=ns_term)* ';;'
 ;
 
 fun
@@ -24,6 +24,7 @@ ns_term
  : ( fun
    | ns
    | dmap
+   | pos_term
 );
 
 dblock_term
