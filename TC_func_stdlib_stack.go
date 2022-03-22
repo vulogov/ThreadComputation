@@ -137,6 +137,62 @@ func TCsStackFunction(l *TCExecListener, name string, q *deque.Deque) (interface
   return nil, nil
 }
 
+func TCGStackLeftFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if q.Len() == 0 {
+    q.PushFront(int64(1))
+  }
+  for q.Len() > 0 {
+    e := q.PopFront()
+    switch e.(type) {
+    case int64:
+      l.TC.StacksLeft(int(e.(int64)))
+    }
+  }
+  return nil, nil
+}
+
+func TCStackLeftFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if q.Len() == 0 {
+    q.PushFront(int64(1))
+  }
+  for q.Len() > 0 {
+    e := q.PopFront()
+    switch e.(type) {
+    case int64:
+      l.TC.StackLeft(int(e.(int64)))
+    }
+  }
+  return nil, nil
+}
+
+func TCGStackRightFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if q.Len() == 0 {
+    q.PushFront(int64(1))
+  }
+  for q.Len() > 0 {
+    e := q.PopFront()
+    switch e.(type) {
+    case int64:
+      l.TC.StacksRight(int(e.(int64)))
+    }
+  }
+  return nil, nil
+}
+
+func TCStackRightFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if q.Len() == 0 {
+    q.PushFront(int64(1))
+  }
+  for q.Len() > 0 {
+    e := q.PopFront()
+    switch e.(type) {
+    case int64:
+      l.TC.StackRight(int(e.(int64)))
+    }
+  }
+  return nil, nil
+}
+
 func init() {
   SetCommand("len", TCLenFunction)
   SetCommand("stack", ToStackFunction)
@@ -148,4 +204,8 @@ func init() {
   SetCommand("|", TCNewStackFunction)
   SetCommand("S", TCSStackFunction)
   SetFunction("s", TCsStackFunction)
+  SetCommand("<-", TCGStackLeftFunction)
+  SetCommand("<<", TCStackLeftFunction)
+  SetCommand("->", TCGStackRightFunction)
+  SetCommand(">>", TCStackRightFunction)
 }
