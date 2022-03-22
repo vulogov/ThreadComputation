@@ -20,3 +20,10 @@ func AttrsToArray(q *deque.Deque) []interface{} {
   }
   return res
 }
+
+func (l *TCExecListener) LastEvAttr() *deque.Deque {
+  if l.TC.EvAttrs.Len() > 0 {
+    return l.TC.EvAttrs.Front().(*deque.Deque)
+  }
+  return nil
+}

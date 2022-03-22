@@ -33,11 +33,23 @@ func (s *BaseThreadComputationListener) EnterRoot_term(ctx *Root_termContext) {}
 // ExitRoot_term is called when production root_term is exited.
 func (s *BaseThreadComputationListener) ExitRoot_term(ctx *Root_termContext) {}
 
+// EnterNs is called when production ns is entered.
+func (s *BaseThreadComputationListener) EnterNs(ctx *NsContext) {}
+
+// ExitNs is called when production ns is exited.
+func (s *BaseThreadComputationListener) ExitNs(ctx *NsContext) {}
+
 // EnterFun is called when production fun is entered.
 func (s *BaseThreadComputationListener) EnterFun(ctx *FunContext) {}
 
 // ExitFun is called when production fun is exited.
 func (s *BaseThreadComputationListener) ExitFun(ctx *FunContext) {}
+
+// EnterNs_term is called when production ns_term is entered.
+func (s *BaseThreadComputationListener) EnterNs_term(ctx *Ns_termContext) {}
+
+// ExitNs_term is called when production ns_term is exited.
+func (s *BaseThreadComputationListener) ExitNs_term(ctx *Ns_termContext) {}
 
 // EnterDblock_term is called when production dblock_term is entered.
 func (s *BaseThreadComputationListener) EnterDblock_term(ctx *Dblock_termContext) {}

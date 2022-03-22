@@ -8,16 +8,29 @@ root_term
  : ( fun
    | dblock
    | dmap
+   | ns
+   | pos_term
 );
+
+ns
+ : '[' name=FUNC_NAME ':' (param+=ns_term)* ';;'
+;
 
 fun
  : (mod=MOD)? fname=FUNC_NAME ('[' (param+=fun_term)* ']')?
 ;
 
+ns_term
+ : ( fun
+   | ns
+   | dmap
+);
+
 dblock_term
  : ( fun
    | dblock
    | dmap
+   | pos_term
 );
 
 fun_term
@@ -27,7 +40,7 @@ fun_term
 );
 
 pos_term
- : '#' pname=NAME ;
+ : '#' pname=FUNC_NAME ;
 
 dblock
  : (':' bname=NAME)?'(' (param+=dblock_term)* ')'
@@ -88,7 +101,6 @@ OP
   | '∆'
   | '∇'
   | ','
-  | ';'
   | '_'
   | '<'
   | '>'

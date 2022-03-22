@@ -14,8 +14,14 @@ type ThreadComputationListener interface {
 	// EnterRoot_term is called when entering the root_term production.
 	EnterRoot_term(c *Root_termContext)
 
+	// EnterNs is called when entering the ns production.
+	EnterNs(c *NsContext)
+
 	// EnterFun is called when entering the fun production.
 	EnterFun(c *FunContext)
+
+	// EnterNs_term is called when entering the ns_term production.
+	EnterNs_term(c *Ns_termContext)
 
 	// EnterDblock_term is called when entering the dblock_term production.
 	EnterDblock_term(c *Dblock_termContext)
@@ -41,8 +47,14 @@ type ThreadComputationListener interface {
 	// ExitRoot_term is called when exiting the root_term production.
 	ExitRoot_term(c *Root_termContext)
 
+	// ExitNs is called when exiting the ns production.
+	ExitNs(c *NsContext)
+
 	// ExitFun is called when exiting the fun production.
 	ExitFun(c *FunContext)
+
+	// ExitNs_term is called when exiting the ns_term production.
+	ExitNs_term(c *Ns_termContext)
 
 	// ExitDblock_term is called when exiting the dblock_term production.
 	ExitDblock_term(c *Dblock_termContext)

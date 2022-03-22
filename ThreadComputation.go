@@ -43,6 +43,7 @@ type TCstate struct {
   Commands     cmap.Cmap    // Commands
   UFStack      deque.Deque  // Stack of User-defined functions
   UFNStack     deque.Deque  // Stack of names User-defined functions
+  UFNB         int          // balancing []
   StackList    cmap.Cmap    // Reference to stacks
   StackChan    cmap.Cmap    // Reference to stack channels
   Wg           sync.WaitGroup // Global wait group
@@ -93,6 +94,7 @@ func Init() *TCstate {
     InAttr:  0,
     InRef:   0,
     errors:  0,
+    UFNB:    0,
     Res:     InitTS(),
     Attrs:   InitTS(),
     ResN:    mapset.NewSet(),

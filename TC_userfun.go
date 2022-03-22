@@ -52,17 +52,20 @@ func (tc *TCstate) GetUserFunCode(fname string) (string, error) {
 
 func (tc *TCstate) MakeUserFun(name string) bool {
   if tc.HaveUserFun() {
+    log.Debugf("Userfunction: %v[", name)
     out := fmt.Sprintf("%v[ ", name)
     c := tc.UFStack.PopFront().(string)
     c += out
     tc.UFStack.PushFront(c)
+    tc.UFNB += 1
     return true
   }
   return false
 }
 
 func (tc *TCstate) FinishUserFun() bool {
-  if tc.HaveUserFun() {
+  if tc.HaveUserFun() && tc.UFNB > 0 {
+    log.Debug("Userfunction: ]")
     c := tc.UFStack.PopFront().(string)
     c += " ]"
     tc.UFStack.PushFront(c)
