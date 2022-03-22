@@ -123,6 +123,20 @@ func TCSStackFunction(l *TCExecListener, name string, q *deque.Deque) (interface
   return nil, nil
 }
 
+func TCsStackFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  for q.Len() > 0 {
+    e := q.PopFront()
+    switch e.(type) {
+    case string:
+      err := l.TC.PositionStack(e.(string))
+      if err != nil {
+        return nil, err
+      }
+    }
+  }
+  return nil, nil
+}
+
 func init() {
   SetCommand("len", TCLenFunction)
   SetCommand("stack", ToStackFunction)
@@ -133,4 +147,5 @@ func init() {
   SetCommand(",", TCDropFunction)
   SetCommand("|", TCNewStackFunction)
   SetCommand("S", TCSStackFunction)
+  SetFunction("s", TCsStackFunction)
 }

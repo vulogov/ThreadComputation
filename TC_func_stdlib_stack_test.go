@@ -130,3 +130,17 @@ func TestStdlibStack11(t *testing.T) {
           t.Fatalf("41 [A: 42 ;; [B: 43 ;; S: %v and shall not be B", res)
   }
 }
+
+func TestStdlibStack12(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+  tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc1 := tc.Eval("\"A\" [A: 42 ;; [B: 43 ;; s")
+  if tc1.Errors() != 0 {
+          t.Fatalf("\"A\" [A: 42 ;; [B: 43 ;; s parse failed")
+  }
+  res := tc.GetAsString()
+  if res != "42" {
+          t.Fatalf("\"A\" [A: 42 ;; [B: 43 ;; s: %v and shall be 42", res)
+  }
+}
