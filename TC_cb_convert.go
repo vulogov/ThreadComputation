@@ -4,7 +4,9 @@ import (
   "fmt"
   "strings"
   "strconv"
+  "github.com/deckarep/golang-set"
   conv "github.com/cstockton/go-conv"
+  log "github.com/sirupsen/logrus"
 )
 
 
@@ -135,6 +137,17 @@ func TCListConvert(data interface{}, to_type int) interface{} {
   return nil
 }
 
+func TCSetConvert(data interface{}, to_type int) interface{} {
+  switch e := data.(type) {
+  case mapset.Set:
+    switch to_type {
+    case String:
+      return e.String()
+    }
+  }
+  return nil
+}
+
 func TCAnythingConvert(data interface{}, to_type int) interface{} {
   return fmt.Sprintf("%v", data)
 }
@@ -147,6 +160,7 @@ func RegisterConvertCallback(from_type int, fun TCConvertFun) {
 
 func GetConverterCallback(x interface{}) TCConvertFun {
   var fn string
+  log.Debugf("Request converter for: %T", x)
   switch x.(type) {
   case int64:
     fn = fmt.Sprintf("convert.%v", Int)
@@ -158,11 +172,14 @@ func GetConverterCallback(x interface{}) TCConvertFun {
     fn = fmt.Sprintf("convert.%v", Bool)
   case *TCList:
     fn = fmt.Sprintf("convert.%v", List)
+  case mapset.Set:
+    fn = fmt.Sprintf("convert.%v", Set)
   default:
     fn = fmt.Sprintf("convert.%v", Any)
   }
   fun, ok := Callbacks.Load(fn)
   if ok {
+    log.Debugf("Returning converter: %v", fn)
     return fun.(TCConvertFun)
   }
   return nil
@@ -183,4 +200,5 @@ func init() {
   RegisterConvertCallback(Bool, TCBoolConvert)
   RegisterConvertCallback(Any, TCAnythingConvert)
   RegisterConvertCallback(List, TCListConvert)
+  RegisterConvertCallback(Set, TCSetConvert)
 }

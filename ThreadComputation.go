@@ -44,6 +44,7 @@ type TCstate struct {
   UFStack      deque.Deque  // Stack of User-defined functions
   UFNStack     deque.Deque  // Stack of names User-defined functions
   UFNB         int          // balancing []
+  CStack       deque.Deque  // Conditionals stack
   StackList    cmap.Cmap    // Reference to stacks
   StackChan    cmap.Cmap    // Reference to stack channels
   Wg           sync.WaitGroup // Global wait group

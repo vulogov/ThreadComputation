@@ -27,14 +27,35 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
     return
   }
   func_name := c.GetFname().GetText()
+  if l.TC.IsInConditional() {
+    log.Debugf("We are in conditional. Skipping: %v", func_name)
+    return
+  }
   if mod != nil && mod == "@" {
     log.Debugf("User function %v will be created", func_name)
     l.TC.StartUserFun(func_name)
     return
   }
+  //
+  // Enter in conditional if #FALSE is on top of the stack
+  // continue otherwise
+  //
   if mod != nil && mod == "?" {
-    log.Debugf("Conditional for %v will be created", func_name)
-    return
+    if l.TC.Ready() {
+      e := l.TC.Get()
+      switch e.(type) {
+      case bool:
+        if ! e.(bool) {
+          log.Debugf("Conditional for %v will be created", func_name)
+          l.TC.BeginConditional(func_name)
+          return
+        } else {
+          log.Debugf("Conditional for %v is met", func_name)
+        }
+      default:
+        l.TC.Set(e)
+      }
+    }
   }
   if mod != nil && mod == "`" {
     log.Debugf("Reference for %v will be created", func_name)
@@ -63,6 +84,19 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     mod = nil
   }
   func_name := c.GetFname().GetText()
+  //
+  // If we are in conditional, Skipping
+  // If we are in conditional and name match, remove and skip
+  //
+  if l.TC.IfConditional(func_name) {
+    log.Debugf("Removing conditional for: %v", func_name)
+    l.TC.EndConditional(func_name)
+    return
+  } else {
+    if l.TC.IsInConditional() {
+      return
+    }
+  }
   log.Debugf("fname=%v, type=%v", func_name, c.GetFname().GetTokenType())
   q = l.Attrs()
   l.TC.EvAttrs.PushFront(q)
@@ -74,10 +108,6 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
   }
   if mod != nil && mod == "`" {
     log.Debugf("Reference to the function %v will be processed", func_name)
-    return
-  }
-  if mod != nil && mod == "?" {
-    log.Debugf("Conditional for %v will be processed", func_name)
     return
   }
   //
