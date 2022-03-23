@@ -6,8 +6,6 @@ expressions
 
 root_term
  : ( fun
-   | dblock
-   | dmap
    | ns
    | pos_term
 );
@@ -20,38 +18,22 @@ fun
  : (mod=MOD)? fname=FUNC_NAME ('[' (param+=fun_term)* ']')?
 ;
 
+
 ns_term
  : ( fun
    | ns
-   | dmap
    | pos_term
 );
 
-dblock_term
- : ( fun
-   | dblock
-   | dmap
-   | pos_term
-);
 
 fun_term
  : ( fun
-   | dmap
    | pos_term
 );
 
 pos_term
  : '#' pname=FUNC_NAME ;
 
-dblock
- : (':' bname=NAME)?'(' (param+=dblock_term)* ')'
-;
-
-dmap
- : '{' (param+=key_term)* '}'
-;
-
-key_term: KEY=NAME ':' VALUE=fun_term ;
 
 FUNC_NAME
   : NAME
