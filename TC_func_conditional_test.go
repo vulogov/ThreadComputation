@@ -19,9 +19,9 @@ func TestCond1(t *testing.T) {
 }
 
 func TestCond2(t *testing.T) {
-	SetVariable("tc.Debuglevel", "debug")
+	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
-	SetVariable("tc.Debuglevel", "info")
+	// SetVariable("tc.Debuglevel", "info")
 	tc = tc.Eval("41 true ?42")
 	if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())
