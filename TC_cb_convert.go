@@ -124,6 +124,17 @@ func TCBoolConvert(data interface{}, to_type int) interface{} {
   return nil
 }
 
+func TCListConvert(data interface{}, to_type int) interface{} {
+  switch e := data.(type) {
+  case *TCList:
+    switch to_type {
+    case String:
+      return e.String()
+    }
+  }
+  return nil
+}
+
 func TCAnythingConvert(data interface{}, to_type int) interface{} {
   return fmt.Sprintf("%v", data)
 }
@@ -145,6 +156,8 @@ func GetConverterCallback(x interface{}) TCConvertFun {
     fn = fmt.Sprintf("convert.%v", String)
   case bool:
     fn = fmt.Sprintf("convert.%v", Bool)
+  case *TCList:
+    fn = fmt.Sprintf("convert.%v", List)
   default:
     fn = fmt.Sprintf("convert.%v", Any)
   }
@@ -169,4 +182,5 @@ func init() {
   RegisterConvertCallback(Float, TCFloatConvert)
   RegisterConvertCallback(Bool, TCBoolConvert)
   RegisterConvertCallback(Any, TCAnythingConvert)
+  RegisterConvertCallback(List, TCListConvert)
 }
