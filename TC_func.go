@@ -69,10 +69,6 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
       }
     }
   }
-  if mod != nil && mod == "`" {
-    log.Debugf("Reference for %v will be created", func_name)
-    return
-  }
   log.Debugf("open call: %v\\%v", mod, func_name)
   if mod == nil {
     l.TC.MakeUserFun("", func_name)
@@ -144,6 +140,9 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
   }
   if mod != nil && mod == "`" {
     log.Debugf("Reference to the function %v will be processed", func_name)
+    ptr := l.TC.NewRef(func_name, q)
+    ReturnFromFunction(l, "#REF", ptr)
+    l.TC.EvAttrs.PopFront()
     return
   }
   //

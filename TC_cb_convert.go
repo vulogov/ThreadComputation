@@ -174,6 +174,10 @@ func GetConverterCallback(x interface{}) TCConvertFun {
     fn = fmt.Sprintf("convert.%v", List)
   case mapset.Set:
     fn = fmt.Sprintf("convert.%v", Set)
+  case *TCCode:
+    fn = fmt.Sprintf("convert.%v", Code)
+  case *TCFunRef:
+    fn = fmt.Sprintf("convert.%v", Ref)
   default:
     fn = fmt.Sprintf("convert.%v", Any)
   }
