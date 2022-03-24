@@ -115,7 +115,19 @@ func TCCodeConvert(data interface{}, to_type int) interface{} {
   return nil
 }
 
+func TCCodeExecute(l *TCExecListener, code interface{}) interface{} {
+  switch code.(type) {
+  case *TCCode:
+    err := l.TC.ExecuteCode(code.(*TCCode))
+    if err != nil {
+      l.SetError(fmt.Sprintf("Error executing code block: %v", err))
+    }
+  }
+  return nil
+}
+
 func init() {
   RegisterBlockCallback("code", BlockCode)
   RegisterConvertCallback(Code, TCCodeConvert)
+  RegisterExecuteCallback(Code, TCCodeExecute)
 }
