@@ -37,10 +37,20 @@ func TCRefConvert(data interface{}, to_type int) interface{} {
   return nil
 }
 
-func TCRefExecute(l *TCExecListener, code interface{}) interface{} {
+func TCRefExecute(l *TCExecListener, code interface{}, q *deque.Deque) interface{} {
   switch code.(type) {
   case *TCFunRef:
-
+    if code.(*TCFunRef).Attrs != nil {
+      for x := 0; x < code.(*TCFunRef).Attrs.Len(); x++ {
+        q.PushBack(code.(*TCFunRef).Attrs.At(x))
+      }
+    }
+    res, err := l.ExecFunction(code.(*TCFunRef).Name, q)
+    if err != nil {
+      l.SetError("Error executing reference: %v", err)
+      return nil
+    }
+    return res
   }
   return nil
 }

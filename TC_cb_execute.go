@@ -2,17 +2,18 @@ package ThreadComputation
 
 import (
   "fmt"
+  "github.com/gammazero/deque"
 )
 
 
 
-type TCExecuteFun func(*TCExecListener, interface{}) interface{}
+type TCExecuteFun func(*TCExecListener, interface{}, *deque.Deque) interface{}
 
-func TCExecuteEcho(l *TCExecListener, code interface{}) interface{} {
+func TCExecuteEcho(l *TCExecListener, code interface{}, q *deque.Deque) interface{} {
   return code
 }
 
-func TCExecuteEval(l *TCExecListener, code interface{}) interface{} {
+func TCExecuteEval(l *TCExecListener, code interface{}, q *deque.Deque) interface{} {
   l.TC.Eval(code.(string))
   return nil
 }

@@ -112,6 +112,9 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
   log.Debugf("fname=%v, type=%v", func_name, c.GetFname().GetTokenType())
   q = l.Attrs()
   l.TC.EvAttrs.PushFront(q)
+  //
+  // First, let's check if we do have a block function
+  //
   bfun := GetBlockCallback(func_name)
   if bfun != nil {
       //
@@ -138,6 +141,9 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     l.TC.EndUserFun()
     return
   }
+  //
+  // Second, if we shall make a reference and do no more
+  //
   if mod != nil && mod == "`" {
     log.Debugf("Reference to the function %v will be processed", func_name)
     ptr := l.TC.NewRef(func_name, q)
