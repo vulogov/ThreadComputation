@@ -31,7 +31,7 @@ func TCSetMath(name string, x interface{}, y interface{}) interface{} {
       case "+":
         return x.(mapset.Set).Union(y.(mapset.Set))
       case "-":
-        return x.(mapset.Set).Intersect(y.(mapset.Set))
+        return x.(mapset.Set).Difference(y.(mapset.Set))
       }
     }
   }

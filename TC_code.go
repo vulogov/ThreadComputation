@@ -32,7 +32,7 @@ func (c *TCCode) New() {
 }
 
 func (c *TCCode) String() string {
-  return fmt.Sprintf("code[ %v segment(s)]", c.Code.Len())
+  return fmt.Sprintf("code[ %v segment(s) %v userfunc(s)]", c.Code.Len(), c.Userfuncs.Cardinality())
 }
 
 func (c *TCCode) Add(v interface{}) {
@@ -104,6 +104,18 @@ func BlockCode(l *TCExecListener, name string, code string) interface{} {
   return nil
 }
 
+func TCCodeConvert(data interface{}, to_type int) interface{} {
+  switch e := data.(type) {
+  case *TCCode:
+    switch to_type {
+    case String:
+      return e.String()
+    }
+  }
+  return nil
+}
+
 func init() {
   RegisterBlockCallback("code", BlockCode)
+  RegisterConvertCallback(Code, TCCodeConvert)
 }
