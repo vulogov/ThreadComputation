@@ -37,6 +37,18 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
     return
   }
   //
+  // See if we have a block callback for this function
+  //
+  bfun := GetBlockCallback(func_name)
+  if bfun != nil {
+    //
+    // Processing code block start
+    //
+    log.Debugf("Block callaback detected for %v", func_name)
+    l.TC.StartLambdaFun()
+    return
+  }
+  //
   // Enter in conditional if #FALSE is on top of the stack
   // continue otherwise
   //
@@ -62,7 +74,11 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
     return
   }
   log.Debugf("open call: %v\\%v", mod, func_name)
-  l.TC.MakeUserFun(func_name)
+  if mod == nil {
+    l.TC.MakeUserFun("", func_name)
+  } else {
+    l.TC.MakeUserFun(mod.(string), func_name)
+  }
   l.TC.InAttr += 1
   l.TC.Attrs.Add()
 }
@@ -100,6 +116,25 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
   log.Debugf("fname=%v, type=%v", func_name, c.GetFname().GetTokenType())
   q = l.Attrs()
   l.TC.EvAttrs.PushFront(q)
+  bfun := GetBlockCallback(func_name)
+  if bfun != nil {
+      //
+      // Block function detected
+      //
+      l.TC.FinishUserFun()
+      ufname, err := l.TC.EndUserFun()
+      if err != nil {
+        l.SetError(fmt.Sprintf("Block exit failure: %v", err))
+        return
+      }
+      code, err := l.TC.GetUserFunCode(ufname)
+      if err != nil {
+        l.SetError(fmt.Sprintf("Block code: %v", err))
+        return
+      }
+      bfun(l, ufname, code)
+      return
+  }
   if mod != nil && mod == "@" {
     log.Debugf("Function %v will be created", func_name)
     l.TC.FinishUserFun()
@@ -119,7 +154,12 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     }
     FuncSetVariable(l, func_name, q)
   }
-
+  //
+  // Shall we just finish user function ?
+  //
+  if l.TC.FinishUserFun() {
+    return
+  }
   //
   // First, check if variable exists
   //

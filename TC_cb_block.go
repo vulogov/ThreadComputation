@@ -6,7 +6,7 @@ import (
 
 
 
-type TCBlockFun func(*TCExecListener, string) interface{}
+type TCBlockFun func(*TCExecListener, string, string) interface{}
 
 
 
@@ -19,7 +19,7 @@ func GetBlockCallback(name string) TCBlockFun {
   return nil
 }
 
-func RegisterBlockCallback(l *TCExecListener, name string, fun TCBlockFun) {
+func RegisterBlockCallback(name string, fun TCBlockFun) {
   fname := fmt.Sprintf("block.%v", name)
   Callbacks.Delete(fname)
   Callbacks.Store(fname, fun)
