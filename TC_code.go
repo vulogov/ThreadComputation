@@ -5,17 +5,20 @@ import (
   "errors"
   log "github.com/sirupsen/logrus"
   "github.com/google/uuid"
+  "github.com/deckarep/golang-set"
   "github.com/gammazero/deque"
 )
 
 type TCCode struct {
   Name       string
+  Userfuncs  mapset.Set
   Code       deque.Deque
 }
 
 func (tc *TCstate) NewCode() *TCCode {
   res := new(TCCode)
   res.Name = uuid.NewString()
+  res.Userfuncs = mapset.NewSet()
   res.New()
   return res
 }
@@ -74,6 +77,10 @@ func (c *TCCode) AddRaw(data string) {
   c.Code.PushFront(code)
 }
 
+func (c *TCCode) AddUserfunc(name string) {
+  c.Userfuncs.Add(name)
+}
+
 func (c *TCCode) Execute(tc *TCstate) error {
   for x := 0; x < c.Code.Len(); x++ {
     line := c.Code.At(x)
@@ -91,6 +98,7 @@ func (c *TCCode) Execute(tc *TCstate) error {
 func BlockCode(l *TCExecListener, name string, code string) interface{} {
   log.Debugf("code %v: %v", name, code)
   res := l.TC.NewCode()
+  res.AddUserfunc(name)
   res.AddRaw(code)
   ReturnFromFunction(l, "code", res)
   return nil

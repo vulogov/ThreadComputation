@@ -132,6 +132,7 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
         l.SetError(fmt.Sprintf("Block code: %v", err))
         return
       }
+      l.TC.EndUserFun()
       bfun(l, ufname, code)
       return
   }
