@@ -27,21 +27,58 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
     return
   }
   func_name := c.GetFname().GetText()
+  if l.TC.IsInConditional() {
+    log.Debugf("We are in conditional. Skipping: %v", func_name)
+    return
+  }
   if mod != nil && mod == "@" {
     log.Debugf("User function %v will be created", func_name)
     l.TC.StartUserFun(func_name)
     return
   }
-  if mod != nil && mod == "?" {
-    log.Debugf("Conditional for %v will be created", func_name)
+  //
+  // See if we have a block callback for this function
+  //
+  bfun := GetBlockCallback(func_name)
+  if bfun != nil {
+    //
+    // Processing code block start
+    //
+    log.Debugf("Block callaback detected for %v", func_name)
+    l.TC.StartLambdaFun()
     return
+  }
+  //
+  // Enter in conditional if #FALSE is on top of the stack
+  // continue otherwise
+  //
+  if mod != nil && mod == "?" {
+    if l.TC.Ready() {
+      e := l.TC.Get()
+      switch e.(type) {
+      case bool:
+        if ! e.(bool) {
+          log.Debugf("Conditional for %v will be created", func_name)
+          l.TC.BeginConditional(func_name)
+          return
+        } else {
+          log.Debugf("Conditional for %v is met", func_name)
+        }
+      default:
+        l.TC.Set(e)
+      }
+    }
   }
   if mod != nil && mod == "`" {
     log.Debugf("Reference for %v will be created", func_name)
     return
   }
   log.Debugf("open call: %v\\%v", mod, func_name)
-  l.TC.MakeUserFun(func_name)
+  if mod == nil {
+    l.TC.MakeUserFun("", func_name)
+  } else {
+    l.TC.MakeUserFun(mod.(string), func_name)
+  }
   l.TC.InAttr += 1
   l.TC.Attrs.Add()
 }
@@ -63,9 +100,42 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     mod = nil
   }
   func_name := c.GetFname().GetText()
+  //
+  // If we are in conditional, Skipping
+  // If we are in conditional and name match, remove and skip
+  //
+  if l.TC.IfConditional(func_name) {
+    log.Debugf("Removing conditional for: %v", func_name)
+    l.TC.EndConditional(func_name)
+    return
+  } else {
+    if l.TC.IsInConditional() {
+      return
+    }
+  }
   log.Debugf("fname=%v, type=%v", func_name, c.GetFname().GetTokenType())
   q = l.Attrs()
   l.TC.EvAttrs.PushFront(q)
+  bfun := GetBlockCallback(func_name)
+  if bfun != nil {
+      //
+      // Block function detected
+      //
+      l.TC.FinishUserFun()
+      ufname, err := l.TC.EndUserFun()
+      if err != nil {
+        l.SetError(fmt.Sprintf("Block exit failure: %v", err))
+        return
+      }
+      code, err := l.TC.GetUserFunCode(ufname)
+      if err != nil {
+        l.SetError(fmt.Sprintf("Block code: %v", err))
+        return
+      }
+      l.TC.EndUserFun()
+      bfun(l, ufname, code)
+      return
+  }
   if mod != nil && mod == "@" {
     log.Debugf("Function %v will be created", func_name)
     l.TC.FinishUserFun()
@@ -74,10 +144,6 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
   }
   if mod != nil && mod == "`" {
     log.Debugf("Reference to the function %v will be processed", func_name)
-    return
-  }
-  if mod != nil && mod == "?" {
-    log.Debugf("Conditional for %v will be processed", func_name)
     return
   }
   //
@@ -89,7 +155,12 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     }
     FuncSetVariable(l, func_name, q)
   }
-
+  //
+  // Shall we just finish user function ?
+  //
+  if l.TC.FinishUserFun() {
+    return
+  }
   //
   // First, check if variable exists
   //
