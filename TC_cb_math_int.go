@@ -20,7 +20,7 @@ func TCIntMath(name string, x interface{}, y interface{}) interface{} {
         return x.(int64) * y.(int64)
       case "/":
         if y.(int64) == 0 {
-          return nil
+          return MakeError("Division to Zero")
         }
         return x.(int64) / y.(int64)
       }

@@ -12,6 +12,11 @@ func TCExecuteFunction(l *TCExecListener, name string, q *deque.Deque) (interfac
     if efun != nil {
       log.Debugf("Executing for data type: %T", e)
       res := efun(l, e, q)
+      switch res.(type) {
+      case *TCError:
+        l.TC.RegisterError(res.(*TCError))
+        return nil, res.(*TCError).Err
+      }
       if res != nil {
         ReturnFromFunction(l, "!", res)
       }
@@ -29,6 +34,11 @@ func TCExecuteAllFunction(l *TCExecListener, name string, q *deque.Deque) (inter
     if efun != nil {
       log.Debugf("Executing for data type: %T", e)
       res := efun(l, e, eq)
+      switch res.(type) {
+      case *TCError:
+        l.TC.RegisterError(res.(*TCError))
+        return nil, res.(*TCError).Err
+      }
       if res != nil {
         ReturnFromFunction(l, "!*", res)
       }

@@ -152,6 +152,18 @@ func TCAnythingConvert(data interface{}, to_type int) interface{} {
   return fmt.Sprintf("%v", data)
 }
 
+func TCErrorConvert(data interface{}, to_type int) interface{} {
+  switch e := data.(type) {
+  case *TCError:
+    switch to_type {
+    case String:
+      return e.String()
+    }
+  }
+  return nil
+}
+
+
 func RegisterConvertCallback(from_type int, fun TCConvertFun) {
   fname := fmt.Sprintf("convert.%v", from_type)
   Callbacks.Delete(fname)
@@ -178,6 +190,8 @@ func GetConverterCallback(x interface{}) TCConvertFun {
     fn = fmt.Sprintf("convert.%v", Code)
   case *TCFunRef:
     fn = fmt.Sprintf("convert.%v", Ref)
+  case *TCError:
+    fn = fmt.Sprintf("convert.%v", Error)
   default:
     fn = fmt.Sprintf("convert.%v", Any)
   }
@@ -205,4 +219,5 @@ func init() {
   RegisterConvertCallback(Any, TCAnythingConvert)
   RegisterConvertCallback(List, TCListConvert)
   RegisterConvertCallback(Set, TCSetConvert)
+  RegisterConvertCallback(Error, TCErrorConvert)
 }

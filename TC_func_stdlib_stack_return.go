@@ -23,7 +23,7 @@ func TCStackReturnFunction(l *TCExecListener, name string, q *deque.Deque) (inte
       case string:
         err := l.TC.PositionStack(n.(string))
         if err != nil {
-          return nil, err
+          return nil, l.TC.MakeError(err)
         }
         l.TC.Set(e)
       case int64:

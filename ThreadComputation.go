@@ -34,6 +34,7 @@ type TCstate struct {
   IsDebug      bool
   IsTest       bool
   IsObserve    bool
+  ErrStack     deque.Deque  // Stack of errors
   InAttr       int          // How deep we are in attributes
   InRef        int          // If we are in reference
   Attrs       *TwoStack     // Creating attributes
@@ -219,20 +220,12 @@ func (tc *TCstate) HaveAttrs() bool {
   return true
 }
 
-// func (tc *TCstate) CurrentFunctionName() string {
-//   if tc.FNStack.Len() > 0 {
-//     return tc.FNStack.Front().(string)
-//   } else {
-//     return "#MAIN"
-//   }
-// }
-
-
 
 func (tc *TCstate) SetError(msg string, args ...interface{}) {
   tc.errmsg = fmt.Sprintf(msg, args...)
   tc.errors += 1
   log.Errorf(tc.errmsg)
+  tc.MakeError(tc.errmsg)
 }
 
 func (l *TCExecListener) SetError(msg string, args ...interface{}) {
@@ -242,25 +235,25 @@ func (l *TCExecListener) SetError(msg string, args ...interface{}) {
 func (l *tcExecErrorListener) SyntaxError(recognizer antlr.Recognizer, offendingSymbol interface{}, line, column int, msg string, e antlr.RecognitionException) {
   msgout := fmt.Sprintf("Syntax error line=%v, column=%v : %v", line, column, msg)
   log.Errorf(msgout)
-  l.TC.errmsg = msgout
+  l.TC.MakeError(msgout)
 	l.errors += 1
 }
 func (l *tcExecErrorListener) ReportAmbiguity(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex int, exact bool, ambigAlts *antlr.BitSet, configs antlr.ATNConfigSet) {
   msgout := fmt.Sprintf("Ambiguity Error")
   log.Errorf(msgout)
-  l.TC.errmsg = msgout
+  l.TC.MakeError(msgout)
 	l.errors += 1
 }
 func (l *tcExecErrorListener) ReportAttemptingFullContext(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex int, conflictingAlts *antlr.BitSet, configs antlr.ATNConfigSet) {
   msgout := fmt.Sprintf("Attempting in Full Context")
   log.Errorf(msgout)
-  l.TC.errmsg = msgout
+  l.TC.MakeError(msgout)
 	l.errors += 1
 }
 func (l *tcExecErrorListener) ReportContextSensitivity(recognizer antlr.Parser, dfa *antlr.DFA, startIndex, stopIndex, prediction int, configs antlr.ATNConfigSet) {
   msgout := fmt.Sprintf("Context sensitivity error")
   log.Errorf(msgout)
-  l.TC.errmsg = msgout
+  l.TC.MakeError(msgout)
 	l.errors += 1
 }
 

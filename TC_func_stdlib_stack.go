@@ -116,7 +116,7 @@ func TCSStackFunction(l *TCExecListener, name string, q *deque.Deque) (interface
     case string:
       err := l.TC.PositionStack(e.(string))
       if err != nil {
-        return nil, err
+        return nil, l.TC.MakeError(err)
       }
     }
   }
@@ -130,7 +130,7 @@ func TCsStackFunction(l *TCExecListener, name string, q *deque.Deque) (interface
     case string:
       err := l.TC.PositionStack(e.(string))
       if err != nil {
-        return nil, err
+        return nil, l.TC.MakeError(err)
       }
     }
   }

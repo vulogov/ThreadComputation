@@ -29,6 +29,11 @@ func TCSimpleMathFunction(l *TCExecListener, name string, q *deque.Deque) (inter
       return nil, errors.New(fmt.Sprintf("Operator non-existing for %T %v %T", acc, name, e))
     }
     res := fun(name, acc, e)
+    switch res.(type) {
+    case *TCError:
+      l.TC.RegisterError(res.(*TCError))
+      return nil, res.(*TCError).Err
+    }
     if res == nil {
       return nil, errors.New(fmt.Sprintf("%T %v %T returns nil", acc, name, e))
     }

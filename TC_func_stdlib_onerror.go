@@ -57,6 +57,23 @@ func TCThrowErrorFunction(l *TCExecListener, name string, q *deque.Deque) (inter
   return nil, errors.New(msg)
 }
 
+func TCCreateErrorFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  msg := ""
+  for q.Len() > 0 {
+    e := q.PopFront()
+    cfun := GetConverterCallback(e)
+    if cfun != nil {
+      res := cfun(e, String)
+      if res == nil {
+        res = fmt.Sprintf("%v", e)
+      }
+      msg += fmt.Sprintf("%v ", res)
+    }
+  }
+  log.Debugf("User-generated error: %v", msg)
+  return l.TC.MakeError(msg), nil
+}
+
 func TCIfLastErrorFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
   if l.TC.TrueErrors() > 0 {
     return l.TC.Error(), nil
@@ -95,6 +112,7 @@ func init() {
   SetCommand("errors", TCNErrorsFunction)
   SetCommand("throw", TCThrowErrorFunction)
   SetCommand("errors.Last", TCLastErrorFunction)
+  SetCommand("errors.Create", TCCreateErrorFunction)
   SetCommand("errors.Message", TCIfLastErrorFunction)
   SetCommand("errors.Check", TCIfErrorFunction)
   SetCommand("errors.Clear", TCClearErrorsFunction)
