@@ -115,7 +115,7 @@ func TCCodeConvert(data interface{}, to_type int) interface{} {
   return nil
 }
 
-func TCCodeExecute(l *TCExecListener, code interface{}) interface{} {
+func TCCodeExecute(l *TCExecListener, code interface{}, q *deque.Deque) interface{} {
   switch code.(type) {
   case *TCCode:
     err := l.TC.ExecuteCode(code.(*TCCode))
