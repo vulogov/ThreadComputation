@@ -31,6 +31,9 @@ type TCstate struct {
   errors       int
   errmsg       string
   HandleErr    bool
+  IsDebug      bool
+  IsTest       bool
+  IsObserve    bool
   InAttr       int          // How deep we are in attributes
   InRef        int          // If we are in reference
   Attrs       *TwoStack     // Creating attributes
@@ -61,6 +64,8 @@ type tcExecErrorListener struct {
 
 func Init() *TCstate {
   var pool_size interface{}
+  var is_debug bool
+
   out, err := GetVariable("tc.Logoutput")
   if err != nil {
     log.SetOutput(os.Stderr)
@@ -71,10 +76,12 @@ func Init() *TCstate {
   if err != nil {
     lvl = "info"
   }
+  is_debug = false
   switch lvl {
   case "trace":
     log.SetLevel(log.TraceLevel)
   case "debug":
+    is_debug = true
     log.SetLevel(log.DebugLevel)
   case "info":
     log.SetLevel(log.InfoLevel)
@@ -97,6 +104,9 @@ func Init() *TCstate {
     InRef:   0,
     errors:  0,
     HandleErr: false,
+    IsDebug: is_debug,
+    IsObserve: false,
+    IsTest:  false,
     UFNB:    0,
     Res:     InitTS(),
     Attrs:   InitTS(),
