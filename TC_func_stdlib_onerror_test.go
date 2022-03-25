@@ -27,3 +27,17 @@ func TestStdlibOnError2(t *testing.T) {
           t.Fatalf("errors.Handle throw[\"test\"] onError[errors.Clear] errors.Check  shall be false and it is %v", res)
   }
 }
+
+func TestStdlibOnError3(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("true notError[42]")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+  if res != "42" {
+          t.Fatalf("true notError[42]  shall be 42 and it is %v", res)
+  }
+}

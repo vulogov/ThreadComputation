@@ -72,8 +72,17 @@ func BlockOnError(l *TCExecListener, name string, code string) interface{} {
   return nil
 }
 
+func BlockNotOnError(l *TCExecListener, name string, code string) interface{} {
+  if l.TC.TrueErrors() == 0 {
+    log.Debugf("notErrors catches good condition")
+    l.TC.Eval(code)
+  }
+  return nil
+}
+
 func init() {
   RegisterBlockCallback("onerror", BlockOnError)
+  RegisterBlockCallback("noterror", BlockNotOnError)
   SetCommand("errors", TCNErrorsFunction)
   SetCommand("throw", TCThrowErrorFunction)
   SetCommand("errors.Last", TCLastErrorFunction)
