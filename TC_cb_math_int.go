@@ -19,6 +19,9 @@ func TCIntMath(name string, x interface{}, y interface{}) interface{} {
       case "*":
         return x.(int64) * y.(int64)
       case "/":
+        if y.(int64) == 0 {
+          return nil
+        }
         return x.(int64) / y.(int64)
       }
     }

@@ -30,6 +30,7 @@ type TCstate struct {
   TC          *TCstate
   errors       int
   errmsg       string
+  HandleErr    bool
   InAttr       int          // How deep we are in attributes
   InRef        int          // If we are in reference
   Attrs       *TwoStack     // Creating attributes
@@ -95,6 +96,7 @@ func Init() *TCstate {
     InAttr:  0,
     InRef:   0,
     errors:  0,
+    HandleErr: false,
     UFNB:    0,
     Res:     InitTS(),
     Attrs:   InitTS(),
@@ -103,6 +105,12 @@ func Init() *TCstate {
   }
   tc.AddNewStack(uuid.NewString())
   return tc
+}
+
+func (tc *TCstate) ClearErrors() {
+  log.Debug("Clearing errors")
+  tc.errors = 0
+  tc.errmsg = ""
 }
 
 func (tc *TCstate) Eval(code string) *TCstate {
@@ -147,6 +155,13 @@ func (tc *TCstate) GoEval(code string) *TCstate {
 }
 
 func (tc *TCstate) Errors() int {
+  if tc.HandleErr {
+    return 0
+  }
+  return tc.errors
+}
+
+func (tc *TCstate) TrueErrors() int {
   return tc.errors
 }
 
