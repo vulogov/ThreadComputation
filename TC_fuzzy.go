@@ -1,7 +1,10 @@
 package ThreadComputation
+
 import (
+  "fmt"
   "time"
   "github.com/gammazero/deque"
+  log "github.com/sirupsen/logrus"
 )
 
 type TCValue struct {
@@ -12,12 +15,30 @@ type TCValue struct {
   P          float32
 }
 
-func (tc *TCstate) Value(v interface{}, p float32, ttl int) *TCValue {
+func MakeValue(v interface{}, p float32, ttl int) *TCValue {
   res := new(TCValue)
   res.Stamp = time.Now()
   res.Value = v
+  res.P     = p
   res.TTL   = ttl
+  log.Debugf("Creating fuzzy value of type %T %v", res.Value, res.P)
   return res
+}
+
+func (tc *TCstate) Value(v interface{}, p float32, ttl int) *TCValue {
+  return MakeValue(v, p, ttl)
+}
+
+func (v *TCValue) String() string {
+  ofun := GetConverterCallback(v.Value)
+  if ofun == nil {
+    return fmt.Sprintf("Value[%v %v]", v.Value, v.P)
+  }
+  out := ofun(v.Value, String)
+  if out == nil {
+    out = fmt.Sprintf("%v", v.Value)
+  }
+  return fmt.Sprintf("Value[value=%v probability=%v%%]", out, v.P)
 }
 
 func tcvalueGetValue(l *TCExecListener, q *deque.Deque) interface{} {
