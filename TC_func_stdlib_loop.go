@@ -31,6 +31,13 @@ func LoopCode(l *TCExecListener, name string, code string) interface{} {
   switch e.(type) {
   case *TCIterator:
     iter = e.(*TCIterator)
+  case *TCRange:
+    r := e.(*TCRange)
+    iter = l.TC.Iterator(r)
+    if iter == nil {
+      l.TC.SetError("Can not initiate range iterator for %T", e)
+      return nil
+    }
   default:
     igfun := GetGenCallback(e)
     if igfun == nil {
