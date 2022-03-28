@@ -65,9 +65,9 @@ func TestFuzzy6(t *testing.T) {
 }
 
 func TestFuzzy7(t *testing.T) {
-	SetVariable("tc.Debuglevel", "debug")
+	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
-	SetVariable("tc.Debuglevel", "info")
+	// SetVariable("tc.Debuglevel", "info")
 	tc = tc.Eval("Value[41 70.0] Value[3 10.0] Value[1 90.0] ~^+ println")
 	if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())

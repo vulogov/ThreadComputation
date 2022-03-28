@@ -7,12 +7,6 @@ import (
   "github.com/gammazero/deque"
 )
 
-
-
-
-
-
-
 func TCSimpleMathFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
   var acc interface{}
   if q.Len() == 0 {

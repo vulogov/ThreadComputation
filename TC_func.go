@@ -110,8 +110,6 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     }
   }
   log.Debugf("fname=%v, type=%v", func_name, c.GetFname().GetTokenType())
-  q = l.Attrs()
-  l.TC.EvAttrs.PushFront(q)
   //
   // First, let's check if we do have a block function
   //
@@ -135,6 +133,8 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
       bfun(l, ufname, code)
       return
   }
+  q = l.Attrs()
+  l.TC.EvAttrs.PushFront(q)
   if mod != nil && mod == "@" {
     log.Debugf("Function %v will be created", func_name)
     l.TC.FinishUserFun()
