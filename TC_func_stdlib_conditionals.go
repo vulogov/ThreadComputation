@@ -13,6 +13,14 @@ func blockConditionalFunction(l *TCExecListener, name string, code string, cond 
         log.Debugf("stdlib conditional %v matches %v condition", name, cond)
         l.TC.Eval(code)
       }
+    case *TCValue:
+      switch e.(*TCValue).Value.(type) {
+      case bool:
+        if e.(*TCValue).Value.(bool) == cond {
+          log.Debugf("stdlib conditional %v matches %v condition", name, cond)
+          l.TC.Eval(code)
+        }
+      }
     default:
       l.TC.Set(e)
     }

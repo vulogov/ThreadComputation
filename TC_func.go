@@ -64,6 +64,16 @@ func (l *TCExecListener) EnterFun(c *parser.FunContext) {
         } else {
           log.Debugf("Conditional for %v is met", func_name)
         }
+      case *TCValue:
+        switch e.(*TCValue).Value.(type) {
+        case bool:
+          if ! e.(*TCValue).Value.(bool) {
+            log.Debugf("Conditional for %v will be created", func_name)
+            l.TC.BeginConditional(func_name)
+          } else {
+            log.Debugf("Conditional for %v is met", func_name)
+          }
+        }
       default:
         l.TC.Set(e)
       }

@@ -41,6 +41,14 @@ func (v *TCValue) String() string {
   return fmt.Sprintf("Value[value=%v probability=%v%%]", out, v.P)
 }
 
+func (v *TCValue) IsTrue() bool {
+  switch v.Value.(type) {
+  case bool:
+    return v.Value.(bool)
+  }
+  return false
+}
+
 func tcvalueGetValue(l *TCExecListener, q *deque.Deque) interface{} {
   if q.Len() == 0 {
     if l.TC.Ready() {
@@ -139,11 +147,22 @@ func TCValueMakeFunction(l *TCExecListener, name string, q *deque.Deque) (interf
   return l.TC.Value(e, p, 0), nil
 }
 
+func TCSureValueFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  return l.TC.Value(true, 100.0, 0), nil
+}
+
+func TCNotSureValueFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  return l.TC.Value(false, 100.0, 0), nil
+}
+
+
 func init() {
   SetCommand("Value", TCValueFunction)
   SetCommand("Just", TCJustValueFunction)
   SetCommand("Never", TCNeverValueFunction)
   SetCommand("Likely", TCLikelyValueFunction)
+  SetCommand("Sure", TCSureValueFunction)
+  SetCommand("NotSure", TCNotSureValueFunction)
   SetFunction("V", TCVFunction)
   SetFunction("Make", TCValueMakeFunction)
 }
