@@ -59,6 +59,13 @@ func LoopCode(l *TCExecListener, name string, code string) interface{} {
     switch v.(type) {
     case *TCBreak:
       break out
+    case *TCNone:
+      break out
+    case *TCValue:
+      switch v.(*TCValue).Value.(type) {
+      case *TCNone:
+        break out
+      }
     }
     cfun := GetConverterCallback(e)
     if cfun == nil {
