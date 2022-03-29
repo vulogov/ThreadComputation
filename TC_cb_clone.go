@@ -4,6 +4,7 @@ import (
   "fmt"
   "reflect"
   "unsafe"
+  "gonum.org/v1/gonum/mat"
 )
 
 
@@ -23,6 +24,13 @@ func TCStringClone(data interface{}) interface{} {
   return cloneString(data.(string))
 }
 
+func TCMatrixClone(data interface{}) interface{} {
+  res := new(TCMatrix)
+  res.M = new(mat.Dense)
+  res.M.CloneFrom(data.(*TCMatrix).M)
+  return res
+}
+
 func TCSimpleClone(data interface{}) interface{} {
   return data
 }
@@ -38,6 +46,8 @@ func GetCloneCallback(x interface{}) TCCloneFun {
     fn = fmt.Sprintf("clone.%v", String)
   case bool:
     fn = fmt.Sprintf("clone.%v", Bool)
+  case *TCMatrix:
+    fn = fmt.Sprintf("clone.%v", Matrix)
   default:
     fn = fmt.Sprintf("clone.%v", Any)
   }
@@ -60,4 +70,5 @@ func init() {
   RegisterCloneCallback(Float, TCSimpleClone)
   RegisterCloneCallback(Bool, TCSimpleClone)
   RegisterCloneCallback(String, TCStringClone)
+  RegisterCloneCallback(Matrix, TCMatrixClone)
 }

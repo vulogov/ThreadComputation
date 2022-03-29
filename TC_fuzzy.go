@@ -88,7 +88,7 @@ func TCGetValueFunction(l *TCExecListener, name string, q *deque.Deque) (interfa
     case *TCValue:
       ReturnFromFunction(l, "value", e.(*TCValue).Value)
     default:
-      return nil, l.TC.MakeError("Value[] is expected for value[] call")
+      ReturnFromFunction(l, "value", e)
     }
   }
   return nil, nil

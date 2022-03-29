@@ -21,6 +21,7 @@ const (
   Value         = 11
   Range         = 12
   None          = 13
+  Numbers       = 14
   Error         = 97
   Simple        = 98
   Any           = 99
@@ -58,6 +59,10 @@ func TCType(x interface{}) int {
     return Range
   case *TCNone:
     return None
+  case *TCNumbers:
+    return Numbers
+  case *TCMatrix:
+    return Matrix
   case *TCError:
     return Error
   default:
