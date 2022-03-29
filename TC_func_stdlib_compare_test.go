@@ -59,3 +59,31 @@ func TestStdlibCompare4(t *testing.T) {
 		t.Fatalf("42 Value[41 50.0] ~< value had failed: %v", res)
 	}
 }
+
+func TestStdlibCompare5(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("'Hello' 'Hello' ~= value")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "true" {
+		t.Fatalf("'Hello' 'Hello' ~= value had failed: %v", res)
+	}
+}
+
+func TestStdlibCompare6(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("'Hello' <['world'] value")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "true" {
+		t.Fatalf("'Hello' >['world'] value had failed: %v", res)
+	}
+}
