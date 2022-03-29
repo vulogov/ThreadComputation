@@ -24,5 +24,5 @@ func TCListCdr(v interface{}) interface{} {
 
 func init() {
   RegisterFunctionCallback("car", List, TCListCar)
-  RegisterFunctionCallback("car", List, TCListCdr)
+  RegisterFunctionCallback("cdr", List, TCListCdr)
 }
