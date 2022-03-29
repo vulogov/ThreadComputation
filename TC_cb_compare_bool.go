@@ -42,6 +42,10 @@ func TCCompareBoolBool(name string, x interface{}, y interface{}) interface{} {
     return x.(bool) == y.(bool)
   case "!=":
     return x.(bool) != y.(bool)
+  case "and":
+    return x.(bool) && y.(bool)
+  case "or":
+    return x.(bool) || y.(bool)
   }
   return nil
 }

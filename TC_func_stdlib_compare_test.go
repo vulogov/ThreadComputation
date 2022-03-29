@@ -143,3 +143,17 @@ func TestStdlibCompare10(t *testing.T) {
 		t.Fatalf("Sure =[true] value had failed: %v", res)
 	}
 }
+
+func TestStdlibCompare11(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("true and[true] value")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "true" {
+		t.Fatalf("true and[true] value had failed: %v", res)
+	}
+}
