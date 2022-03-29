@@ -9,6 +9,7 @@ func TCSizeFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}
     e := q.PopBack()
     fun := GetSizeCallback(e)
     if fun != nil {
+      ReturnFromFunction(l, "size", e)
       ReturnFromFunction(l, "size", fun(e))
     } else {
       return nil, l.TC.MakeError("Can not determine size of %T", e)

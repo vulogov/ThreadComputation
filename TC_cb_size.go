@@ -36,6 +36,15 @@ func TCNumbersSize(data interface{}) int {
   return 0
 }
 
+func TCMatrixSize(data interface{}) int {
+  switch data.(type) {
+  case *TCMatrix:
+    x, y := data.(*TCMatrix).M.Dims()
+    return x * y
+  }
+  return 0
+}
+
 func RegisterSizeCallback(from_type int, fun TCSizeFun) {
   fname := fmt.Sprintf("size.%v", from_type)
   Callbacks.Delete(fname)
@@ -57,6 +66,8 @@ func GetSizeCallback(x interface{}) TCSizeFun {
     fn = fmt.Sprintf("size.%v", List)
   case *TCNumbers:
     fn = fmt.Sprintf("size.%v", Numbers)
+  case *TCMatrix:
+    fn = fmt.Sprintf("size.%v", Matrix)
   default:
     fn = fmt.Sprintf("size.%v", Any)
   }
@@ -76,4 +87,5 @@ func init() {
   RegisterSizeCallback(Any, TCSizeSimple)
   RegisterSizeCallback(List, TCListSize)
   RegisterSizeCallback(Numbers, TCNumbersSize)
+  RegisterSizeCallback(Matrix, TCMatrixSize)
 }

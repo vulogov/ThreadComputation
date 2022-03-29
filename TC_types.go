@@ -61,6 +61,8 @@ func TCType(x interface{}) int {
     return None
   case *TCNumbers:
     return Numbers
+  case *TCMatrix:
+    return Matrix
   case *TCError:
     return Error
   default:
