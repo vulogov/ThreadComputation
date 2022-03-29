@@ -57,3 +57,27 @@ func TestMatrix5(t *testing.T) {
 		t.Fatalf(tc.Error())
 	}
 }
+
+func TestMatrix6(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("matrix[numbers[1 2 3] numbers[4 5]] ^ println")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
+func TestMatrix7(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("matrix[numbers[1 2 3] numbers[4 5]] matrix[numbers[1 2 3] numbers[4 5]] ~= ")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+  if res != "true" {
+    t.Fatalf("matrix[numbers[1 2 3] numbers[4 5]] matrix[numbers[1 2 3] numbers[4 5]] ~= failed: %v", res)
+  }
+}
