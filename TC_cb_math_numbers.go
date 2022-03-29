@@ -69,6 +69,22 @@ func TCNumbersMath(name string, x interface{}, y interface{}) interface{} {
         return MakeValue(tcNumbersMathInt(name, x.(*TCNumbers), y.(*TCValue).Value.(int64)),y.(*TCValue).P, 0)
       case float64:
         return MakeValue(tcNumbersMathFloat(name, x.(*TCNumbers), y.(*TCValue).Value.(float64)),y.(*TCValue).P, 0)
+      case *TCNumbers:
+        return MakeValue(tcNumbersMathNumbers(name, x.(*TCNumbers), y.(*TCValue).Value.(*TCNumbers)),y.(*TCValue).P, 0)
+      }
+    }
+  }
+  return nil
+}
+
+func TCValueNumbersMath(name string, x interface{}, y interface{}) interface{} {
+  switch x.(type) {
+  case *TCValue:
+    switch x.(*TCValue).Value.(type) {
+    case *TCNumbers:
+      switch y.(type) {
+      case *TCNumbers:
+        return MakeValue(tcNumbersMathNumbers(name, x.(*TCValue).Value.(*TCNumbers), y.(*TCNumbers)), x.(*TCValue).P, 0)
       }
     }
   }
@@ -80,4 +96,5 @@ func init() {
   RegisterMathCallback(Numbers, Float, TCNumbersMath)
   RegisterMathCallback(Numbers, Value, TCNumbersMath)
   RegisterMathCallback(Numbers, Numbers, TCNumbersMath)
+  RegisterMathCallback(Value, Numbers, TCValueNumbersMath)
 }
