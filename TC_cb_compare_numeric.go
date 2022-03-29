@@ -4,7 +4,37 @@ import (
 
 )
 
+func TCCompareNumericString(name string, x interface{}, y interface{}) interface{} {
+  cfun := GetStringConverter()
+  if cfun == nil {
+    return nil
+  }
+  res := cfun(y, Float)
+  if res == nil {
+    return nil
+  }
+  cmpfun := GetCompareCallback(x, res)
+  if cmpfun == nil {
+    return nil
+  }
+  return cmpfun(name, x, res)
+}
 
+func TCCompareStringNumeric(name string, x interface{}, y interface{}) interface{} {
+  cfun := GetStringConverter()
+  if cfun == nil {
+    return nil
+  }
+  res := cfun(x, Float)
+  if res == nil {
+    return nil
+  }
+  cmpfun := GetCompareCallback(res, y)
+  if cmpfun == nil {
+    return nil
+  }
+  return cmpfun(name, res, y)
+}
 
 func TCCompareIntInt(name string, x interface{}, y interface{}) interface{} {
   switch name {
@@ -83,4 +113,8 @@ func init() {
   RegisterCompareCallback(Int, Float, TCCompareIntFloat)
   RegisterCompareCallback(Float, Int, TCCompareFloatInt)
   RegisterCompareCallback(Float, Float, TCCompareFloatFloat)
+  RegisterCompareCallback(Float, String, TCCompareNumericString)
+  RegisterCompareCallback(Int, String, TCCompareNumericString)
+  RegisterCompareCallback(String, Float, TCCompareStringNumeric)
+  RegisterCompareCallback(String, Int, TCCompareStringNumeric)
 }
