@@ -19,7 +19,7 @@ var Vars      cmap.Cmap
 var Functions cmap.Cmap
 var Commands  cmap.Cmap
 var Callbacks cmap.Cmap
-var VERSION = "1.16"
+var VERSION = "1.17"
 
 type TCExecListener struct {
   *parser.BaseThreadComputationListener
