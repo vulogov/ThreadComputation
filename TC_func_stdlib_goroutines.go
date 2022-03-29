@@ -1,6 +1,7 @@
 package ThreadComputation
 
 import (
+  "strings"
   log "github.com/sirupsen/logrus"
   "github.com/gammazero/deque"
 )
@@ -43,6 +44,24 @@ func TCSendLocalFunction(l *TCExecListener, name string, q *deque.Deque) (interf
   return nil, nil
 }
 
+func TCSendNamedFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if q.Len() == 0 {
+    return nil, l.TC.MakeError("Context is too shallow for sending")
+  }
+  s := q.PopFront()
+  switch s.(type) {
+  case string:
+    s = strings.ToLower(s.(string))
+  default:
+    return nil, l.TC.MakeError("Channel name is not defined")
+  }
+  for q.Len() > 0 {
+    e := q.PopFront()
+    tcSendDataToChannel(l, s.(string), e)
+  }
+  return nil, nil
+}
+
 func TCRecvLocalFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
   if l.TC.ResNames.Len() == 0 {
     return nil, l.TC.MakeError("Namespace context is too shallow for receiving")
@@ -58,6 +77,43 @@ func TCRecvLocalFunction(l *TCExecListener, name string, q *deque.Deque) (interf
   return nil, nil
 }
 
+func TCRecvNamedFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  var sname string
+  if l.TC.ResNames.Len() == 0 {
+    return nil, l.TC.MakeError("Namespace context is too shallow for receiving")
+  }
+  if q.Len() == 0 {
+    sname = l.TC.ResNames.Front().(string)
+  } else {
+    e := q.PopFront()
+    switch e.(type) {
+    case string:
+      sname = e.(string)
+    default:
+      return nil, l.TC.MakeError("Bad arguments for receiving")
+    }
+  }
+  out:
+  for {
+    e := tcRecvDataFromChannel(l, sname)
+    if e == nil {
+      break
+    }
+    ReturnFromFunction(l, "recv", e)
+    if q.Len() == 0 {
+      break out
+    }
+    e = q.PopFront()
+    switch e.(type) {
+    case string:
+      sname = e.(string)
+    default:
+      return nil, l.TC.MakeError("Bad arguments for receiving")
+    }
+  }
+  return nil, nil
+}
+
 func BlockSpawn(l *TCExecListener, name string, code string) interface{} {
   log.Debugf("Spawning code in goroutine: %v", name)
   l.TC.GoEval(code)
@@ -68,5 +124,7 @@ func init() {
   RegisterBlockCallback("spawn", BlockSpawn)
   SetCommand("wait", TCWaitFunction)
   SetFunction("send", TCSendLocalFunction)
+  SetFunction("Send", TCSendNamedFunction)
   SetCommand("recv", TCRecvLocalFunction)
+  SetFunction("Recv", TCRecvNamedFunction)
 }

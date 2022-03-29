@@ -85,6 +85,23 @@ func BlockMonitoring(l *TCExecListener, name string, code string) interface{} {
   return nil
 }
 
+func TCNSNameFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if l.TC.ResNames.Len() == 0 {
+    return nil, l.TC.MakeError("Namespace context is too shallow for getting name")
+  }
+  return l.TC.ResNames.Front().(string), nil
+}
+
+func TCNSPreviousNameFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if l.TC.ResNames.Len() == 0 {
+    return nil, l.TC.MakeError("Namespace context is too shallow for getting name")
+  }
+  l.TC.StacksLeft(1)
+  sname := l.TC.ResNames.Front().(string)
+  l.TC.StacksRight(1)
+  return sname, nil
+}
+
 func init() {
   RegisterBlockCallback("testing", BlockTesting)
   RegisterBlockCallback("monitoring", BlockMonitoring)
@@ -93,4 +110,6 @@ func init() {
   SetCommand("system.TestDisable", TCTestDisableFunction)
   SetCommand("system.ObservabilityEnable", TCObserveEnableFunction)
   SetCommand("system.ObservabilityDisable", TCObserveDisableFunction)
+  SetCommand("name", TCNSNameFunction)
+  SetCommand("previous", TCNSPreviousNameFunction)
 }

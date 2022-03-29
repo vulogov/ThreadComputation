@@ -159,6 +159,17 @@ func TCRangeConvert(data interface{}, to_type int) interface{} {
   return nil
 }
 
+func TCNoneConvert(data interface{}, to_type int) interface{} {
+  switch e := data.(type) {
+  case *TCNone:
+    switch to_type {
+    case String:
+      return e.String()
+    }
+  }
+  return nil
+}
+
 func TCAnythingConvert(data interface{}, to_type int) interface{} {
   return fmt.Sprintf("%v", data)
 }
@@ -203,6 +214,8 @@ func GetConverterCallback(x interface{}) TCConvertFun {
     fn = fmt.Sprintf("convert.%v", Ref)
   case *TCRange:
     fn = fmt.Sprintf("convert.%v", Range)
+  case *TCNone:
+    fn = fmt.Sprintf("convert.%v", None)
   case *TCError:
     fn = fmt.Sprintf("convert.%v", Error)
   default:
@@ -234,4 +247,5 @@ func init() {
   RegisterConvertCallback(Set, TCSetConvert)
   RegisterConvertCallback(Range, TCRangeConvert)
   RegisterConvertCallback(Error, TCErrorConvert)
+  RegisterConvertCallback(None, TCNoneConvert)
 }

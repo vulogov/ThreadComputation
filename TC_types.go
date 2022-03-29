@@ -20,6 +20,7 @@ const (
   Code          = 10
   Value         = 11
   Range         = 12
+  None          = 13
   Error         = 97
   Simple        = 98
   Any           = 99
@@ -55,6 +56,8 @@ func TCType(x interface{}) int {
     return Value
   case *TCRange:
     return Range
+  case *TCNone:
+    return None
   case *TCError:
     return Error
   default:

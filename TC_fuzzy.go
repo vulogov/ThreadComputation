@@ -77,6 +77,23 @@ func tcvalueGetP(l *TCExecListener, q *deque.Deque) float32 {
   return float32(100.0)
 }
 
+func TCGetValueFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if q.Len() == 0 {
+    log.Debugf("No elements for which we requesting value[]")
+  }
+  for q.Len() > 0 {
+    e := q.PopFront()
+    log.Debugf("Getting value for %T", e)
+    switch e.(type) {
+    case *TCValue:
+      ReturnFromFunction(l, "value", e.(*TCValue).Value)
+    default:
+      return nil, l.TC.MakeError("Value[] is expected for value[] call")
+    }
+  }
+  return nil, nil
+}
+
 func TCValueFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
   v := tcvalueGetValue(l, q)
   if v == nil {
@@ -158,6 +175,7 @@ func TCNotSureValueFunction(l *TCExecListener, name string, q *deque.Deque) (int
 
 func init() {
   SetCommand("Value", TCValueFunction)
+  SetFunction("value", TCGetValueFunction)
   SetCommand("Just", TCJustValueFunction)
   SetCommand("Never", TCNeverValueFunction)
   SetCommand("Likely", TCLikelyValueFunction)
