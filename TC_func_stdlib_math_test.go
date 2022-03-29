@@ -101,3 +101,13 @@ func TestStdlibMath7(t *testing.T) {
 		t.Fatalf(" '4' *[2] had failed: %v", res)
 	}
 }
+
+func TestStdlibMath8(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("1 /[0] println")
+	if tc.Errors() == 0 {
+		t.Fatalf(tc.Error())
+	}
+}

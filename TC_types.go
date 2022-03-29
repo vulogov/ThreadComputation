@@ -18,6 +18,10 @@ const (
   Set           = 8
   Ref           = 9
   Code          = 10
+  Value         = 11
+  Range         = 12
+  None          = 13
+  Error         = 97
   Simple        = 98
   Any           = 99
   Nil           = 100
@@ -48,6 +52,14 @@ func TCType(x interface{}) int {
     return Ref
   case *TCCode:
     return Code
+  case *TCValue:
+    return Value
+  case *TCRange:
+    return Range
+  case *TCNone:
+    return None
+  case *TCError:
+    return Error
   default:
     return Unknown
   }

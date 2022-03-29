@@ -4,44 +4,42 @@ import (
 	"testing"
 )
 
-func TestCond1(t *testing.T) {
+func TestRange1(t *testing.T) {
 	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
 	// SetVariable("tc.Debuglevel", "info")
-	tc = tc.Eval("42 false ?41")
+	tc = tc.Eval("range println")
 	if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())
 	}
-	res := tc.GetAsString()
-  if res != "42" {
-    t.Fatalf("Not pushed to stack: %v", res)
-  }
 }
 
-func TestCond2(t *testing.T) {
+func TestRange2(t *testing.T) {
 	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
 	// SetVariable("tc.Debuglevel", "info")
-	tc = tc.Eval("41 true ?42")
+	tc = tc.Eval("range[4] println")
 	if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())
 	}
-	res := tc.GetAsString()
-  if res != "42" {
-    t.Fatalf("Not pushed to stack: %v", res)
-  }
 }
 
-func TestCond3(t *testing.T) {
+func TestRange3(t *testing.T) {
 	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
 	// SetVariable("tc.Debuglevel", "info")
-	tc = tc.Eval("42 NotSure ?41")
+	tc = tc.Eval("range[40 42] loop[#0 println]")
 	if tc.Errors() != 0 {
 		t.Fatalf(tc.Error())
 	}
-	res := tc.GetAsString()
-  if res != "42" {
-    t.Fatalf("Not pushed to stack: %v", res)
-  }
+}
+
+func TestRange4(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("range[34 42 4] loop[#0 println]")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
 }

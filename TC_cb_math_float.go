@@ -19,6 +19,9 @@ func TCFloatFloatMath(name string, x interface{}, y interface{}) interface{} {
       case "*":
         return x.(float64) * y.(float64)
       case "/":
+        if y.(float64) == 0 {
+          return MakeError("Division to Zero")
+        }
         return x.(float64) / y.(float64)
       }
     }
@@ -39,6 +42,9 @@ func TCIntFloatMath(name string, x interface{}, y interface{}) interface{} {
       case "*":
         return float64(x.(int64)) * y.(float64)
       case "/":
+        if y.(float64) == 0 {
+          return MakeError("Division to Zero")
+        }
         return float64(x.(int64)) / y.(float64)
       }
     }
@@ -59,6 +65,9 @@ func TCFloatIntMath(name string, x interface{}, y interface{}) interface{} {
       case "*":
         return x.(float64) * float64(y.(int64))
       case "/":
+        if y.(int64) == 0 {
+          return MakeError("Division to Zero")
+        }
         return x.(float64) / float64(y.(int64))
       }
     }

@@ -2,6 +2,7 @@ package ThreadComputation
 
 import (
   "fmt"
+  log "github.com/sirupsen/logrus"
 )
 
 
@@ -12,6 +13,7 @@ type TCMathFun func(string, interface{}, interface{}) interface{}
 func GetMathCallback(x interface{}, y interface{}) TCMathFun {
   x_type := TCType(x)
   y_type := TCType(y)
+  log.Debugf("Looking for math for %v %v", x_type, y_type)
   fname := fmt.Sprintf("math.%v.%v", x_type, y_type)
   if fun, ok := Callbacks.Load(fname); ok {
     return fun.(TCMathFun)
