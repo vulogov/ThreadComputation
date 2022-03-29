@@ -22,6 +22,6 @@ func TCCdrFunction(l *TCExecListener, name string, q *deque.Deque) (interface{},
 }
 
 func init() {
-  SetCommand("car", TCCarFunction)
-  SetCommand("cdr", TCCdrFunction)
+  SetFunction("car", TCCarFunction)
+  SetFunction("cdr", TCCdrFunction)
 }
