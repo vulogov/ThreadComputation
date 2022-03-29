@@ -28,6 +28,14 @@ func TCListSize(data interface{}) int {
   return 0
 }
 
+func TCNumbersSize(data interface{}) int {
+  switch data.(type) {
+  case *TCNumbers:
+    return data.(*TCNumbers).Len()
+  }
+  return 0
+}
+
 func RegisterSizeCallback(from_type int, fun TCSizeFun) {
   fname := fmt.Sprintf("size.%v", from_type)
   Callbacks.Delete(fname)
@@ -47,6 +55,8 @@ func GetSizeCallback(x interface{}) TCSizeFun {
     fn = fmt.Sprintf("size.%v", Bool)
   case *TCList:
     fn = fmt.Sprintf("size.%v", List)
+  case *TCNumbers:
+    fn = fmt.Sprintf("size.%v", Numbers)
   default:
     fn = fmt.Sprintf("size.%v", Any)
   }
@@ -65,4 +75,5 @@ func init() {
   RegisterSizeCallback(Bool, TCSizeSimple)
   RegisterSizeCallback(Any, TCSizeSimple)
   RegisterSizeCallback(List, TCListSize)
+  RegisterSizeCallback(Numbers, TCNumbersSize)
 }
