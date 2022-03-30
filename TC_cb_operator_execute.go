@@ -26,6 +26,7 @@ func (l *TCExecListener) ExecuteOperator(name string, q *deque.Deque) *TCError {
   default:
     x = rx
   }
+  ReturnFromFunction(l, name, rx)
   for q.Len() > 0 {
     e := q.PopFront()
     switch e.(type) {
@@ -36,12 +37,11 @@ func (l *TCExecListener) ExecuteOperator(name string, q *deque.Deque) *TCError {
       fun = GetOperatorCallback(name, x, e)
     }
     if fun == nil {
-      return l.TC.MakeError(fmt.Sprintf("callback for %v(%T) not found", name, e))
+      return l.TC.MakeError(fmt.Sprintf("callback for %v(%T %T) not found", name, x, e))
     }
     res := fun(x, e)
     if res == nil {
-      log.Debugf("callback for %v(%T %T) returned nil", name, x, e)
-      continue
+      return l.TC.MakeError(fmt.Sprintf("callback for %v(%T %T) returned nil", name, x, e))
     }
     log.Debugf("operator %v(%T %T) = %v", name, x, e, res)
     switch e.(type) {

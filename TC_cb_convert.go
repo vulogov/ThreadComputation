@@ -218,6 +218,17 @@ func TCDictConvert(data interface{}, to_type int) interface{} {
   return nil
 }
 
+func TCPairConvert(data interface{}, to_type int) interface{} {
+  switch e := data.(type) {
+  case *TCPair:
+    switch to_type {
+    case String:
+      return e.String()
+    }
+  }
+  return nil
+}
+
 func RegisterConvertCallback(from_type int, fun TCConvertFun) {
   fname := fmt.Sprintf("convert.%v", from_type)
   Callbacks.Delete(fname)
@@ -254,6 +265,8 @@ func GetConverterCallback(x interface{}) TCConvertFun {
     fn = fmt.Sprintf("convert.%v", Matrix)
   case *TCDict:
     fn = fmt.Sprintf("convert.%v", Dict)
+  case *TCPair:
+    fn = fmt.Sprintf("convert.%v", Pair)
   case *TCError:
     fn = fmt.Sprintf("convert.%v", Error)
   default:
@@ -289,4 +302,5 @@ func init() {
   RegisterConvertCallback(Numbers, TCNumbersConvert)
   RegisterConvertCallback(Matrix, TCMatrixConvert)
   RegisterConvertCallback(Dict, TCDictConvert)
+  RegisterConvertCallback(Pair, TCPairConvert)
 }
