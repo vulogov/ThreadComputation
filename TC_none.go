@@ -15,6 +15,14 @@ func (r *TCNone) String() string {
   return fmt.Sprintf("none[set at %v]", r.Stamp.Format(time.RFC3339))
 }
 
+func IsNone(x interface{}) bool {
+  switch x.(type) {
+  case *TCNone:
+    return true
+  }
+  return false
+}
+
 func MakeNone() *TCNone {
   res := new(TCNone)
   res.Id    = uuid.NewString()

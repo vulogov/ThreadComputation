@@ -22,6 +22,7 @@ const (
   None          = 13
   Numbers       = 14
   Pair          = 15
+  Json          = 16
   Error         = 97
   Simple        = 98
   Any           = 99
@@ -65,6 +66,8 @@ func TCType(x interface{}) int {
     return Matrix
   case *TCPair:
     return Pair
+  case *TCJson:
+    return Json
   case *TCError:
     return Error
   default:
