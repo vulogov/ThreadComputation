@@ -5,6 +5,8 @@ import (
   "github.com/gammazero/deque"
 )
 
+type TCExitCbFun func(*TCExecListener)
+
 func (l *TCExecListener) ExitRequest() {
   log.Debugf("Exit requesting. Capacity=%v, Active=%v", l.TC.Pool.PoolSize(), l.TC.Pool.ActiveWorkers())
   l.TC.IsExitReq = true
@@ -29,6 +31,29 @@ func (l *TCExecListener) ExitRequested() bool {
   return false
 }
 
+func (l *TCExecListener) RunExitCallbacks() {
+  for cb := range l.TC.ExitCb.Items() {
+    log.Debugf("Running exit callback: %v", cb.Key)
+    cb.Value.(TCExitCbFun)(l)
+  }
+}
+
+func (l *TCExecListener) RegisterExitCallback(name string, fun TCExitCbFun) {
+  l.TC.RegisterExitCallback(name, fun)
+}
+
+func (tc *TCstate) RegisterExitCallback(name string, fun TCExitCbFun) {
+  log.Debugf("Reistering exit callback: %v", name)
+  tc.ExitCb.Del(name)
+  tc.ExitCb.Set(name, fun)
+}
+
+func InitExitCallbacks(tc *TCstate) {
+  log.Debugf("Initialize exit callbacks")
+  tc.RegisterExitCallback("closePool", TCExitCbPoolClose)
+  tc.RegisterExitCallback("setError", TCExitCbSetExitError)
+}
+
 func (tc *TCstate) ExitRequested() bool {
   if tc.IsExitReq {
     return true
@@ -50,6 +75,7 @@ func TCExitFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}
   if l.ExitRequested() {
     log.Debugf("Waiting for threads to terminate. Capacity=%v, Active=%v", l.TC.Pool.PoolSize(), l.TC.Pool.ActiveWorkers())
     l.TC.Wg.Wait()
+    l.RunExitCallbacks()
     return true, nil
   }
   return false, nil
@@ -63,6 +89,7 @@ func TCExitRequestedFunction(l *TCExecListener, name string, q *deque.Deque) (in
   log.Debugf("Exit not been requested. Capacity=%v, Active=%v", l.TC.Pool.PoolSize(), l.TC.Pool.ActiveWorkers())
   return false, nil
 }
+
 
 
 func init() {

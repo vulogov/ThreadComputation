@@ -13,6 +13,7 @@ import (
   "github.com/google/uuid"
   "github.com/vulogov/ThreadComputation/parser"
   "github.com/loveleshsharma/gohive"
+  "github.com/srfrog/dict"
 )
 
 var Vars      cmap.Cmap
@@ -57,6 +58,7 @@ type TCstate struct {
   Pool        *gohive.PoolService // Global execution pool
   ExReq       chan bool       // Exit request channel
   IsExitReq   bool            // Exit flag
+  ExitCb     *dict.Dict       // Exit callbacks
 }
 
 type tcExecErrorListener struct {
@@ -124,10 +126,12 @@ func Init() *TCstate {
     Pool:    gohive.NewFixedSizePool(pool_size.(int)),
     ExReq:   make(chan bool, chcap.(int)),
     IsExitReq: false,
+    ExitCb:    dict.New(),
   }
   tc.AddNewStack(uuid.NewString())
   log.Debugf("TC instance created: %v", tc.ID)
   log.Debugf("Worker pool created. Capacity=%v, Active=%v", tc.Pool.PoolSize(), tc.Pool.ActiveWorkers())
+  InitExitCallbacks(tc)
   return tc
 }
 
