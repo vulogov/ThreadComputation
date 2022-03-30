@@ -27,6 +27,7 @@ type TCExecListener struct {
 }
 
 type TCstate struct {
+  ID           string
   TC          *TCstate
   errors       int
   errmsg       string
@@ -54,6 +55,8 @@ type TCstate struct {
   StackChan    cmap.Cmap    // Reference to stack channels
   Wg           sync.WaitGroup // Global wait group
   Pool        *gohive.PoolService // Global execution pool
+  ExReq       chan bool       // Exit request channel
+  IsExitReq   bool            // Exit flag
 }
 
 type tcExecErrorListener struct {
@@ -99,8 +102,14 @@ func Init() *TCstate {
   if err != nil {
     pool_size = 25
   }
+  chcap, err := GetVariable("tc.Chancapacity")
+  if err != nil {
+    chcap = 4096
+  }
   log.Debug("Creating TC")
+  log.Debugf("Channels capacity set to %v", chcap)
   tc := &TCstate{
+    ID:      uuid.NewString(),
     InAttr:  0,
     InRef:   0,
     errors:  0,
@@ -113,8 +122,12 @@ func Init() *TCstate {
     Attrs:   InitTS(),
     ResN:    mapset.NewSet(),
     Pool:    gohive.NewFixedSizePool(pool_size.(int)),
+    ExReq:   make(chan bool, chcap.(int)),
+    IsExitReq: false,
   }
   tc.AddNewStack(uuid.NewString())
+  log.Debugf("TC instance created: %v", tc.ID)
+  log.Debugf("Worker pool created. Capacity=%v, Active=%v", tc.Pool.PoolSize(), tc.Pool.ActiveWorkers())
   return tc
 }
 
