@@ -15,6 +15,9 @@ func tcFillJson(d *gabs.Container, q *deque.Deque) *gabs.Container {
   for q.Len() > 0 {
     k := q.PopFront()
     v := q.PopFront()
+    if ! TCisSimple(v) {
+      return nil
+    }
     switch k.(type) {
     case string:
       d.Set(v, k.(string))
