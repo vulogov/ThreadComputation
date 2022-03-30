@@ -149,13 +149,13 @@ func TestStdlibStack13(t *testing.T) {
 	// SetVariable("tc.Debuglevel", "debug")
   tc := Init()
 	// SetVariable("tc.Debuglevel", "info")
-	tc1 := tc.Eval("42 | 1 2 3 <-")
+	tc1 := tc.Eval("42 | 1 2 3 <--")
   if tc1.Errors() != 0 {
-          t.Fatalf("42 | 1 2 3 <- parse failed")
+          t.Fatalf("42 | 1 2 3 <-- parse failed")
   }
   res := tc.GetAsString()
   if res != "42" {
-          t.Fatalf("42 | 1 2 3 <-: %v and shall be 42", res)
+          t.Fatalf("42 | 1 2 3 <--: %v and shall be 42", res)
   }
 }
 
