@@ -1,7 +1,6 @@
 package ThreadComputation
 
 import (
-  "github.com/srfrog/dict"
   "gonum.org/v1/gonum/mat"
   "github.com/deckarep/golang-set"
 )
@@ -45,7 +44,7 @@ func TCType(x interface{}) int {
     return List
   case *mat.Dense:
     return Matrix
-  case *dict.Dict:
+  case *TCDict:
     return Dict
   case mapset.Set:
     return Set

@@ -143,8 +143,10 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
       bfun(l, ufname, code)
       return
   }
+  log.Debugf("fname=%v pushes attributes to evattrs", func_name)
   q = l.Attrs()
   l.TC.EvAttrs.PushFront(q)
+
   if mod != nil && mod == "@" {
     log.Debugf("Function %v will be created", func_name)
     l.TC.FinishUserFun()
@@ -158,6 +160,7 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     log.Debugf("Reference to the function %v will be processed", func_name)
     ptr := l.TC.NewRef(func_name, q)
     ReturnFromFunction(l, "#REF", ptr)
+    log.Debugf("fname=%v removes attributes from evattrs len=%v", func_name, l.TC.EvAttrs.Len())
     l.TC.EvAttrs.PopFront()
     return
   }
@@ -197,6 +200,7 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     }
     log.Debugf("Evaluating user function: %v", func_name)
     l.TC.Eval(code)
+    log.Debugf("fname=%v removes attributes from evattrs len=%v", func_name, l.TC.EvAttrs.Len())
     l.TC.EvAttrs.PopFront()
     return
   } else if l.TC.HaveCommand(func_name) {
@@ -255,5 +259,6 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
       }
     }
   }
+  log.Debugf("fname=%v removes attributes from evattrs len=%v", func_name, l.TC.EvAttrs.Len())
   l.TC.EvAttrs.PopFront()
 }
