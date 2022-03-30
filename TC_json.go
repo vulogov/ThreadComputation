@@ -1,5 +1,7 @@
 package ThreadComputation
 import (
+  "time"
+  "github.com/google/uuid"
   "github.com/Jeffail/gabs/v2"
   "github.com/gammazero/deque"
 )
@@ -56,7 +58,19 @@ func TCJsonValueFunction(l *TCExecListener, name string, q *deque.Deque) (interf
   return MakeValue(res, 100.0, 0), nil
 }
 
+func TCJsonUniqFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  res := l.TC.Json()
+  res.J = tcFillJson(res.J, q)
+  if res.J == nil {
+    return nil, l.TC.MakeError("Error creating JSON")
+  }
+  res.J.Set(time.Now().String(), "__time")
+  res.J.Set(uuid.NewString(), "__id")
+  return res, nil
+}
+
 func init() {
   SetCommand("json", TCJsonFunction)
+  SetCommand("jsonUniq", TCJsonUniqFunction)
   SetCommand("Json", TCJsonValueFunction)
 }
