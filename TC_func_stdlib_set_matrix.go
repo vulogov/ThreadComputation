@@ -3,7 +3,7 @@ package ThreadComputation
 import (
 )
 
-func TCMatrixSet(x interface{}, y interface{}) interface{} {
+func TCMatrixSet(x interface{}, y interface{}) {
   var rval float64
 
   m := x.(*TCMatrix).M
@@ -23,20 +23,18 @@ func TCMatrixSet(x interface{}, y interface{}) interface{} {
         case int64:
           rval = float64(val.(int64))
         default:
-          return nil
+          return
         }
         mx, mn := m.Dims()
         if int(ax.(int64)) > mx || int(ay.(int64)) > mn {
-          return nil
+          return
         }
         m.Set(int(ax.(int64)), int(ay.(int64)), rval)
-        return rval
       }
     }
   }
-  return nil
 }
 
 func init() {
-  RegisterOperatorCallback("set", Matrix, Pair, TCMatrixSet)
+  RegisterOperatorCmdCallback("set", Matrix, Pair, TCMatrixSet)
 }

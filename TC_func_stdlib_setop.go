@@ -5,7 +5,7 @@ import (
 )
 
 func TCSetOpFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
-  err := l.ExecuteOperator("set", q)
+  err := l.ExecuteOperatorCommand("set", q)
   if err != nil {
     return nil, err
   }
