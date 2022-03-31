@@ -23,6 +23,7 @@ const (
   Numbers       = 14
   Pair          = 15
   Json          = 16
+  Neural        = 17
   Error         = 97
   Simple        = 98
   Any           = 99
@@ -68,6 +69,8 @@ func TCType(x interface{}) int {
     return Pair
   case *TCJson:
     return Json
+  case *TCNeural:
+    return Neural
   case *TCError:
     return Error
   default:

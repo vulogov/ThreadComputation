@@ -45,6 +45,14 @@ func TCMatrixSize(data interface{}) int {
   return 0
 }
 
+func TCNeuralSize(data interface{}) int {
+  switch data.(type) {
+  case *TCNeural:
+    return len(data.(*TCNeural).Patterns)
+  }
+  return 0
+}
+
 func RegisterSizeCallback(from_type int, fun TCSizeFun) {
   fname := fmt.Sprintf("size.%v", from_type)
   Callbacks.Delete(fname)
@@ -68,6 +76,8 @@ func GetSizeCallback(x interface{}) TCSizeFun {
     fn = fmt.Sprintf("size.%v", Numbers)
   case *TCMatrix:
     fn = fmt.Sprintf("size.%v", Matrix)
+  case *TCNeural:
+    fn = fmt.Sprintf("size.%v", Neural)
   default:
     fn = fmt.Sprintf("size.%v", Any)
   }
@@ -88,4 +98,5 @@ func init() {
   RegisterSizeCallback(List, TCListSize)
   RegisterSizeCallback(Numbers, TCNumbersSize)
   RegisterSizeCallback(Matrix, TCMatrixSize)
+  RegisterSizeCallback(Neural, TCNeuralSize)
 }

@@ -16,6 +16,7 @@ pre:
 	go get github.com/google/uuid
 	go get github.com/loveleshsharma/gohive
 	go get -u github.com/hbollon/go-edlib
+	go get -u github.com/goml/gobrain
 
 build:
 	rm -rf ./parser

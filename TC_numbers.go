@@ -10,10 +10,14 @@ type TCNumbers struct {
   N            []float64
 }
 
-func (tc *TCstate) Numbers() *TCNumbers {
+func MakeNumbers() *TCNumbers {
   res := new(TCNumbers)
   res.P = 0.0
   return res
+}
+
+func (tc *TCstate) Numbers() *TCNumbers {
+  return MakeNumbers()
 }
 
 func (n *TCNumbers) Add(v interface{}) bool {
@@ -37,6 +41,10 @@ func (n *TCNumbers) Add(v interface{}) bool {
     return false
   }
   return true
+}
+
+func (n *TCNumbers) Set(v []float64) {
+  n.N = v
 }
 
 func (n *TCNumbers) Len() int {

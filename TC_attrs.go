@@ -27,3 +27,14 @@ func (l *TCExecListener) LastEvAttr() *deque.Deque {
   }
   return nil
 }
+
+func (l *TCExecListener) AttrByType(x_type int, q *deque.Deque) interface{} {
+
+  for i := 0; i < q.Len() ; i++ {
+    e := q.At(i)
+    if TCType(e) == x_type {
+      return e
+    }
+  }
+  return nil
+}
