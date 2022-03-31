@@ -207,8 +207,16 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     //
     // Next, if command exists
     //
-    log.Debugf("Command %v will be applied only to attributes", func_name)
+    if mod == nil {
+      mod = ""
+    }
     fun := l.TC.GetCommand(func_name)
+    if mod == "~" {
+      log.Debugf("Command %v%v will be applied all values from stack and attributes", mod, func_name)
+      q = AllValuesFromStackAndAttr(l, q)
+    } else {
+      log.Debugf("Command %v will be applied only to attributes", func_name)
+    }
     res, err := fun(l, func_name, q)
     if err != nil {
       l.SetError("Command %v returned error: %v", func_name, err)
