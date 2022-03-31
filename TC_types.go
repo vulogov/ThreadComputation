@@ -249,6 +249,18 @@ func TCTimeFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}
   return MakeType(Time), nil
 }
 
+func TCListTypeFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if q.Len() > 0 {
+    res := new(TCList)
+    for q.Len() > 0 {
+      e := q.PopFront()
+      res.Q.PushBack(e)
+    }
+    return res, nil
+  }
+  return MakeType(List), nil
+}
+
 func TCToTypeConverter(v interface{}) interface{} {
   return MakeType(v)
 }
@@ -266,6 +278,7 @@ func init() {
   SetCommand("Float", TCFloatFunction)
   SetCommand("String", TCStringFunction)
   SetCommand("Time", TCTimeFunction)
+  SetCommand("List", TCListTypeFunction)
   SetFunction("type", TCToTypeFunction)
   RegisterFunctionCallback("totype", Any, TCToTypeConverter)
 }

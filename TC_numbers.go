@@ -28,6 +28,11 @@ func (n *TCNumbers) Add(v interface{}) bool {
   case int64:
     n.P += 100.0
     n.N = append(n.N, float64(v.(int64)))
+  case *TCList:
+    n.P += 100.0
+    for i := 0; i < v.(*TCList).Len(); i++ {
+      n.Add(v.(*TCList).Q.At(i))
+    }
   case *TCValue:
     switch v.(*TCValue).Value.(type) {
     case int64:

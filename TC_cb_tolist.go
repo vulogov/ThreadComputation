@@ -2,6 +2,7 @@ package ThreadComputation
 
 import (
   "fmt"
+  log "github.com/sirupsen/logrus"
 )
 
 type TCToListFun func(interface{}) *TCList
@@ -10,19 +11,8 @@ type TCToListFun func(interface{}) *TCList
 func TCConvertAnyToList(x interface{}) *TCList {
   res := new(TCList)
   res.Add(x)
+  log.Debugf("Added %v(%T) to list[]", x, x)
   return res
-}
-
-func TCConvertNumbersToList(x interface{}) *TCList {
-  switch e := x.(type) {
-  case *TCNumbers:
-    res := new(TCList)
-    for i := 0; i < len(e.N); i++ {
-      res.Add(e.N[i])
-    }
-    return res
-  }
-  return nil
 }
 
 func RegisterToListCallback(x_type int, fun TCToListFun) {
@@ -51,5 +41,4 @@ func GetToListCallback(x interface{}) TCToListFun {
 
 func init() {
   RegisterToListCallback(Any, TCConvertAnyToList)
-  RegisterToListCallback(List, TCConvertNumbersToList)
 }

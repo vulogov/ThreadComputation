@@ -6,7 +6,19 @@ import (
 )
 
 func TCConversionFunction(l *TCExecListener, t int, e interface{}) (interface{}, error) {
-  log.Debugf("convert[] from %v to %v", TypeToStr(t), TypeToStr(e))
+  log.Debugf("convert[] from %v to %v", TypeToStr(e), TypeToStr(t))
+  switch t {
+  case List:
+    lfun := GetToListCallback(e)
+    if lfun == nil {
+      return nil, l.TC.MakeError("conversion function to list not found")
+    }
+    res := lfun(e)
+    if res == nil {
+      return nil, l.TC.MakeError("conversion function to list returned nil")
+    }
+    return res, nil
+  }
   fun := GetConverterCallback(e)
   if fun == nil {
     return nil, l.TC.MakeError("conversion function not found")

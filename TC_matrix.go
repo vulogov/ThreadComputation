@@ -24,6 +24,8 @@ func (tc *TCstate) Matrix(q *deque.Deque) *TCMatrix {
       if y < e.(*TCNumbers).Len() {
         y = e.(*TCNumbers).Len()
       }
+    case *TCList:
+      return tc.Matrix(&e.(*TCList).Q)
     default:
       tc.SetError("Can not crreate matrix[] due to invalid source data")
       return nil
