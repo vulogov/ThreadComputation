@@ -217,7 +217,7 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     } else if mod == "∃" {
       log.Debugf("Command %v%v will be applied to one value from stack and all attributes", mod, func_name)
       q = SingleValueFromStackAndAttr(l, q)
-    } else {      
+    } else {
       log.Debugf("Command %v will be applied only to all attributes", func_name)
     }
     res, err := fun(l, func_name, q)
@@ -237,6 +237,8 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
         if mod != nil && mod == "~" {
           log.Debugf("Function %v will be applied to all data in stack", func_name)
           q = AllValuesFromStackAndAttr(l, q)
+        } else if mod != nil && mod == "∄" {
+          log.Debugf("Function %v will be applied only to attrs", func_name)
         } else if mod != nil && mod == "∘" {
           log.Debugf("Function %v will be applied to ether data in stack or in attrs", func_name)
           q = AllValuesFromStackOrAttr(l, q)
