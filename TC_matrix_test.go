@@ -101,3 +101,13 @@ func TestMatrix9(t *testing.T) {
 		t.Fatalf(tc.Error())
 	}
 }
+
+func TestMatrix10(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("42 list[numbers[1 2] numbers[3 4]] ∃matrix println")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}

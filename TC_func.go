@@ -212,10 +212,13 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     }
     fun := l.TC.GetCommand(func_name)
     if mod == "~" {
-      log.Debugf("Command %v%v will be applied all values from stack and attributes", mod, func_name)
+      log.Debugf("Command %v%v will be applied to all values from stack and all attributes", mod, func_name)
       q = AllValuesFromStackAndAttr(l, q)
-    } else {
-      log.Debugf("Command %v will be applied only to attributes", func_name)
+    } else if mod == "∃" {
+      log.Debugf("Command %v%v will be applied to one value from stack and all attributes", mod, func_name)
+      q = SingleValueFromStackAndAttr(l, q)
+    } else {      
+      log.Debugf("Command %v will be applied only to all attributes", func_name)
     }
     res, err := fun(l, func_name, q)
     if err != nil {
