@@ -69,6 +69,14 @@ func TCObserveDisableFunction(l *TCExecListener, name string, q *deque.Deque) (i
   return nil, nil
 }
 
+func TCPoolCapacityFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  return l.TC.Pool.PoolSize(), nil
+}
+
+func TCPoolActiveFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  return l.TC.Pool.ActiveWorkers(), nil
+}
+
 func BlockTesting(l *TCExecListener, name string, code string) interface{} {
   if l.TC.IsTest {
     log.Debugf("Executing testing[] section")
@@ -110,6 +118,8 @@ func init() {
   SetCommand("system.TestDisable", TCTestDisableFunction)
   SetCommand("system.ObservabilityEnable", TCObserveEnableFunction)
   SetCommand("system.ObservabilityDisable", TCObserveDisableFunction)
+  SetCommand("system.PoolCapacity", TCPoolCapacityFunction)
+  SetCommand("system.Workers", TCPoolActiveFunction)
   SetCommand("name", TCNSNameFunction)
   SetCommand("previous", TCNSPreviousNameFunction)
 }

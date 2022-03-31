@@ -204,8 +204,8 @@ func init() {
   SetCommand("|", TCNewStackFunction)
   SetCommand("S", TCSStackFunction)
   SetFunction("s", TCsStackFunction)
-  SetCommand("<-", TCGStackLeftFunction)
+  SetCommand("<--", TCGStackLeftFunction)
   SetCommand("<<", TCStackLeftFunction)
-  SetCommand("->", TCGStackRightFunction)
+  SetCommand("-->", TCGStackRightFunction)
   SetCommand(">>", TCStackRightFunction)
 }

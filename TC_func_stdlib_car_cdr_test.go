@@ -59,3 +59,31 @@ func TestStdlibCarcdr4(t *testing.T) {
 		t.Fatalf("numbers[42 43 44] cdr size had failed: %v", res)
 	}
 }
+
+func TestStdlibCarcdr5(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("pair[1 2] car")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "1" {
+		t.Fatalf("pair[1 2] car had failed: %v", res)
+	}
+}
+
+func TestStdlibCarcdr6(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("pair[1 2] cdr")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "2" {
+		t.Fatalf("pair[1 2] cdr had failed: %v", res)
+	}
+}

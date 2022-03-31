@@ -207,6 +207,49 @@ func TCMatrixConvert(data interface{}, to_type int) interface{} {
   return nil
 }
 
+func TCDictConvert(data interface{}, to_type int) interface{} {
+  switch e := data.(type) {
+  case *TCDict:
+    switch to_type {
+    case String:
+      return e.String()
+    }
+  }
+  return nil
+}
+
+func TCPairConvert(data interface{}, to_type int) interface{} {
+  switch e := data.(type) {
+  case *TCPair:
+    switch to_type {
+    case String:
+      return e.String()
+    }
+  }
+  return nil
+}
+
+func TCJsonConvert(data interface{}, to_type int) interface{} {
+  switch e := data.(type) {
+  case *TCJson:
+    switch to_type {
+    case String:
+      return e.String()
+    }
+  }
+  return nil
+}
+
+func TCNeuralConvert(data interface{}, to_type int) interface{} {
+  switch e := data.(type) {
+  case *TCNeural:
+    switch to_type {
+    case String:
+      return e.String()
+    }
+  }
+  return nil
+}
 
 func RegisterConvertCallback(from_type int, fun TCConvertFun) {
   fname := fmt.Sprintf("convert.%v", from_type)
@@ -242,6 +285,14 @@ func GetConverterCallback(x interface{}) TCConvertFun {
     fn = fmt.Sprintf("convert.%v", Numbers)
   case *TCMatrix:
     fn = fmt.Sprintf("convert.%v", Matrix)
+  case *TCDict:
+    fn = fmt.Sprintf("convert.%v", Dict)
+  case *TCPair:
+    fn = fmt.Sprintf("convert.%v", Pair)
+  case *TCJson:
+    fn = fmt.Sprintf("convert.%v", Json)
+  case *TCNeural:
+    fn = fmt.Sprintf("convert.%v", Neural)
   case *TCError:
     fn = fmt.Sprintf("convert.%v", Error)
   default:
@@ -276,4 +327,8 @@ func init() {
   RegisterConvertCallback(None, TCNoneConvert)
   RegisterConvertCallback(Numbers, TCNumbersConvert)
   RegisterConvertCallback(Matrix, TCMatrixConvert)
+  RegisterConvertCallback(Dict, TCDictConvert)
+  RegisterConvertCallback(Pair, TCPairConvert)
+  RegisterConvertCallback(Json, TCJsonConvert)
+  RegisterConvertCallback(Neural, TCNeuralConvert)
 }

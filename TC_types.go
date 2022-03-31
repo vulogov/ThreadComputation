@@ -1,7 +1,6 @@
 package ThreadComputation
 
 import (
-  "github.com/srfrog/dict"
   "gonum.org/v1/gonum/mat"
   "github.com/deckarep/golang-set"
 )
@@ -22,6 +21,9 @@ const (
   Range         = 12
   None          = 13
   Numbers       = 14
+  Pair          = 15
+  Json          = 16
+  Neural        = 17
   Error         = 97
   Simple        = 98
   Any           = 99
@@ -45,7 +47,7 @@ func TCType(x interface{}) int {
     return List
   case *mat.Dense:
     return Matrix
-  case *dict.Dict:
+  case *TCDict:
     return Dict
   case mapset.Set:
     return Set
@@ -63,6 +65,12 @@ func TCType(x interface{}) int {
     return Numbers
   case *TCMatrix:
     return Matrix
+  case *TCPair:
+    return Pair
+  case *TCJson:
+    return Json
+  case *TCNeural:
+    return Neural
   case *TCError:
     return Error
   default:
