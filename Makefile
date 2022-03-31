@@ -17,6 +17,7 @@ pre:
 	go get github.com/loveleshsharma/gohive
 	go get -u github.com/hbollon/go-edlib
 	go get -u github.com/goml/gobrain
+	go get -u github.com/rocketlaunchr/dataframe-go
 
 build:
 	rm -rf ./parser

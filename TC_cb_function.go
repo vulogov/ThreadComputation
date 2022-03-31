@@ -18,6 +18,12 @@ func GetFunctionCallback(name string, x interface{}) TCGenericFunction {
     log.Debugf("Got: %v", fname)
     return fun.(TCGenericFunction)
   }
+  fname = fmt.Sprintf("fun.%v.%v", name, Any)
+  log.Debugf("Looking for function for %v(Any)", name)
+  if fun, ok := Callbacks.Load(fname); ok {
+    log.Debugf("Got: %v", fname)
+    return fun.(TCGenericFunction)
+  }
   log.Debugf("No function for: %v(%T)", name, x)
   return nil
 }

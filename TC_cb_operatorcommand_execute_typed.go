@@ -14,7 +14,8 @@ func (l *TCExecListener) ExecuteOperatorTyped(name string, x_type int, q *deque.
   if q.Len() < 2 {
     return nil
   }
-  x = l.AttrByType(Neural, q)
+  log.Debugf("Searching for %v[%v]", name, x_type)
+  x = l.AttrByType(x_type, q)
   if x == nil {
     return l.TC.MakeError(fmt.Sprintf("X type %v not found for ExecuteOperatorTyped", x_type))
   }

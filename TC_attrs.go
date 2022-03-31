@@ -1,6 +1,7 @@
 package ThreadComputation
 
 import (
+  log "github.com/sirupsen/logrus"
   "github.com/gammazero/deque"
 )
 
@@ -35,6 +36,7 @@ func (l *TCExecListener) AttrByType(x_type int, q *deque.Deque) interface{} {
     if TCType(e) == x_type {
       return e
     }
+    log.Debugf("Searching for type=%v, skipping %v", x_type, TCType(e))
   }
   return nil
 }

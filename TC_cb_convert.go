@@ -251,6 +251,30 @@ func TCNeuralConvert(data interface{}, to_type int) interface{} {
   return nil
 }
 
+func TCDataConvert(data interface{}, to_type int) interface{} {
+  switch e := data.(type) {
+  case *TCData:
+    switch to_type {
+    case String:
+      return e.String()
+    }
+  }
+  return nil
+}
+
+func TCTypeConvert(data interface{}, to_type int) interface{} {
+  switch e := data.(type) {
+  case *Type:
+    switch to_type {
+    case String:
+      return e.String()
+    case Int:
+      return int64(e.T)
+    }
+  }
+  return nil
+}
+
 func RegisterConvertCallback(from_type int, fun TCConvertFun) {
   fname := fmt.Sprintf("convert.%v", from_type)
   Callbacks.Delete(fname)
@@ -260,45 +284,14 @@ func RegisterConvertCallback(from_type int, fun TCConvertFun) {
 func GetConverterCallback(x interface{}) TCConvertFun {
   var fn string
   log.Debugf("Request converter for: %T", x)
-  switch x.(type) {
-  case int64:
-    fn = fmt.Sprintf("convert.%v", Int)
-  case float64:
-    fn = fmt.Sprintf("convert.%v", Float)
-  case string:
-    fn = fmt.Sprintf("convert.%v", String)
-  case bool:
-    fn = fmt.Sprintf("convert.%v", Bool)
-  case *TCList:
-    fn = fmt.Sprintf("convert.%v", List)
-  case mapset.Set:
-    fn = fmt.Sprintf("convert.%v", Set)
-  case *TCCode:
-    fn = fmt.Sprintf("convert.%v", Code)
-  case *TCFunRef:
-    fn = fmt.Sprintf("convert.%v", Ref)
-  case *TCRange:
-    fn = fmt.Sprintf("convert.%v", Range)
-  case *TCNone:
-    fn = fmt.Sprintf("convert.%v", None)
-  case *TCNumbers:
-    fn = fmt.Sprintf("convert.%v", Numbers)
-  case *TCMatrix:
-    fn = fmt.Sprintf("convert.%v", Matrix)
-  case *TCDict:
-    fn = fmt.Sprintf("convert.%v", Dict)
-  case *TCPair:
-    fn = fmt.Sprintf("convert.%v", Pair)
-  case *TCJson:
-    fn = fmt.Sprintf("convert.%v", Json)
-  case *TCNeural:
-    fn = fmt.Sprintf("convert.%v", Neural)
-  case *TCError:
-    fn = fmt.Sprintf("convert.%v", Error)
-  default:
-    fn = fmt.Sprintf("convert.%v", Any)
-  }
+  fn = fmt.Sprintf("convert.%v", TCType(x))
   fun, ok := Callbacks.Load(fn)
+  if ok {
+    log.Debugf("Returning converter: %v", fn)
+    return fun.(TCConvertFun)
+  }
+  fn = fmt.Sprintf("convert.%v", Any)
+  fun, ok = Callbacks.Load(fn)
   if ok {
     log.Debugf("Returning converter: %v", fn)
     return fun.(TCConvertFun)
@@ -331,4 +324,6 @@ func init() {
   RegisterConvertCallback(Pair, TCPairConvert)
   RegisterConvertCallback(Json, TCJsonConvert)
   RegisterConvertCallback(Neural, TCNeuralConvert)
+  RegisterConvertCallback(Data, TCDataConvert)
+  RegisterConvertCallback(SType, TCTypeConvert)
 }

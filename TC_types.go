@@ -1,8 +1,8 @@
 package ThreadComputation
 
 import (
-  "gonum.org/v1/gonum/mat"
   "github.com/deckarep/golang-set"
+  "github.com/gammazero/deque"
 )
 
 const (
@@ -24,11 +24,91 @@ const (
   Pair          = 15
   Json          = 16
   Neural        = 17
+  Data          = 18
+  Time          = 19
+  SType         = 96
   Error         = 97
   Simple        = 98
   Any           = 99
   Nil           = 100
 )
+
+type Type struct {
+  T      int
+}
+
+func (t *Type) String() string {
+  return TypeToStr(t.T)
+}
+
+func IsType(x interface{}) bool {
+  switch x.(type) {
+  case *Type:
+    return true
+  }
+  return false
+}
+
+func MakeType(t interface{}) *Type {
+  res := new(Type)
+  res.T    = Unknown
+  switch t.(type) {
+  case int:
+    res.T = t.(int)
+  default:
+    res.T = TCType(t)
+  }
+  return res
+}
+
+func TypeToStr(t interface{}) string {
+  switch t.(type) {
+  case int:
+    switch t {
+    case Int:
+      return "Int"
+    case Float:
+      return "Float"
+    case String:
+      return "String"
+    case Bool:
+      return "Bool"
+    case List:
+      return "List"
+    case Matrix:
+      return "Matrix"
+    case Dict:
+      return "Dict"
+    case Set:
+      return "Set"
+    case Ref:
+      return "Ref"
+    case Code:
+      return "Code"
+    case Value:
+      return "Value"
+    case Range:
+      return "Range"
+    case None:
+      return "None"
+    case Numbers:
+      return "Numbers"
+    case Pair:
+      return "Pair"
+    case Json:
+      return "Json"
+    case Neural:
+      return "Neural"
+    case Data:
+      return "Data"
+    case Error:
+      return "Error"
+    case SType:
+      return "Type"
+    }
+  }
+  return TypeToStr(TCType(t))
+}
 
 func TCType(x interface{}) int {
   if x == nil {
@@ -45,8 +125,6 @@ func TCType(x interface{}) int {
     return Bool
   case *TCList:
     return List
-  case *mat.Dense:
-    return Matrix
   case *TCDict:
     return Dict
   case mapset.Set:
@@ -71,8 +149,12 @@ func TCType(x interface{}) int {
     return Json
   case *TCNeural:
     return Neural
+  case *TCData:
+    return Data
   case *TCError:
     return Error
+  case *Type:
+    return x.(*Type).T
   default:
     return Unknown
   }
@@ -84,4 +166,106 @@ func TCisSimple(x interface{}) bool {
     return true
   }
   return false
+}
+
+func TCIntFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if q.Len() > 0 {
+    for q.Len() > 0 {
+      e := q.PopFront()
+      switch e.(type) {
+      case int64:
+        ReturnFromFunction(l, "Int", e)
+      case *TCValue:
+        switch e.(*TCValue).Value.(type) {
+        case int64:
+          ReturnFromFunction(l, "Int", e)
+        }
+      case string:
+        fun := GetConverterCallback(e)
+        if fun == nil {
+          return nil, l.TC.MakeError("Error getting converter for Int")
+        }
+        res := fun(e, Int)
+        if res == nil {
+          return nil, l.TC.MakeError("Error converting for Int")
+        }
+        ReturnFromFunction(l, "Int", res)
+      }
+    }
+    return nil, nil
+  }
+  return MakeType(Int), nil
+}
+
+func TCFloatFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if q.Len() > 0 {
+    for q.Len() > 0 {
+      e := q.PopFront()
+      switch e.(type) {
+      case float64:
+        ReturnFromFunction(l, "Float", e)
+      case *TCValue:
+        switch e.(*TCValue).Value.(type) {
+        case float64:
+          ReturnFromFunction(l, "Float", e)
+        }
+      case string:
+        fun := GetConverterCallback(e)
+        if fun == nil {
+          return nil, l.TC.MakeError("Error getting converter for Float")
+        }
+        res := fun(e, Float)
+        if res == nil {
+          return nil, l.TC.MakeError("Error converting for Float")
+        }
+        ReturnFromFunction(l, "Float", res)
+      }
+    }
+    return nil, nil
+  }
+  return MakeType(Float), nil
+}
+
+func TCStringFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if q.Len() > 0 {
+    for q.Len() > 0 {
+      e := q.PopFront()
+      switch e.(type) {
+      case string:
+        ReturnFromFunction(l, "String", e)
+      case *TCValue:
+        switch e.(*TCValue).Value.(type) {
+        case string:
+          ReturnFromFunction(l, "String", e)
+        }
+      }
+    }
+    return nil, nil
+  }
+  return MakeType(String), nil
+}
+
+func TCTimeFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  return MakeType(Time), nil
+}
+
+func TCToTypeConverter(v interface{}) interface{} {
+  return MakeType(v)
+}
+
+func TCToTypeFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  err := l.ExecuteSingleArgumentFunction("totype", q)
+  if err != nil {
+    return nil, err
+  }
+  return nil, nil
+}
+
+func init() {
+  SetCommand("Int", TCIntFunction)
+  SetCommand("Float", TCFloatFunction)
+  SetCommand("String", TCStringFunction)
+  SetCommand("Time", TCTimeFunction)
+  SetFunction("type", TCToTypeFunction)
+  RegisterFunctionCallback("totype", Any, TCToTypeConverter)
 }
