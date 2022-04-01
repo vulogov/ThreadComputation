@@ -13,8 +13,8 @@ type TCMatrix struct {
 }
 
 func (tc *TCstate) Matrix(q *deque.Deque) *TCMatrix {
-  var d []float64
 
+  d := make([]float64, 0)
   if q.Len() == 0 {
     res := new(TCMatrix)
     res.P = 0.0
@@ -57,6 +57,38 @@ func (tc *TCstate) Matrix(q *deque.Deque) *TCMatrix {
 func (m *TCMatrix) String() string {
   out := mat.Formatted(m.M, mat.Prefix(""), mat.Squeeze())
   return fmt.Sprintf("%v", out)
+}
+
+func (m *TCMatrix) RotateLeft() *TCMatrix {
+  d := make([]float64, 0)
+  m1, n1 := m.M.Dims()
+  for i := n1-1; i >= 0; i-- {
+    v := m.M.ColView(i)
+    for j := 0; j < v.Len(); j++ {
+      e := v.AtVec(j)
+      d = append(d, e)
+    }
+  }
+  res := new(TCMatrix)
+  res.P = 0.0
+  res.M = mat.NewDense(n1, m1, d)
+  return res
+}
+
+func (m *TCMatrix) RotateRight() *TCMatrix {
+  d := make([]float64, 0)
+  m1, n1 := m.M.Dims()
+  for i := 0; i < n1; i++ {
+    v := m.M.ColView(i)
+    for j := v.Len()-1; j >= 0; j-- {
+      e := v.AtVec(j)
+      d = append(d, e)
+    }
+  }
+  res := new(TCMatrix)
+  res.P = 0.0
+  res.M = mat.NewDense(n1, m1, d)
+  return res
 }
 
 func TCMatrixFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
