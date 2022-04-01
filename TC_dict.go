@@ -26,10 +26,14 @@ func tcFillDict(d *dict.Dict, q *deque.Deque) *dict.Dict {
   return d
 }
 
-func (tc *TCstate) Dict() *TCDict {
+func MakeDict() *TCDict {
   res := new(TCDict)
   res.D = dict.New()
   return res
+}
+
+func (tc *TCstate) Dict() *TCDict {
+  return MakeDict()
 }
 
 func (r *TCDict) String() string {
@@ -51,10 +55,20 @@ func (r *TCDict) String() string {
       value = r.(string)
     }
 
-    out += fmt.Sprintf("%v : '%v'", item.Key, value)
+    out += fmt.Sprintf("%v : '%v' ", item.Key, value)
   }
   out += "]"
   return out
+}
+
+func (r *TCDict) ToMap() map[string]interface{} {
+  res := make(map[string]interface{})
+  for item := range r.D.Items() {
+    key := item.Key.(string)
+    val := item.Value
+    res[key] = val
+  }
+  return res
 }
 
 func TCDictFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {

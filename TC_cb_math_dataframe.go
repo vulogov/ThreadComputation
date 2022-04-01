@@ -12,11 +12,13 @@ func tcDataframeMathPair(name string, x *TCData, y *TCDict) *TCData {
 
 
 func TCDataframeMath(name string, x interface{}, y interface{}) interface{} {
-  switch x.(type) {
+  switch d := x.(type) {
   case *TCData:
-    switch y.(type) {
-    case *TCPair:
-      return tcDataframeMathPair(name, x.(*TCData), y.(*TCDict))
+    switch v := y.(type) {
+    case *TCDict:
+      m := v.ToMap()
+      d.D.Append(nil, m)
+      return d
     }
   }
   return nil
