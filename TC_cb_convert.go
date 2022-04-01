@@ -275,6 +275,17 @@ func TCTypeConvert(data interface{}, to_type int) interface{} {
   return nil
 }
 
+func TCIteratorConvert(data interface{}, to_type int) interface{} {
+  switch e := data.(type) {
+  case *TCIterator:
+    switch to_type {
+    case String:
+      return e.String()
+    }
+  }
+  return nil
+}
+
 func RegisterConvertCallback(from_type int, fun TCConvertFun) {
   fname := fmt.Sprintf("convert.%v", from_type)
   Callbacks.Delete(fname)
@@ -326,4 +337,5 @@ func init() {
   RegisterConvertCallback(Neural, TCNeuralConvert)
   RegisterConvertCallback(Data, TCDataConvert)
   RegisterConvertCallback(SType, TCTypeConvert)
+  RegisterConvertCallback(Iterator, TCIteratorConvert)
 }
