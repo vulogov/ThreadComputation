@@ -45,3 +45,17 @@ func TestStdlibExecute3(t *testing.T) {
 		t.Fatalf(" 42 ! had failed: %v", res)
 	}
 }
+
+func TestStdlibExecute4(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("Just['42'] !")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("Just['42'] ! had failed: %v", res)
+	}
+}

@@ -15,6 +15,12 @@ type TCMatrix struct {
 func (tc *TCstate) Matrix(q *deque.Deque) *TCMatrix {
   var d []float64
 
+  if q.Len() == 0 {
+    res := new(TCMatrix)
+    res.P = 0.0
+    res.M = new(mat.Dense)
+    return res
+  }
   x := q.Len()
   y := 0
   for i := 0; i < q.Len(); i++ {
@@ -24,6 +30,8 @@ func (tc *TCstate) Matrix(q *deque.Deque) *TCMatrix {
       if y < e.(*TCNumbers).Len() {
         y = e.(*TCNumbers).Len()
       }
+    case *TCList:
+      return tc.Matrix(&e.(*TCList).Q)
     default:
       tc.SetError("Can not crreate matrix[] due to invalid source data")
       return nil
