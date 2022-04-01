@@ -8,6 +8,7 @@ root_term
  : ( fun
    | ns
    | pos_term
+   | val
 );
 
 ns
@@ -18,17 +19,22 @@ fun
  : (mod=MOD)? fname=FUNC_NAME ('[' (param+=fun_term)* ']')?
 ;
 
+val
+ : '{' fname=fun (p=FUNC_NAME)? '}'
+;
 
 ns_term
  : ( fun
    | ns
    | pos_term
+   | val
 );
 
 
 fun_term
  : ( fun
    | pos_term
+   | val
 );
 
 pos_term
@@ -134,6 +140,7 @@ fragment POINT_FLOAT
   : [0-9]* '.' [0-9]+
   | [0-9]+ '.'
   ;
+
 
 fragment RN
   : '\r'? '\n'

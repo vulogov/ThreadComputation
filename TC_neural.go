@@ -140,7 +140,7 @@ func TCTrainNeuralFunction(l *TCExecListener, name string, q *deque.Deque) (inte
 
 func init() {
   SetCommand("neural", TCNeuralFunction)
-  SetCommand("Neural", TCNeuralValueFunction)
+  SetCommand("JustNeural", TCNeuralValueFunction)
   SetFunction("train", TCTrainNeuralFunction)
   RegisterOperatorCmdCallback("set", Neural, Pair, TCNeuralTrain)
   RegisterOperatorCallback("get", Neural, Numbers, TCNeuralUpdate)

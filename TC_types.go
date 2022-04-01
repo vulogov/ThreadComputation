@@ -180,12 +180,14 @@ func TCIntFunction(l *TCExecListener, name string, q *deque.Deque) (interface{},
       switch e.(type) {
       case int64:
         ReturnFromFunction(l, "Int", e)
+      case float64:
+        ReturnFromFunction(l, "Int", int64(e.(float64)))
       case *TCValue:
         switch e.(*TCValue).Value.(type) {
         case int64:
           ReturnFromFunction(l, "Int", e)
         }
-      case string:
+      default:
         fun := GetConverterCallback(e)
         if fun == nil {
           return nil, l.TC.MakeError("Error getting converter for Int")
@@ -214,7 +216,9 @@ func TCFloatFunction(l *TCExecListener, name string, q *deque.Deque) (interface{
         case float64:
           ReturnFromFunction(l, "Float", e)
         }
-      case string:
+      case int64:
+        ReturnFromFunction(l, "Float", float64(e.(int64)))
+      default:
         fun := GetConverterCallback(e)
         if fun == nil {
           return nil, l.TC.MakeError("Error getting converter for Float")
@@ -242,6 +246,14 @@ func TCStringFunction(l *TCExecListener, name string, q *deque.Deque) (interface
         switch e.(*TCValue).Value.(type) {
         case string:
           ReturnFromFunction(l, "String", e)
+        }
+      default:
+        fun := GetConverterCallback(e)
+        if fun != nil {
+          res := fun(e, String)
+          if res == nil {
+            ReturnFromFunction(l, "String", res)
+          }
         }
       }
     }

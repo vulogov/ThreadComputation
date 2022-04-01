@@ -72,5 +72,5 @@ func TCJsonUniqFunction(l *TCExecListener, name string, q *deque.Deque) (interfa
 func init() {
   SetCommand("json", TCJsonFunction)
   SetCommand("jsonUniq", TCJsonUniqFunction)
-  SetCommand("Json", TCJsonValueFunction)
+  SetCommand("JustJson", TCJsonValueFunction)
 }

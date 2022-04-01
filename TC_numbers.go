@@ -89,5 +89,5 @@ func TCNumbersValueFunction(l *TCExecListener, name string, q *deque.Deque) (int
 
 func init() {
   SetCommand("numbers", TCNumbersFunction)
-  SetCommand("Numbers", TCNumbersValueFunction)
+  SetCommand("JustNumbers", TCNumbersValueFunction)
 }

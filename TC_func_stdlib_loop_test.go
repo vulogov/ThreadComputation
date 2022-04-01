@@ -65,3 +65,31 @@ func TestStdlibLoop5(t *testing.T) {
 		t.Fatalf("list[40 41 42] ![pair['current' 1]] loop[stack[#0]] len had failed: %v", res)
 	}
 }
+
+func TestStdlibLoop6(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("matrix[numbers[1 2] numbers[3 4]] loop[stack[#0]] len")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "2" {
+		t.Fatalf("matrix[numbers[1 2] numbers[3 4]] loop[stack[#0]] len had failed: %v", res)
+	}
+}
+
+func TestStdlibLoop7(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("matrix[numbers[1 2] numbers[3 4]] ![pair['current' 1]] loop[stack[#0]] len")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "1" {
+		t.Fatalf("matrix[numbers[1 2] numbers[3 4]] ![pair['current' 1]] loop[stack[#0]] len had failed: %v", res)
+	}
+}
