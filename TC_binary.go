@@ -1,6 +1,5 @@
 package ThreadComputation
 import (
-  "fmt"
   "github.com/gammazero/deque"
 )
 
@@ -10,7 +9,7 @@ type TCBinary struct {
 }
 
 func (b *TCBinary) String() string {
-  return fmt.Sprintf("binary[ size=%v ]", len(b.D))
+  return string(b.D)
 }
 
 func (b *TCBinary) Len() int {

@@ -43,5 +43,6 @@ func TCPairValueFunction(l *TCExecListener, name string, q *deque.Deque) (interf
 
 func init() {
   SetCommand("pair", TCPairFunction)
+  SetCommand("let", TCPairFunction)
   SetCommand("JustPair", TCPairValueFunction)
 }

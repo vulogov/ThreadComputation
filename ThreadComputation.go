@@ -59,6 +59,8 @@ type TCstate struct {
   ExReq       chan bool       // Exit request channel
   IsExitReq   bool            // Exit flag
   ExitCb     *dict.Dict       // Exit callbacks
+  Ctx         cmap.Cmap       // Global context
+  CtxStack    deque.Deque     // Stack of local contexts
 }
 
 type tcExecErrorListener struct {
@@ -132,6 +134,7 @@ func Init() *TCstate {
   log.Debugf("TC instance created: %v", tc.ID)
   log.Debugf("Worker pool created. Capacity=%v, Active=%v", tc.Pool.PoolSize(), tc.Pool.ActiveWorkers())
   InitExitCallbacks(tc)
+  tc.SetContext("ID", tc.ID)
   return tc
 }
 

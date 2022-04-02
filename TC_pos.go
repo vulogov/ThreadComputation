@@ -25,7 +25,6 @@ func (l *TCExecListener) ExitPos_term(c *parser.Pos_termContext) {
   if l.TC.Errors() > 0 {
     return
   }
-
   pos_name := c.GetPname().GetText()
   if l.TC.AddToUserFun(fmt.Sprintf("#%v", pos_name)) {
     log.Debugf("Recorded positional to userfun: #%v", pos_name)
@@ -44,6 +43,12 @@ func (l *TCExecListener) ExitPos_term(c *parser.Pos_termContext) {
         return
       }
       ReturnFromFunction(l, "#POSITIONAL", e)
+    }
+  } else if l.TC.HaveContext(pos_name) {
+    log.Debugf("Positional parameter %v is string key for context", pos_name)
+    res := l.TC.GetContext(pos_name)
+    if res != nil {
+      ReturnFromFunction(l, "#POSITIONAL", res)
     }
   }
 }
