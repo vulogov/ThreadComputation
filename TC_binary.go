@@ -5,6 +5,7 @@ import (
 )
 
 type TCBinary struct {
+  Type        int
   D           []byte
 }
 
@@ -20,16 +21,21 @@ func (res *TCBinary) Add(d interface{}) *TCBinary {
   if d != nil {
     switch v := d.(type) {
     case string:
+      res.Type = String
       res.D = []byte(v)
     case []byte:
+      res.Type = String
       res.D = v
     case *TCBinary:
+      res.Type = Binary
       res.D = append(res.D[:], v.D...)
     case *TCValue:
       switch v.Value.(type) {
       case string:
+        res.Type = String
         res.D = []byte(v.Value.(string))
       case *TCBinary:
+        res.Type = Binary
         res.D = append(res.D[:], v.Value.(*TCBinary).D...)
       }
     }
@@ -48,6 +54,7 @@ func IsBinary(x interface{}) bool {
 func MakeBinary(d interface{}) *TCBinary {
   res := new(TCBinary)
   res.D = make([]byte, 0)
+  res.Type = Unknown
   res.Add(d)
   return res
 }
