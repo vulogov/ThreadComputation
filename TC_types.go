@@ -26,6 +26,7 @@ const (
   Neural        = 17
   Data          = 18
   Time          = 19
+  Binary        = 20
   Iterator      = 95
   SType         = 96
   Error         = 97
@@ -102,6 +103,8 @@ func TypeToStr(t interface{}) string {
       return "Neural"
     case Data:
       return "Data"
+    case Binary:
+      return "Binary"
     case Iterator:
       return "Iterator"
     case Error:
@@ -156,6 +159,8 @@ func TCType(x interface{}) int {
     return Data
   case *TCIterator:
     return Iterator
+  case *TCBinary:
+    return Binary
   case *TCError:
     return Error
   case *Type:
