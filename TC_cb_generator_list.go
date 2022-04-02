@@ -11,7 +11,7 @@ func tcGetNFromList(res *TCIterator, i int64) interface{} {
   }
   log.Debugf("list-iterator: getting value at %v", i)
   e := res.Gen.(*TCList).Q.At(int(i))
-  if res == nil {
+  if e == nil {
     res.Last = nil
     return nil
   }

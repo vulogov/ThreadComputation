@@ -20,6 +20,9 @@ type ThreadComputationListener interface {
 	// EnterFun is called when entering the fun production.
 	EnterFun(c *FunContext)
 
+	// EnterVal is called when entering the val production.
+	EnterVal(c *ValContext)
+
 	// EnterNs_term is called when entering the ns_term production.
 	EnterNs_term(c *Ns_termContext)
 
@@ -40,6 +43,9 @@ type ThreadComputationListener interface {
 
 	// ExitFun is called when exiting the fun production.
 	ExitFun(c *FunContext)
+
+	// ExitVal is called when exiting the val production.
+	ExitVal(c *ValContext)
 
 	// ExitNs_term is called when exiting the ns_term production.
 	ExitNs_term(c *Ns_termContext)

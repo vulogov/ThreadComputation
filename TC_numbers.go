@@ -2,12 +2,54 @@ package ThreadComputation
 
 import (
   "fmt"
+  "math"
   "github.com/gammazero/deque"
 )
 
 type TCNumbers struct {
   P            float64
   N            []float64
+}
+
+func tcRotateFloat64(slice []float64, n int) (rotateSlice []float64) {
+    var begin []float64
+    var end []float64
+    size := len(slice)
+    rotateSlice = make([]float64, size)
+
+    nAbs := math.Abs(float64(n))
+
+    if int(nAbs) > size {
+        remainder, _ := tcQuotientAndRemainderF64(float64(n), float64(size))
+        n = int(remainder)
+    }
+
+    if n != 0 {
+        if n > 0 {
+            index := size - n
+            begin = slice[index:]
+            end = slice[0:index]
+            copy(rotateSlice, begin)
+            copy(rotateSlice[n:], end)
+        } else {
+            n = int(nAbs)
+            index := size - n
+            begin = slice[n:]
+            end = slice[0:n]
+            copy(rotateSlice, begin)
+            copy(rotateSlice[index:], end)
+        }
+    } else {
+        copy(rotateSlice, slice)
+    }
+
+    return rotateSlice
+}
+
+func tcQuotientAndRemainderF64(x, y float64) (Remainder, Quotient float64) {
+    Quotient = float64(math.Floor(float64(x / y)))
+    Remainder = x - y*Quotient
+    return Remainder, Quotient
 }
 
 func MakeNumbers() *TCNumbers {
@@ -56,6 +98,14 @@ func (n *TCNumbers) Len() int {
   return len(n.N)
 }
 
+func (n *TCNumbers) RotateLeft() {
+  n.N = tcRotateFloat64(n.N, -1)
+}
+
+func (n *TCNumbers) RotateRight() {
+  n.N = tcRotateFloat64(n.N, 1)
+}
+
 func (n *TCNumbers) String() string {
   out := "numbers[ "
   for x := 0; x < len(n.N); x++ {
@@ -89,5 +139,5 @@ func TCNumbersValueFunction(l *TCExecListener, name string, q *deque.Deque) (int
 
 func init() {
   SetCommand("numbers", TCNumbersFunction)
-  SetCommand("Numbers", TCNumbersValueFunction)
+  SetCommand("JustNumbers", TCNumbersValueFunction)
 }

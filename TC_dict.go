@@ -86,6 +86,6 @@ func TCDictValueFunction(l *TCExecListener, name string, q *deque.Deque) (interf
 func init() {
   SetCommand("dict", TCDictFunction)
   SetCommand("row", TCDictFunction)
-  SetCommand("Dict", TCDictValueFunction)
-  SetCommand("Row", TCDictValueFunction)
+  SetCommand("JustDict", TCDictValueFunction)
+  SetCommand("JustRow", TCDictValueFunction)
 }

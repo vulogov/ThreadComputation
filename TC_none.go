@@ -43,5 +43,5 @@ func TCNoneValueFunction(l *TCExecListener, name string, q *deque.Deque) (interf
 
 func init() {
   SetCommand("none", TCNoneFunction)
-  SetCommand("None", TCNoneValueFunction)
+  SetCommand("JustNone", TCNoneValueFunction)
 }

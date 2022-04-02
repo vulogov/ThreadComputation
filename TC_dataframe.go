@@ -107,6 +107,6 @@ func TCDataValueFunction(l *TCExecListener, name string, q *deque.Deque) (interf
 
 func init() {
   SetCommand("data", TCDataFunction)
-  SetCommand("Data", TCDataValueFunction)
+  SetCommand("JustData", TCDataValueFunction)
   RegisterOperatorCmdCallback("set", Data, Pair, TCDataSet)
 }

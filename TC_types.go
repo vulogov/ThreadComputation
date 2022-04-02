@@ -26,6 +26,8 @@ const (
   Neural        = 17
   Data          = 18
   Time          = 19
+  Binary        = 20
+  Context       = 21
   Iterator      = 95
   SType         = 96
   Error         = 97
@@ -102,6 +104,10 @@ func TypeToStr(t interface{}) string {
       return "Neural"
     case Data:
       return "Data"
+    case Binary:
+      return "Binary"
+    case Context:
+      return "Context"
     case Iterator:
       return "Iterator"
     case Error:
@@ -156,6 +162,10 @@ func TCType(x interface{}) int {
     return Data
   case *TCIterator:
     return Iterator
+  case *TCBinary:
+    return Binary
+  case *TCCtx:
+    return Context
   case *TCError:
     return Error
   case *Type:
@@ -180,12 +190,14 @@ func TCIntFunction(l *TCExecListener, name string, q *deque.Deque) (interface{},
       switch e.(type) {
       case int64:
         ReturnFromFunction(l, "Int", e)
+      case float64:
+        ReturnFromFunction(l, "Int", int64(e.(float64)))
       case *TCValue:
         switch e.(*TCValue).Value.(type) {
         case int64:
           ReturnFromFunction(l, "Int", e)
         }
-      case string:
+      default:
         fun := GetConverterCallback(e)
         if fun == nil {
           return nil, l.TC.MakeError("Error getting converter for Int")
@@ -214,7 +226,9 @@ func TCFloatFunction(l *TCExecListener, name string, q *deque.Deque) (interface{
         case float64:
           ReturnFromFunction(l, "Float", e)
         }
-      case string:
+      case int64:
+        ReturnFromFunction(l, "Float", float64(e.(int64)))
+      default:
         fun := GetConverterCallback(e)
         if fun == nil {
           return nil, l.TC.MakeError("Error getting converter for Float")
@@ -242,6 +256,14 @@ func TCStringFunction(l *TCExecListener, name string, q *deque.Deque) (interface
         switch e.(*TCValue).Value.(type) {
         case string:
           ReturnFromFunction(l, "String", e)
+        }
+      default:
+        fun := GetConverterCallback(e)
+        if fun != nil {
+          res := fun(e, String)
+          if res == nil {
+            ReturnFromFunction(l, "String", res)
+          }
         }
       }
     }
