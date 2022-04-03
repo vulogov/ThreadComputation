@@ -268,7 +268,17 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
         e = ApplyToFunction(l, e, q)
         ReturnFromFunction(l, func_name, e)
       } else {
-        l.SetError("%v is not recognized as function", func_name)
+        //
+        // Give the function last chance through function router
+        //
+        res, err := TCFunctionRouter(l, func_name, q)
+        if err != nil {
+          l.SetError(fmt.Sprintf("Function router returned: %v", err))
+          return
+        }
+        if res != nil {
+          ReturnFromFunction(l, func_name, res)
+        }
       }
     }
   }
