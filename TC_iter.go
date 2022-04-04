@@ -5,6 +5,7 @@ import (
 )
 
 type TCIterator struct {
+  tc        *TCstate
   Type       int
   Gen        interface{}
   Last       interface{}
@@ -18,6 +19,7 @@ func (tc *TCstate) Iterator(gen interface{}) *TCIterator {
     return nil
   }
   res := gfun(gen)
+  res.tc = tc
   if res == nil {
     tc.SetError("Generator for %T returned nil", gen)
     return nil
@@ -48,6 +50,9 @@ func (i *TCIterator) Prev() interface{} {
 func (i *TCIterator) Set(name string, val interface{}) interface{} {
   i.Attrs.Delete(name)
   i.Attrs.Store(name, val)
+  if i.tc != nil {
+    i.tc.SetContext(name, val)
+  }
   return val
 }
 
