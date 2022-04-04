@@ -9,7 +9,7 @@ func TCLinesTypeFunction(l *TCExecListener, name string, q *deque.Deque) (interf
     res := MakeLines(q)
     return res, nil
   }
-  return MakeType(Binary), nil
+  return MakeType(Lines), nil
 }
 
 func init() {
