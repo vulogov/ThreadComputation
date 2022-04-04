@@ -1,6 +1,7 @@
 package ThreadComputation
 import (
   "fmt"
+  log "github.com/sirupsen/logrus"
   "github.com/lrita/cmap"
 )
 
@@ -36,6 +37,7 @@ func (i *TCIterator) Next() interface{} {
   if nfun == nil {
     return nil
   }
+  log.Debugf("loop: next()=%v", GetFunctionName(nfun))
   return nfun(i)
 }
 
@@ -44,6 +46,7 @@ func (i *TCIterator) Prev() interface{} {
   if nfun == nil {
     return nil
   }
+  log.Debugf("loop: prev()=%v", GetFunctionName(nfun))
   return nfun(i)
 }
 

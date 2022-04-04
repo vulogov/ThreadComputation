@@ -35,6 +35,7 @@ func ListGenerator(v interface{}) *TCIterator {
 
 func ListNext(res *TCIterator) interface{} {
   i := res.Get("current").(int64)
+  log.Debugf("%v(s) element from list", i)
   out := tcGetNFromList(res, i)
   i = i + 1
   res.Set("current", i)
@@ -43,6 +44,7 @@ func ListNext(res *TCIterator) interface{} {
 
 func ListPrev(res *TCIterator) interface{} {
   i := res.Get("current").(int64)
+  log.Debugf("%v(s) element from list", i)
   out := tcGetNFromList(res, i)
   i = i - 1
   res.Set("current", i)

@@ -28,6 +28,7 @@ func LoopCode(l *TCExecListener, name string, code string) interface{} {
     l.TC.SetError("Context is not defined for loop[]")
     return nil
   }
+  log.Debugf("Attempting to make a loop over %T", e)
   l.TC.AddContext(nil)
   switch e.(type) {
   case *TCIterator:

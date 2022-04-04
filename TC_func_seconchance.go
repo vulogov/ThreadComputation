@@ -1,6 +1,7 @@
 package ThreadComputation
 
 import (
+  "fmt"
   log "github.com/sirupsen/logrus"
   "github.com/gammazero/deque"
 )
@@ -23,7 +24,7 @@ func TCFunctionRouter(l *TCExecListener, func_name string, q *deque.Deque) (inte
       ReturnFromFunction(l, fname, res)
     }
   }
-  return nil, l.TC.MakeError("%v is not recognized as function", func_name)
+  return nil, l.TC.MakeError(fmt.Sprintf("%v is not recognized as function", func_name))
 }
 
 func TCAddRouterFunction(fun TCRouterFun) {
