@@ -63,6 +63,15 @@ func (tc *TCstate) GetContext(name string) interface {} {
   return nil
 }
 
+func (tc *TCstate) FromContext(name string, data interface{}) interface{} {
+  res := tc.GetContext(name)
+  if res == nil {
+    tc.SetContext(name, data)
+    return data
+  }
+  return res
+}
+
 func (tc *TCstate) HaveContext(name string) bool {
   if tc.GetContext(name) == nil {
     return false

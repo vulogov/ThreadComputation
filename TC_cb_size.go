@@ -28,6 +28,14 @@ func TCListSize(data interface{}) int {
   return 0
 }
 
+func TCLinesSize(data interface{}) int {
+  switch data.(type) {
+  case *TCLines:
+    return data.(*TCLines).Q.Len()
+  }
+  return 0
+}
+
 func TCNumbersSize(data interface{}) int {
   switch data.(type) {
   case *TCNumbers:
@@ -88,6 +96,8 @@ func GetSizeCallback(x interface{}) TCSizeFun {
     fn = fmt.Sprintf("size.%v", Neural)
   case *TCBinary:
     fn = fmt.Sprintf("size.%v", Binary)
+  case *TCLines:
+    fn = fmt.Sprintf("size.%v", Lines)
   default:
     fn = fmt.Sprintf("size.%v", Any)
   }
@@ -110,4 +120,5 @@ func init() {
   RegisterSizeCallback(Matrix, TCMatrixSize)
   RegisterSizeCallback(Neural, TCNeuralSize)
   RegisterSizeCallback(Binary, TCBinarySize)
+  RegisterSizeCallback(Lines, TCLinesSize)
 }
