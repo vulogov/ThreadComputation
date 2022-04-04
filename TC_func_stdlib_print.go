@@ -11,6 +11,7 @@ import (
 func TCPrintFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
   for q.Len() > 0 {
     e := q.PopFront()
+    ReturnFromFunction(l, name, e)
     fun := GetConverterCallback(e)
     if fun == nil {
       log.Debugf("print error: Can not get convert for %T", e)
@@ -37,6 +38,7 @@ func TCPrintfFunction(l *TCExecListener, name string, q *deque.Deque) (interface
 
   if q.Len() > 0 {
     f := q.PopFront()
+    ReturnFromFunction(l, name, f)
     switch f.(type) {
     case string:
       for q.Len() > 0 {
@@ -63,6 +65,7 @@ func TCnewlineFunction(l *TCExecListener, name string, q *deque.Deque) (interfac
   if q.Len() > 0 {
     for q.Len() > 0 {
       e := q.PopFront()
+      ReturnFromFunction(l, name, e)
       fun := GetConverterCallback(e)
       if fun == nil {
         log.Debugf("print error: Can not get convert for %T", e)

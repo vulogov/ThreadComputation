@@ -1,5 +1,6 @@
 package ThreadComputation
 import (
+  "fmt"
   "github.com/gammazero/deque"
 )
 
@@ -9,7 +10,24 @@ type TCBinary struct {
 }
 
 func (b *TCBinary) String() string {
+  out := "binary[ "
+  for i := 0; i<len(b.D); i++ {
+    out += fmt.Sprintf("%U(%q) ", b.D[i], b.D[i])
+  }
+  out += " ]"
+  return out
+}
+
+func (b *TCBinary) Raw() string {
   return string(b.D)
+}
+
+func (b *TCBinary) Slice(s int, l int) *TCBinary {
+  if s+l <= len(b.D) {
+    res := MakeBinary(b.D[s:s+l])
+    return res
+  }
+  return nil
 }
 
 func (b *TCBinary) Len() int {
