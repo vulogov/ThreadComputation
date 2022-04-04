@@ -1,12 +1,7 @@
 package ThreadComputation
 
 import (
-  "fmt"
-  "strings"
-  "strconv"
-  "github.com/deckarep/golang-set"
-  conv "github.com/cstockton/go-conv"
-  log "github.com/sirupsen/logrus"
+
 )
 
 
@@ -17,7 +12,7 @@ func TCBinaryConvert(data interface{}, to_type int) interface{} {
     case String:
       return e.String()
     case Lines:
-      return MakeLinesFromValue(e.(*TCBinary))
+      return MakeLinesFromValue(e)
     }
   }
   return nil

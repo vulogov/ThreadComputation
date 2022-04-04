@@ -19,11 +19,11 @@ func MakeLinesFromValue(d interface{}) *TCLines {
   res := new(TCLines)
   switch v := d.(type) {
   case string:
-    for _, elem := TCEndOfLine.FindAllString(v.(string), -1) {
+    for _, elem := range TCEndOfLine.FindAllString(v, -1) {
       res.Add(elem)
     }
   case *TCBinary:
-    return MakeLinesFromValue(string(v.(TCBinary).Raw()))
+    return MakeLinesFromValue(string(v.Raw()))
   }
   return res
 }
