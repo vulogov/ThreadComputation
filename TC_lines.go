@@ -1,11 +1,31 @@
 package ThreadComputation
 import (
   "fmt"
+  "regexp"
   "github.com/gammazero/deque"
 )
 
+var TCEndOfLine = regexp.MustCompile(`\n+`)
+
 type TCLines struct {
   Q         deque.Deque
+}
+
+func MakeLinesFromValue(d interface{}) *TCLines {
+  switch d.(type) {
+  case *TCValue:
+    return MakeLinesFromValue(d.(*TCValue).Value)
+  }
+  res := new(TCLines)
+  switch v := d.(type) {
+  case string:
+    for _, elem := TCEndOfLine.FindAllString(v.(string), -1) {
+      res.Add(elem)
+    }
+  case *TCBinary:
+    return MakeLinesFromValue(string(v.(TCBinary).Raw()))
+  }
+  return res
 }
 
 func MakeLines(q *deque.Deque) *TCLines {
@@ -51,7 +71,11 @@ func (l *TCLines) Len() int {
 }
 
 func (l *TCLines) String() string {
-  return fmt.Sprintf("lines[ %v line(s) ]", l.Len())
+  out := ""
+  for i := 0; i < l.Len(); i++ {
+    out += fmt.Sprintf("%v\n", l.Q.At(i))
+  }
+  return out
 }
 
 func TCLinesFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {

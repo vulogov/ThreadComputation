@@ -308,17 +308,6 @@ func TCContextConvert(data interface{}, to_type int) interface{} {
   return nil
 }
 
-func TCLinesConvert(data interface{}, to_type int) interface{} {
-  switch e := data.(type) {
-  case *TCLines:
-    switch to_type {
-    case String:
-      return e.String()
-    }
-  }
-  return nil
-}
-
 func RegisterConvertCallback(from_type int, fun TCConvertFun) {
   fname := fmt.Sprintf("convert.%v", from_type)
   Callbacks.Delete(fname)
@@ -373,5 +362,4 @@ func init() {
   RegisterConvertCallback(Iterator, TCIteratorConvert)
   RegisterConvertCallback(Binary, TCBinaryConvert)
   RegisterConvertCallback(Context, TCContextConvert)
-  RegisterConvertCallback(Lines, TCLinesConvert)
 }
