@@ -65,7 +65,7 @@ func TCReadFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}
       if err != nil {
         return nil, err
       }
-      ReturnFromFunction(l, "read", data)
+      ReturnFromFunction(l, "read", string(data))
     }
   }
   return nil, nil
