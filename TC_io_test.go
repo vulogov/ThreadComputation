@@ -40,3 +40,14 @@ func TestIO3(t *testing.T) {
     t.Fatalf("%v is failed: %v", code, res)
   }
 }
+
+func TestIO4(t *testing.T) {
+	code := "io['./examples/hello2.txt'] Write[io['./examples/hello.txt'] Read]]"
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval(code)
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
