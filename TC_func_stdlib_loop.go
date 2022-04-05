@@ -86,6 +86,10 @@ func LoopCode(l *TCExecListener, name string, code string) interface{} {
     l.TC.AddContext(nil)
     q := new(deque.Deque)
     q.PushFront(v)
+    lpfun := GetLoopPCallback(v)
+    if lpfun != nil {
+      q = lpfun(l, v, q)
+    }
     l.TC.EvAttrs.PushFront(q)
     l.TC.Eval(code)
     l.TC.EvAttrs.PopFront()
