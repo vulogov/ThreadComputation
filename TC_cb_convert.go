@@ -47,84 +47,6 @@ func TCStringConvert(data interface{}, to_type int) interface{} {
   return nil
 }
 
-func TCIntConvert(data interface{}, to_type int) interface{} {
-  switch e := data.(type) {
-  case int64:
-    switch to_type {
-    case String:
-      return fmt.Sprintf("%v", e)
-    case Int:
-      ret, err := conv.Int64(data)
-      if err == nil {
-        return ret
-      }
-    case Float:
-      ret, err := conv.Float64(float64(e))
-      if err == nil {
-        return ret
-      }
-    case Bool:
-      if e == 1 {
-        return true
-      } else {
-        return false
-      }
-    }
-  }
-  return nil
-}
-
-func TCFloatConvert(data interface{}, to_type int) interface{} {
-  switch e := data.(type) {
-  case float64:
-    switch to_type {
-    case String:
-      return fmt.Sprintf("%v", e)
-    case Int:
-      ret, err := conv.Int64(int64(data.(float64)))
-      if err == nil {
-        return ret
-      }
-    case Float:
-      ret, err := conv.Float64(float64(e))
-      if err == nil {
-        return ret
-      }
-    case Bool:
-      if e == 1 {
-        return true
-      } else {
-        return false
-      }
-    }
-  }
-  return nil
-}
-
-func TCBoolConvert(data interface{}, to_type int) interface{} {
-  switch e := data.(type) {
-  case bool:
-    switch to_type {
-    case String:
-      return fmt.Sprintf("%v", e)
-    case Int:
-      if e {
-        return int64(1)
-      } else {
-        return int64(0)
-      }
-    case Float:
-      if e {
-        return float64(1)
-      } else {
-        return float64(0)
-      }
-    case Bool:
-      return e
-    }
-  }
-  return nil
-}
 
 func TCListConvert(data interface{}, to_type int) interface{} {
   switch e := data.(type) {
@@ -331,9 +253,6 @@ func GetStringConverter() TCConvertFun {
 
 func init() {
   RegisterConvertCallback(String, TCStringConvert)
-  RegisterConvertCallback(Int, TCIntConvert)
-  RegisterConvertCallback(Float, TCFloatConvert)
-  RegisterConvertCallback(Bool, TCBoolConvert)
   RegisterConvertCallback(Any, TCAnythingConvert)
   RegisterConvertCallback(List, TCListConvert)
   RegisterConvertCallback(Set, TCSetConvert)

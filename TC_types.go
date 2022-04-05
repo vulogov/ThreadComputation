@@ -193,6 +193,20 @@ func TCisSimple(x interface{}) bool {
   return false
 }
 
+func TCBoolTypeFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if q.Len() > 0 {
+    for q.Len() > 0 {
+      e := q.PopFront()
+      switch e.(type) {
+      case bool:
+        ReturnFromFunction(l, "Int", e)
+      }
+    }
+    return nil, nil
+  }
+  return MakeType(Bool), nil
+}
+
 func TCIntFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
   if q.Len() > 0 {
     for q.Len() > 0 {
@@ -316,6 +330,7 @@ func init() {
   SetCommand("String", TCStringFunction)
   SetCommand("Time", TCTimeFunction)
   SetCommand("List", TCListTypeFunction)
+  SetCommand("Bool", TCBoolTypeFunction)
   SetFunction("type", TCToTypeFunction)
   RegisterFunctionCallback("totype", Any, TCToTypeConverter)
 }
