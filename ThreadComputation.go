@@ -20,7 +20,7 @@ var Vars      cmap.Cmap
 var Functions cmap.Cmap
 var Commands  cmap.Cmap
 var Callbacks cmap.Cmap
-var VERSION = "1.20"
+var VERSION = "1.21"
 
 type TCExecListener struct {
   *parser.BaseThreadComputationListener
@@ -221,6 +221,10 @@ func (tc *TCstate) Set(x interface{}) {
 func (tc *TCstate) GetAsString() string {
   res := tc.Get()
   if res != nil {
+    switch res.(type) {
+    case *TCBinary:
+      return res.(*TCBinary).Raw()
+    }
     return fmt.Sprintf("%v", res)
   }
   return ""
