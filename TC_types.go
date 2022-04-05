@@ -28,6 +28,8 @@ const (
   Time          = 19
   Binary        = 20
   Context       = 21
+  Lines         = 22
+  IO            = 23
   Iterator      = 95
   SType         = 96
   Error         = 97
@@ -110,6 +112,10 @@ func TypeToStr(t interface{}) string {
       return "Context"
     case Iterator:
       return "Iterator"
+    case Lines:
+      return "Lines"
+    case IO:
+      return "IO"
     case Error:
       return "Error"
     case SType:
@@ -166,6 +172,10 @@ func TCType(x interface{}) int {
     return Binary
   case *TCCtx:
     return Context
+  case *TCLines:
+    return Lines
+  case *TCIO:
+    return IO
   case *TCError:
     return Error
   case *Type:

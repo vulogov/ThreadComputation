@@ -28,6 +28,8 @@ func LoopCode(l *TCExecListener, name string, code string) interface{} {
     l.TC.SetError("Context is not defined for loop[]")
     return nil
   }
+  log.Debugf("Attempting to make a loop over %T", e)
+  l.TC.AddContext(nil)
   switch e.(type) {
   case *TCIterator:
     iter = e.(*TCIterator)
@@ -35,17 +37,20 @@ func LoopCode(l *TCExecListener, name string, code string) interface{} {
     r := e.(*TCRange)
     iter = l.TC.Iterator(r)
     if iter == nil {
+      l.TC.DelContext()
       l.TC.SetError("Can not initiate range iterator for %T", e)
       return nil
     }
   default:
     igfun := GetGenCallback(e)
     if igfun == nil {
+      l.TC.DelContext()
       l.TC.SetError("Can not initiate iterator for %T", e)
       return nil
     }
     iter = igfun(e)
     if iter == nil {
+      l.TC.DelContext()
       l.TC.SetError("Can not create iterator for %T", e)
       return nil
     }
@@ -84,6 +89,7 @@ func LoopCode(l *TCExecListener, name string, code string) interface{} {
     l.TC.Eval(code)
     l.TC.EvAttrs.PopFront()
   }
+  l.TC.DelContext()
   return nil
 }
 

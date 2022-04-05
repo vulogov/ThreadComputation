@@ -1,6 +1,8 @@
 package ThreadComputation
 
 import (
+  "reflect"
+  "runtime"
   log "github.com/sirupsen/logrus"
 )
 
@@ -73,4 +75,8 @@ func SetFunction(name string, fun TCFun) {
 func SetCommand(name string, fun TCFun) {
   Commands.Delete(name)
   Commands.Store(name, fun)
+}
+
+func GetFunctionName(i interface{}) string {
+    return runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
 }

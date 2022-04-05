@@ -286,17 +286,6 @@ func TCIteratorConvert(data interface{}, to_type int) interface{} {
   return nil
 }
 
-func TCBinaryConvert(data interface{}, to_type int) interface{} {
-  switch e := data.(type) {
-  case *TCBinary:
-    switch to_type {
-    case String:
-      return e.String()
-    }
-  }
-  return nil
-}
-
 func TCContextConvert(data interface{}, to_type int) interface{} {
   switch e := data.(type) {
   case *TCCtx:
@@ -360,6 +349,5 @@ func init() {
   RegisterConvertCallback(Data, TCDataConvert)
   RegisterConvertCallback(SType, TCTypeConvert)
   RegisterConvertCallback(Iterator, TCIteratorConvert)
-  RegisterConvertCallback(Binary, TCBinaryConvert)
   RegisterConvertCallback(Context, TCContextConvert)
 }

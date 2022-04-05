@@ -47,15 +47,29 @@ func (tc *TCstate) GetContext(name string) interface {} {
     if data, ok := tc.Ctx.Load(name); ok {
       log.Debugf("global context %v->%v", data, name)
       return data
+    } else {
+      log.Debugf("Positional %v in global context", name)
     }
   } else {
-    e := tc.CtxStack.Front().(*TCCtx)
-    if data, ok := e.C.Load(name); ok {
-      log.Debugf("local context %v %v->%v", e.Id, data, name)
-      return data
+    for i := 0; i < tc.CtxStack.Len(); i++ {
+      e := tc.CtxStack.At(i).(*TCCtx)
+      log.Debugf("Scanning context %v for %v", e.Id, name)
+      if data, ok := e.C.Load(name); ok {
+        log.Debugf("local context %v %v->%v", e.Id, data, name)
+        return data
+      }
     }
   }
   return nil
+}
+
+func (tc *TCstate) FromContext(name string, data interface{}) interface{} {
+  res := tc.GetContext(name)
+  if res == nil {
+    tc.SetContext(name, data)
+    return data
+  }
+  return res
 }
 
 func (tc *TCstate) HaveContext(name string) bool {
@@ -82,6 +96,15 @@ func (tc *TCstate) DelContext()  {
   if tc.CtxStack.Len() > 0 {
     ctx := tc.CtxStack.PopFront()
     log.Debugf("local context %v deleted", ctx.(*TCCtx).Id)
-    tc.CtxStack.PushFront(ctx)
   }
+}
+
+func (tc *TCstate) LastContext() *TCCtx {
+  if tc.CtxStack.Len() > 0 {
+    ctx := tc.CtxStack.PopFront().(*TCCtx)
+    log.Debugf("local context %v pushed to stack", ctx.Id)
+    return ctx
+  }
+  log.Debugf("context stack is shallow")
+  return nil
 }

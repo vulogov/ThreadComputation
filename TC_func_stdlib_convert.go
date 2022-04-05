@@ -18,6 +18,13 @@ func TCConversionFunction(l *TCExecListener, t int, e interface{}) (interface{},
       return nil, l.TC.MakeError("conversion function to list returned nil")
     }
     return res, nil
+  case String:
+    lfun := GetToStringCallback(e)
+    if lfun == nil {
+      return nil, l.TC.MakeError("conversion function to string not found")
+    }
+    res := lfun(e)
+    return res, nil
   }
   fun := GetConverterCallback(e)
   if fun == nil {

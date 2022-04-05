@@ -1,12 +1,11 @@
 package ThreadComputation
 
 import (
-	"fmt"
 	"testing"
 )
 
-func TestBinary1(t *testing.T) {
-	code := "bin['Hello'] size"
+func TestLines1(t *testing.T) {
+	code := "lines['Hello' 'Second line'] size"
 	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
 	// SetVariable("tc.Debuglevel", "info")
@@ -15,13 +14,13 @@ func TestBinary1(t *testing.T) {
 		t.Fatalf(tc.Error())
 	}
 	res := tc.GetAsString()
-  if res != "5" {
+  if res != "2" {
     t.Fatalf("%v is failed: %v", code, res)
   }
 }
 
-func TestBinary2(t *testing.T) {
-	code := "bin +['Hello'] size"
+func TestLines2(t *testing.T) {
+	code := "lines['Hello' 'Second line'] +['Third line'] size"
 	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
 	// SetVariable("tc.Debuglevel", "info")
@@ -30,13 +29,24 @@ func TestBinary2(t *testing.T) {
 		t.Fatalf(tc.Error())
 	}
 	res := tc.GetAsString()
-  if res != "5" {
+  if res != "3" {
     t.Fatalf("%v is failed: %v", code, res)
   }
 }
 
-func TestBinary3(t *testing.T) {
-	code := "bin['Hello'] =[bin['Hello']]"
+func TestLines3(t *testing.T) {
+	code := "lines['Hello' 'Second line'] ! loop[#0 println]"
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval(code)
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
+func TestLines4(t *testing.T) {
+	code := "lines['Hello' 'Second line'] loop[stack[#0]] len"
 	// SetVariable("tc.Debuglevel", "debug")
 	tc := Init()
 	// SetVariable("tc.Debuglevel", "info")
@@ -45,39 +55,7 @@ func TestBinary3(t *testing.T) {
 		t.Fatalf(tc.Error())
 	}
 	res := tc.GetAsString()
-  if res != "true" {
+	if res != "2" {
     t.Fatalf("%v is failed: %v", code, res)
   }
-}
-
-func TestBinary4(t *testing.T) {
-	code := "bin['Hello'] =['Hello']"
-	// SetVariable("tc.Debuglevel", "debug")
-	tc := Init()
-	// SetVariable("tc.Debuglevel", "info")
-	tc = tc.Eval(code)
-	if tc.Errors() != 0 {
-		t.Fatalf(tc.Error())
-	}
-	res := tc.GetAsString()
-  if res != "true" {
-    t.Fatalf("%v is failed: %v", code, res)
-  }
-}
-
-func TestBinary5(t *testing.T) {
-	code := "bin['Hello'] println"
-	// SetVariable("tc.Debuglevel", "debug")
-	tc := Init()
-	// SetVariable("tc.Debuglevel", "info")
-	tc = tc.Eval(code)
-	if tc.Errors() != 0 {
-		t.Fatalf(tc.Error())
-	}
-}
-
-func TestBinary6(t *testing.T) {
-	b := MakeBinary("12345")
-	s := b.Slice(1,3)
-	fmt.Println(s.String())
 }
