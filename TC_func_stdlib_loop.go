@@ -83,11 +83,13 @@ func LoopCode(l *TCExecListener, name string, code string) interface{} {
         log.Debugf("Loop element: %v", out)
       }
     }
+    l.TC.AddContext(nil)
     q := new(deque.Deque)
     q.PushFront(v)
     l.TC.EvAttrs.PushFront(q)
     l.TC.Eval(code)
     l.TC.EvAttrs.PopFront()
+    l.TC.DelContext()
   }
   l.TC.DelContext()
   return nil
