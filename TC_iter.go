@@ -32,6 +32,10 @@ func (i *TCIterator) TC() *TCstate {
   return i.tc
 }
 
+func (i *TCIterator) SetTC(tc *TCstate)  {
+  i.tc = tc
+}
+
 func (i *TCIterator) String() interface{} {
   return fmt.Sprintf("iterator[ type=(%v)]", TypeToStr(i.Type))
 }

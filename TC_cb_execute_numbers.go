@@ -8,22 +8,21 @@ import (
 
 
 
-func TCExecuteMatrix(l *TCExecListener, v interface{}, q *deque.Deque) interface{} {
-  if TCType(v) != Matrix {
-    log.Debugf("matrix-execute: %T is not a Matrix", v)
+func TCExecuteNumbers(l *TCExecListener, v interface{}, q *deque.Deque) interface{} {
+  if TCType(v) != Numbers {
+    log.Debugf("numbers-execute: %T is not a Numbers", v)
     return nil
   }
   gfun := GetGenCallback(v)
   if gfun == nil {
-    log.Debugf("matrix-execute: Can not get generator for %T", v)
+    log.Debugf("numbers-execute: Can not get generator for %T", v)
     return nil
   }
   iter := gfun(v)
   if iter == nil {
-    log.Debugf("matrix-execute: Can not get iterator for %T", v)
+    log.Debugf("numbers-execute: Can not get iterator for %T", v)
     return nil
   }
-  iter.SetTC(l.TC)
   for q.Len() > 0 {
     elem := q.PopFront()
     switch p := elem.(type) {
@@ -41,5 +40,5 @@ func TCExecuteMatrix(l *TCExecListener, v interface{}, q *deque.Deque) interface
 
 
 func init() {
-  RegisterExecuteCallback(Matrix, TCExecuteMatrix)
+  RegisterExecuteCallback(Numbers, TCExecuteNumbers)
 }

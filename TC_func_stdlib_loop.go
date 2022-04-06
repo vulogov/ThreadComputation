@@ -53,8 +53,9 @@ func LoopCode(l *TCExecListener, name string, code string) interface{} {
       l.TC.DelContext()
       l.TC.SetError("Can not create iterator for %T", e)
       return nil
-    }
+    }  
   }
+  iter.SetTC(l.TC)
   out:
   for {
     v := iter.Next()
