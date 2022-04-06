@@ -6,7 +6,7 @@ import (
   "github.com/gammazero/deque"
 )
 
-type TCRouterFun func(*TCExecListener, string, *deque.Deque) (interface{}, error)
+type TCRouterFun func(*TCExecListener, string, *deque.Deque) (bool, interface{}, error)
 
 var FunctionRouterQ deque.Deque
 
@@ -16,12 +16,15 @@ func TCFunctionRouter(l *TCExecListener, func_name string, q *deque.Deque) (inte
     fun := FunctionRouterQ.At(x).(TCRouterFun)
     fname := GetFunctionName(fun)
     log.Debugf("Calling function-router function %v()", fname)
-    res, err := fun(l,func_name, q)
+    served, res, err := fun(l,func_name, q)
     if err != nil {
       return nil, err
     }
     if res != nil {
       ReturnFromFunction(l, fname, res)
+    }
+    if served {
+      break
     }
   }
   return nil, l.TC.MakeError(fmt.Sprintf("%v is not recognized as function", func_name))
