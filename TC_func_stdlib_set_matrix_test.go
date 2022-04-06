@@ -14,6 +14,6 @@ func TestStdlibSetMatrix1(t *testing.T) {
 	}
 	res := tc.GetAsString()
   if res != "42" {
-          t.Fatalf("matrix[numbers[1 2] numbers[3 4]] <-[pair[pair[1 1] 42]] ->[pair[1 1]]: %v and shall be 42", res)
+    t.Fatalf("matrix[numbers[1 2] numbers[3 4]] <-[pair[pair[1 1] 42]] ->[pair[1 1]]: %v and shall be 42", res)
   }
 }
