@@ -23,8 +23,9 @@ func TCFunctionRouter(l *TCExecListener, func_name string, q *deque.Deque) (inte
     if res != nil {
       ReturnFromFunction(l, fname, res)
     }
+    log.Debugf("%v() served status: %v", fname, served)
     if served {
-      break
+      return nil, nil
     }
   }
   return nil, l.TC.MakeError(fmt.Sprintf("%v is not recognized as function", func_name))
