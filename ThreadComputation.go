@@ -20,12 +20,18 @@ var Vars      cmap.Cmap
 var Functions cmap.Cmap
 var Commands  cmap.Cmap
 var Callbacks cmap.Cmap
+var extType     TCExtType       // Functions for external types generation
+var extTypeStr  TCExtTypeStr    // and conversion
 var VERSION = "1.21"
 
 type TCExecListener struct {
   *parser.BaseThreadComputationListener
   TC          *TCstate
 }
+
+type TCExtType    func(interface{}) int
+type TCExtTypeStr func(interface{}) string
+
 
 type TCstate struct {
   ID           string
@@ -243,7 +249,6 @@ func (tc *TCstate) HaveAttrs() bool {
   }
   return true
 }
-
 
 func (tc *TCstate) SetError(msg string, args ...interface{}) {
   tc.errmsg = fmt.Sprintf(msg, args...)

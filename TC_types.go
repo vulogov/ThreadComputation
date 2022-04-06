@@ -66,6 +66,11 @@ func MakeType(t interface{}) *Type {
   return res
 }
 
+func SetExternalTypeHandlers(fun1 TCExtType, fun2 TCExtTypeStr) {
+  extType = fun1
+  extTypeStr = fun2
+}
+
 func TypeToStr(t interface{}) string {
   switch t.(type) {
   case int:
@@ -120,6 +125,10 @@ func TypeToStr(t interface{}) string {
       return "Error"
     case SType:
       return "Type"
+    default:
+      if extTypeStr != nil {
+        return extTypeStr(t)
+      }
     }
   }
   return TypeToStr(TCType(t))
@@ -181,8 +190,11 @@ func TCType(x interface{}) int {
   case *Type:
     return x.(*Type).T
   default:
-    return Unknown
+    if extType != nil {
+      return extType(x)
+    }
   }
+  return Unknown
 }
 
 func TCisSimple(x interface{}) bool {
