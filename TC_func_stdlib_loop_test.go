@@ -228,3 +228,18 @@ func TestStdlibLoop16(t *testing.T) {
 		t.Fatalf("%v had failed: %v", code, res)
 	}
 }
+
+func TestStdlibLoop17(t *testing.T) {
+	code := "numbers[40 41 42]  loop[stack[#0]] len"
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval(code)
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "3" {
+		t.Fatalf("%v had failed: %v", code, res)
+	}
+}
