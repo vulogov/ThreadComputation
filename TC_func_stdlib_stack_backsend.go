@@ -15,5 +15,5 @@ func TCStackBackSendFunction(l *TCExecListener, name string, q *deque.Deque) (in
 }
 
 func init() {
-  SetFunction(";", TCStackBackSendFunction)
+  SetCommand(";", TCStackBackSendFunction)
 }
