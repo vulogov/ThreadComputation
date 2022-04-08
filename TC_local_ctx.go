@@ -1,5 +1,6 @@
 package ThreadComputation
 import (
+  log "github.com/sirupsen/logrus"
   "github.com/gammazero/deque"
 )
 
@@ -16,6 +17,26 @@ func TCFillCtx(res *TCCtx, q *deque.Deque) *TCCtx {
     }
   }
   return res
+}
+
+func tcSetCtx(l *TCExecListener, q *deque.Deque) {
+  if (q.Len() % 2) != 0 {
+    return
+  }
+  for q.Len() > 0 {
+    k := q.PopFront()
+    v := q.PopFront()
+    switch k.(type) {
+    case string:
+      log.Debugf("local-context: %v=%v", k,v)
+      l.TC.SetContext(k.(string), v)
+    }
+  }
+}
+
+func TCPopulateCtxFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  tcSetCtx(l, q)
+  return nil, nil
 }
 
 func TCSetLocalCtxFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
@@ -46,6 +67,7 @@ func TCGetCtxFunction(l *TCExecListener, name string, q *deque.Deque) (interface
 
 func init() {
   SetCommand("local", TCSetLocalCtxFunction)
+  SetCommand("here", TCPopulateCtxFunction)
   SetCommand("context", TCCtxFunction)
   SetCommand("dropcontext", TCDropCtxFunction)
   SetCommand("getcontext", TCGetCtxFunction)
