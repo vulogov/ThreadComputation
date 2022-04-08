@@ -30,6 +30,7 @@ const (
   Context       = 21
   Lines         = 22
   IO            = 23
+  Exported      = 24
   Iterator      = 95
   SType         = 96
   Error         = 97
@@ -121,6 +122,8 @@ func TypeToStr(t interface{}) string {
       return "Lines"
     case IO:
       return "IO"
+    case Exported:
+      return "Exported"
     case Error:
       return "Error"
     case SType:
@@ -185,6 +188,8 @@ func TCType(x interface{}) int {
     return Lines
   case *TCIO:
     return IO
+  case *TCExported:
+    return Exported
   case *TCError:
     return Error
   case *Type:
@@ -335,6 +340,7 @@ func TCToTypeFunction(l *TCExecListener, name string, q *deque.Deque) (interface
   }
   return nil, nil
 }
+
 
 func init() {
   SetCommand("Int", TCIntFunction)

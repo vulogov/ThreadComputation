@@ -25,6 +25,8 @@ func TCBinaryConvert(data interface{}, to_type int) interface{} {
       if e.Type == Bool {
           return bytesToBool(e.D)
       }
+    case Exported:
+      return MakeExportedFromBinary(e)
     }
   }
   return nil

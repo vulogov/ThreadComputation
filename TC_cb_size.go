@@ -52,6 +52,14 @@ func TCBinarySize(data interface{}) int {
   return 0
 }
 
+func TCExportedSize(data interface{}) int {
+  switch data.(type) {
+  case *TCExported:
+    return data.(*TCExported).Len()
+  }
+  return 0
+}
+
 func TCMatrixSize(data interface{}) int {
   switch data.(type) {
   case *TCMatrix:
@@ -98,6 +106,8 @@ func GetSizeCallback(x interface{}) TCSizeFun {
     fn = fmt.Sprintf("size.%v", Binary)
   case *TCLines:
     fn = fmt.Sprintf("size.%v", Lines)
+  case *TCExported:
+    fn = fmt.Sprintf("size.%v", Exported)
   default:
     fn = fmt.Sprintf("size.%v", Any)
   }
@@ -121,4 +131,5 @@ func init() {
   RegisterSizeCallback(Neural, TCNeuralSize)
   RegisterSizeCallback(Binary, TCBinarySize)
   RegisterSizeCallback(Lines, TCLinesSize)
+  RegisterSizeCallback(Exported, TCExportedSize)
 }

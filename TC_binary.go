@@ -11,7 +11,7 @@ type TCBinary struct {
 }
 
 func (b *TCBinary) String() string {
-  out := "binary[ "
+  out := fmt.Sprintf("binary(%v)[ ", TypeToStr(b.Type))
   for i := 0; i<len(b.D); i++ {
     out += fmt.Sprintf("%U(%q) ", b.D[i], b.D[i])
   }
@@ -56,6 +56,8 @@ func (res *TCBinary) Add(d interface{}) *TCBinary {
         res.Type = Binary
         res.D = append(res.D[:], v.Value.(*TCBinary).D...)
       }
+    default:
+      log.Debugf("binary-add: No suitable converter")
     }
   }
   return res
@@ -70,6 +72,21 @@ func IsBinary(x interface{}) bool {
 }
 
 func MakeBinary(d interface{}) *TCBinary {
+  cfun := GetConverterCallback(d)
+  if cfun != nil {
+    res := cfun(d, Binary)
+    if res != nil {
+      switch res.(type) {
+      case *TCBinary:
+        log.Debugf("make-binary: done using standard converter for %T", d)
+        return res.(*TCBinary)
+      }
+    } else {
+      log.Debugf("make-binary: standard converter for %T returned nil", d)
+    }
+  } else {
+    log.Debugf("make-binary: no standard converter for %T", d)
+  }
   res := new(TCBinary)
   res.D = make([]byte, 0)
   res.Type = Unknown

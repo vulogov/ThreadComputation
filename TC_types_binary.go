@@ -16,9 +16,19 @@ func TCBinaryTypeFunction(l *TCExecListener, name string, q *deque.Deque) (inter
       case *TCValue:
         switch e.(*TCValue).Value.(type) {
         case string:
-          ReturnFromFunction(l, "String", MakeBinary(e.(*TCValue).Value.(string)))
+          ReturnFromFunction(l, "Binary", MakeBinary(e.(*TCValue).Value.(string)))
         case *TCBinary:
-          ReturnFromFunction(l, "String", MakeBinary(e.(*TCValue).Value.(*TCBinary).D))
+          ReturnFromFunction(l, "Binary", MakeBinary(e.(*TCValue).Value.(*TCBinary).D))
+        default:
+          res := MakeBinary(e.(*TCValue).Value)
+          if res != nil {
+            ReturnFromFunction(l, "Binary", res)
+          }
+        }
+      default:
+        res := MakeBinary(e)
+        if res != nil {
+          ReturnFromFunction(l, "Binary", res)
         }
       }
     }
