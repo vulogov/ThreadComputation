@@ -30,6 +30,7 @@ const (
   Context       = 21
   Lines         = 22
   IO            = 23
+  Exported      = 24
   Iterator      = 95
   SType         = 96
   Error         = 97
@@ -64,6 +65,11 @@ func MakeType(t interface{}) *Type {
     res.T = TCType(t)
   }
   return res
+}
+
+func SetExternalTypeHandlers(fun1 TCExtType, fun2 TCExtTypeStr) {
+  extType = fun1
+  extTypeStr = fun2
 }
 
 func TypeToStr(t interface{}) string {
@@ -116,10 +122,16 @@ func TypeToStr(t interface{}) string {
       return "Lines"
     case IO:
       return "IO"
+    case Exported:
+      return "Exported"
     case Error:
       return "Error"
     case SType:
       return "Type"
+    default:
+      if extTypeStr != nil {
+        return extTypeStr(t)
+      }
     }
   }
   return TypeToStr(TCType(t))
@@ -176,13 +188,18 @@ func TCType(x interface{}) int {
     return Lines
   case *TCIO:
     return IO
+  case *TCExported:
+    return Exported
   case *TCError:
     return Error
   case *Type:
     return x.(*Type).T
   default:
-    return Unknown
+    if extType != nil {
+      return extType(x)
+    }
   }
+  return Unknown
 }
 
 func TCisSimple(x interface{}) bool {
@@ -191,6 +208,20 @@ func TCisSimple(x interface{}) bool {
     return true
   }
   return false
+}
+
+func TCBoolTypeFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if q.Len() > 0 {
+    for q.Len() > 0 {
+      e := q.PopFront()
+      switch e.(type) {
+      case bool:
+        ReturnFromFunction(l, "Int", e)
+      }
+    }
+    return nil, nil
+  }
+  return MakeType(Bool), nil
 }
 
 func TCIntFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
@@ -310,12 +341,14 @@ func TCToTypeFunction(l *TCExecListener, name string, q *deque.Deque) (interface
   return nil, nil
 }
 
+
 func init() {
   SetCommand("Int", TCIntFunction)
   SetCommand("Float", TCFloatFunction)
   SetCommand("String", TCStringFunction)
   SetCommand("Time", TCTimeFunction)
   SetCommand("List", TCListTypeFunction)
+  SetCommand("Bool", TCBoolTypeFunction)
   SetFunction("type", TCToTypeFunction)
   RegisterFunctionCallback("totype", Any, TCToTypeConverter)
 }

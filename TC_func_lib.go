@@ -9,10 +9,10 @@ import (
 func ReturnFromFunction(l *TCExecListener, func_name string, data interface{}) {
   log.Debugf("return from fun=%v() res=%T", func_name, data)
   if l.TC.Attrs.GLen() >= 1 {
-    log.Debugf("returning function value to attribute: %v->%v", func_name, data)
+    log.Debugf("returning function value to attribute: %v->%v[%T]", func_name, data, data)
     l.TC.Attrs.Set(data)
   } else {
-    log.Debugf("returning function value to stack: %v->%v", func_name, data)
+    log.Debugf("returning function value to stack: %v->%v[%T]", func_name, data, data)
     l.TC.Res.Set(data)
   }
 }

@@ -23,6 +23,7 @@ func TCExecuteList(l *TCExecListener, v interface{}, q *deque.Deque) interface{}
     log.Debugf("list-execute: Can not get iterator for %T", v)
     return nil
   }
+  iter.SetTC(l.TC)
   for q.Len() > 0 {
     elem := q.PopFront()
     switch p := elem.(type) {

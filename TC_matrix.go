@@ -55,6 +55,10 @@ func (tc *TCstate) Matrix(q *deque.Deque) *TCMatrix {
 }
 
 func (m *TCMatrix) String() string {
+  m1, n1 := m.M.Dims()
+  if m1 == 0 && n1 == 0 {
+    return fmt.Sprintf("matrix[ 0 x 0 ]")
+  }
   out := mat.Formatted(m.M, mat.Prefix(""), mat.Squeeze())
   return fmt.Sprintf("%v", out)
 }

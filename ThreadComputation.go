@@ -20,12 +20,18 @@ var Vars      cmap.Cmap
 var Functions cmap.Cmap
 var Commands  cmap.Cmap
 var Callbacks cmap.Cmap
-var VERSION = "1.20"
+var extType     TCExtType       // Functions for external types generation
+var extTypeStr  TCExtTypeStr    // and conversion
+var VERSION = "1.21"
 
 type TCExecListener struct {
   *parser.BaseThreadComputationListener
   TC          *TCstate
 }
+
+type TCExtType    func(interface{}) int
+type TCExtTypeStr func(interface{}) string
+
 
 type TCstate struct {
   ID           string
@@ -221,6 +227,10 @@ func (tc *TCstate) Set(x interface{}) {
 func (tc *TCstate) GetAsString() string {
   res := tc.Get()
   if res != nil {
+    switch res.(type) {
+    case *TCBinary:
+      return res.(*TCBinary).Raw()
+    }
     return fmt.Sprintf("%v", res)
   }
   return ""
@@ -239,7 +249,6 @@ func (tc *TCstate) HaveAttrs() bool {
   }
   return true
 }
-
 
 func (tc *TCstate) SetError(msg string, args ...interface{}) {
   tc.errmsg = fmt.Sprintf(msg, args...)

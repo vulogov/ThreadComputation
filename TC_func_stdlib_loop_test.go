@@ -138,3 +138,108 @@ func TestStdlibLoop10(t *testing.T) {
 		t.Fatalf("%v had failed: %v", code, res)
 	}
 }
+
+func TestStdlibLoop11(t *testing.T) {
+	code := "list[list[1 2 3] list[3 4 5]] loop[stack[#2]] ~+"
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval(code)
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "6" {
+		t.Fatalf("%v had failed: %v", code, res)
+	}
+}
+
+func TestStdlibLoop12(t *testing.T) {
+	code := "list[dict['value' 41] dict['value' 1]] loop[stack[#value]] ~+"
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval(code)
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("%v had failed: %v", code, res)
+	}
+}
+
+func TestStdlibLoop13(t *testing.T) {
+	code := "list[pair['value' 41] pair['value' 1]] loop[stack[#value]] ~+"
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval(code)
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("%v had failed: %v", code, res)
+	}
+}
+
+func TestStdlibLoop14(t *testing.T) {
+	code := "list[pair['value' 41] pair['value' 1]] loop[stack[#2]] ~+"
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval(code)
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("%v had failed: %v", code, res)
+	}
+}
+
+func TestStdlibLoop15(t *testing.T) {
+	code := "list[numbers[0 41 1] numbers[1 1 42]] loop[stack[#2]] ~+"
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval(code)
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("%v had failed: %v", code, res)
+	}
+}
+
+func TestStdlibLoop16(t *testing.T) {
+	code := "list[Value[41 10.0] Just[1]] loop[stack[#probability]] ~+ /[2]"
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval(code)
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "55" {
+		t.Fatalf("%v had failed: %v", code, res)
+	}
+}
+
+func TestStdlibLoop17(t *testing.T) {
+	code := "numbers[40 41 42]  loop[stack[#0]] len"
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval(code)
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "3" {
+		t.Fatalf("%v had failed: %v", code, res)
+	}
+}
