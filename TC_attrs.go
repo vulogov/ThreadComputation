@@ -22,6 +22,20 @@ func AttrsToArray(q *deque.Deque) []interface{} {
   return res
 }
 
+func ArrayToAttrs(attrs []interface{}) *deque.Deque {
+	q := deque.New()
+	for _, v := range(attrs) {
+		res := tc.GetSimpleData(v)
+		if res == nil {
+			q.PushBack(v)
+		} else {
+			q.PushBack(res)
+		}
+	}
+	return q
+}
+
+
 func (l *TCExecListener) LastEvAttr() *deque.Deque {
   if l.TC.EvAttrs.Len() > 0 {
     return l.TC.EvAttrs.Front().(*deque.Deque)
