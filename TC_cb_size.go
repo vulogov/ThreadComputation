@@ -44,6 +44,14 @@ func TCNumbersSize(data interface{}) int {
   return 0
 }
 
+func TCDataframeSize(data interface{}) int {
+  switch data.(type) {
+  case *TCData:
+    return data.(*TCData).D.NRows()
+  }
+  return 0
+}
+
 func TCBinarySize(data interface{}) int {
   switch data.(type) {
   case *TCBinary:
@@ -98,6 +106,8 @@ func GetSizeCallback(x interface{}) TCSizeFun {
     fn = fmt.Sprintf("size.%v", List)
   case *TCNumbers:
     fn = fmt.Sprintf("size.%v", Numbers)
+  case *TCData:
+    fn = fmt.Sprintf("size.%v", Data)
   case *TCMatrix:
     fn = fmt.Sprintf("size.%v", Matrix)
   case *TCNeural:
@@ -127,6 +137,7 @@ func init() {
   RegisterSizeCallback(Any, TCSizeSimple)
   RegisterSizeCallback(List, TCListSize)
   RegisterSizeCallback(Numbers, TCNumbersSize)
+  RegisterSizeCallback(Data, TCDataframeSize)
   RegisterSizeCallback(Matrix, TCMatrixSize)
   RegisterSizeCallback(Neural, TCNeuralSize)
   RegisterSizeCallback(Binary, TCBinarySize)

@@ -27,7 +27,7 @@ func (l *TCExecListener) ExecuteSingleArgumentFunction(name string, q *deque.Deq
       // Yes, we do not care if execute function returned nothing
       //
       // return l.TC.MakeError(fmt.Sprintf("callback for %v(%T) returned nil", name, e))
-      return nil
+      continue
     }
     log.Debugf("function %v(%T) = %v", name, e, res)
     switch e.(type) {

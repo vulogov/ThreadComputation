@@ -3,6 +3,7 @@ package ThreadComputation
 import (
   "fmt"
   "math"
+  conv "github.com/cstockton/go-conv"
   "github.com/gammazero/deque"
 )
 
@@ -70,6 +71,13 @@ func (n *TCNumbers) Add(v interface{}) bool {
   case int64:
     n.P += 100.0
     n.N = append(n.N, float64(v.(int64)))
+  case string:
+    n.P += 100.0
+    num, err := conv.Float64(v.(string))
+    if err != nil {
+      return false
+    }
+    n.N = append(n.N, num)
   case *TCList:
     n.P += 100.0
     for i := 0; i < v.(*TCList).Len(); i++ {
@@ -83,6 +91,13 @@ func (n *TCNumbers) Add(v interface{}) bool {
     case float64:
       n.P += float64(v.(*TCValue).P)
       n.N = append(n.N, v.(*TCValue).Value.(float64))
+    case string:
+      n.P += float64(v.(*TCValue).P)
+      num, err := conv.Float64(v.(*TCValue).Value.(string))
+      if err != nil {
+        return false
+      }
+      n.N = append(n.N, num)
     }
   default:
     return false
@@ -112,6 +127,14 @@ func (n *TCNumbers) String() string {
     out += fmt.Sprintf("%v ", n.N[x])
   }
   out += " ]"
+  return out
+}
+
+func (n *TCNumbers) List() *TCList {
+  out := MakeList()
+  for x := 0; x < len(n.N); x++ {
+    out.Q.PushBack(n.N[x])
+  }
   return out
 }
 

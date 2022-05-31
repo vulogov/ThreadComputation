@@ -22,7 +22,7 @@ var Commands  cmap.Cmap
 var Callbacks cmap.Cmap
 var extType     TCExtType       // Functions for external types generation
 var extTypeStr  TCExtTypeStr    // and conversion
-var VERSION = "1.21"
+var VERSION = "1.22"
 
 type TCExecListener struct {
   *parser.BaseThreadComputationListener

@@ -233,7 +233,7 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
     // Otherwise assiming it is a function or values
     //
     if l.TC.HaveFunction(func_name) {
-      if l.TC.Ready() || l.TC.HaveAttrs() {
+      if l.TC.Ready() || l.TC.HaveAttrs() || (mod != nil && mod == "□") {
         if mod != nil && mod == "~" {
           log.Debugf("Function %v will be applied to all data in stack", func_name)
           q = AllValuesFromStackAndAttr(l, q)
@@ -245,6 +245,15 @@ func (l *TCExecListener) ExitFun(c *parser.FunContext) {
         } else if mod != nil && mod == "∀" {
           log.Debugf("Function %v will be applied to all data in stack and in attrs", func_name)
           q = AllValuesFromStackAndAttr(l, q)
+        } else if mod != nil && mod == "□" {
+          log.Debugf("Function %v will be applied to a value taken from context", func_name)
+          elem := l.TC.GetContext("value")
+          if elem != nil {
+            q.PushFront(elem)
+          } else {
+            l.SetError("Attempt to get context to stack had failed")
+            return
+          }
         } else {
           log.Debugf("Function %v will be applied to a single element in stack", func_name)
           q = SingleValueFromStackAndAttr(l, q)

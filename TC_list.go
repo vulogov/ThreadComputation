@@ -9,6 +9,11 @@ type TCList struct {
   Q         deque.Deque
 }
 
+func MakeList() *TCList {
+  res := new(TCList)
+  return res
+}
+
 func (l *TCList) Add(x interface{}) {
   l.Q.PushBack(x)
 }
@@ -40,4 +45,12 @@ func (l *TCList) String() string {
   }
   ret += " ]"
   return ret
+}
+
+func (l *TCList) Numbers() *TCNumbers {
+  out := MakeNumbers()
+  for n := 0; n < l.Q.Len(); n++ {
+    out.Add(l.Q.At(n))
+  }
+  return out
 }

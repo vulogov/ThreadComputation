@@ -65,10 +65,24 @@ func TCGetCtxFunction(l *TCExecListener, name string, q *deque.Deque) (interface
   return res, nil
 }
 
+func TCCtxValueFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  var val interface{}
+
+  res := MakeContext()
+  if q.Len() > 0 {
+    val = q.PopFront()
+  }
+  res = TCFillCtx(res, q)
+  l.TC.AddContext(res)
+  l.TC.SetContext("value", val)
+  return nil, nil
+}
+
 func init() {
   SetCommand("local", TCSetLocalCtxFunction)
   SetCommand("here", TCPopulateCtxFunction)
   SetCommand("context", TCCtxFunction)
   SetCommand("dropcontext", TCDropCtxFunction)
   SetCommand("getcontext", TCGetCtxFunction)
+  SetFunction("&", TCCtxValueFunction)
 }

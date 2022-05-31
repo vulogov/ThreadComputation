@@ -87,3 +87,85 @@ func TestStdlibCarcdr6(t *testing.T) {
 		t.Fatalf("pair[1 2] cdr had failed: %v", res)
 	}
 }
+
+func TestStdlibCarcdr7(t *testing.T) {
+	code := `
+	data[
+		pair[
+			"Answers"
+			Int
+		]
+		pair[
+			"Comment"
+			String
+		]
+	]
+	+[
+	  row[
+			"Answers"
+			42
+			"Comment"
+			"This is the Answer"
+		]
+		row[
+			"Answers"
+			41
+			"Comment"
+			"This is not an answer"
+		]
+	 ]
+	car sample["Answers"] ->[0]
+	`
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval(code)
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "42" {
+		t.Fatalf("%v had failed: %v", code, res)
+	}
+}
+
+func TestStdlibCarcdr8(t *testing.T) {
+	code := `
+	data[
+		pair[
+			"Answers"
+			Int
+		]
+		pair[
+			"Comment"
+			String
+		]
+	]
+	+[
+	  row[
+			"Answers"
+			42
+			"Comment"
+			"This is the Answer"
+		]
+		row[
+			"Answers"
+			41
+			"Comment"
+			"This is not an answer"
+		]
+	 ]
+	cdr sample["Answers"] ->[0]
+	`
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval(code)
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "41" {
+		t.Fatalf("%v had failed: %v", code, res)
+	}
+}

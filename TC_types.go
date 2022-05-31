@@ -329,6 +329,18 @@ func TCListTypeFunction(l *TCExecListener, name string, q *deque.Deque) (interfa
   return MakeType(List), nil
 }
 
+func TCNumbersTypeFunction(l *TCExecListener, name string, q *deque.Deque) (interface{}, error) {
+  if q.Len() > 0 {
+    res := MakeNumbers()
+    for q.Len() > 0 {
+      e := q.PopFront()
+      res.Add(e)
+    }
+    return res, nil
+  }
+  return MakeType(Numbers), nil
+}
+
 func TCToTypeConverter(v interface{}) interface{} {
   return MakeType(v)
 }
@@ -348,6 +360,7 @@ func init() {
   SetCommand("String", TCStringFunction)
   SetCommand("Time", TCTimeFunction)
   SetCommand("List", TCListTypeFunction)
+  SetCommand("Numbers", TCNumbersTypeFunction)
   SetCommand("Bool", TCBoolTypeFunction)
   SetFunction("type", TCToTypeFunction)
   RegisterFunctionCallback("totype", Any, TCToTypeConverter)
