@@ -3,6 +3,7 @@ package ThreadComputation
 import (
   log "github.com/sirupsen/logrus"
   "github.com/gammazero/deque"
+
 )
 
 func (l *TCExecListener) Attrs() *deque.Deque {
@@ -25,12 +26,17 @@ func AttrsToArray(q *deque.Deque) []interface{} {
 func ArrayToAttrs(attrs []interface{}) *deque.Deque {
 	q := deque.New()
 	for _, v := range(attrs) {
-		res := tc.GetSimpleData(v)
-		if res == nil {
-			q.PushBack(v)
-		} else {
-			q.PushBack(res)
-		}
+    switch v.(type) {
+    case string:
+      res := GetSimpleData(v.(string))
+      if res == nil {
+  			q.PushBack(v)
+  		} else {
+  			q.PushBack(res)
+  		}
+    default:
+      q.PushBack(v)
+    }
 	}
 	return q
 }

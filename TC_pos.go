@@ -14,7 +14,7 @@ func GetPositionalFromAttr(l *TCExecListener, n int64) interface{} {
     log.Debug("There is no attrs in evaluiation")
     return nil
   }
-  if len(q) == 0 {
+  if q.Len() == 0 {
     log.Debugf("Postion %v is outside of empty attrs", n)
     return nil
   }
