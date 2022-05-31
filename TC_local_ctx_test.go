@@ -104,3 +104,25 @@ func TestLocalCtx7(t *testing.T) {
     t.Fatalf("%v is failed: %v", code, res)
   }
 }
+
+func TestLocalCtx8(t *testing.T) {
+	code := "local[let['value' 42]] □println"
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval(code)
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}
+
+func TestLocalCtx9(t *testing.T) {
+	code := "42 &  □println"
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval(code)
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+}

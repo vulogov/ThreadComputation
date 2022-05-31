@@ -20,7 +20,7 @@ require (
 	github.com/Jeffail/gabs/v2 v2.6.1 // indirect
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b // indirect
-	github.com/antlr/antlr4/runtime/Go/antlr v0.0.0-20220314183648-97c793e446ba // indirect
+	github.com/antlr/antlr4/runtime/Go/antlr v0.0.0-20220527190237-ee62e23da966 // indirect
 	github.com/aws/aws-sdk-go v1.43.21 // indirect
 	github.com/c2fo/vfs/v6 v6.1.0 // indirect
 	github.com/cstockton/go-conv v1.0.0 // indirect

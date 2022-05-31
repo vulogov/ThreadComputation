@@ -1,92 +1,112 @@
-// Code generated from ThreadComputation.g4 by ANTLR 4.9.3. DO NOT EDIT.
+// Code generated from ThreadComputation.g4 by ANTLR 4.10.1. DO NOT EDIT.
 
 package parser // ThreadComputation
 
 import (
 	"fmt"
-	"reflect"
 	"strconv"
+	"sync"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
 
 // Suppress unused import errors
 var _ = fmt.Printf
-var _ = reflect.Copy
 var _ = strconv.Itoa
-
-var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 21, 77, 4,
-	2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 4, 5, 9, 5, 4, 6, 9, 6, 4, 7, 9, 7, 4,
-	8, 9, 8, 4, 9, 9, 9, 3, 2, 7, 2, 20, 10, 2, 12, 2, 14, 2, 23, 11, 2, 3,
-	3, 3, 3, 3, 3, 3, 3, 5, 3, 29, 10, 3, 3, 4, 3, 4, 3, 4, 3, 4, 7, 4, 35,
-	10, 4, 12, 4, 14, 4, 38, 11, 4, 3, 4, 3, 4, 3, 5, 5, 5, 43, 10, 5, 3, 5,
-	3, 5, 3, 5, 7, 5, 48, 10, 5, 12, 5, 14, 5, 51, 11, 5, 3, 5, 5, 5, 54, 10,
-	5, 3, 6, 3, 6, 3, 6, 5, 6, 59, 10, 6, 3, 6, 3, 6, 3, 7, 3, 7, 3, 7, 3,
-	7, 5, 7, 67, 10, 7, 3, 8, 3, 8, 3, 8, 5, 8, 72, 10, 8, 3, 9, 3, 9, 3, 9,
-	3, 9, 2, 2, 10, 2, 4, 6, 8, 10, 12, 14, 16, 2, 2, 2, 82, 2, 21, 3, 2, 2,
-	2, 4, 28, 3, 2, 2, 2, 6, 30, 3, 2, 2, 2, 8, 42, 3, 2, 2, 2, 10, 55, 3,
-	2, 2, 2, 12, 66, 3, 2, 2, 2, 14, 71, 3, 2, 2, 2, 16, 73, 3, 2, 2, 2, 18,
-	20, 5, 4, 3, 2, 19, 18, 3, 2, 2, 2, 20, 23, 3, 2, 2, 2, 21, 19, 3, 2, 2,
-	2, 21, 22, 3, 2, 2, 2, 22, 3, 3, 2, 2, 2, 23, 21, 3, 2, 2, 2, 24, 29, 5,
-	8, 5, 2, 25, 29, 5, 6, 4, 2, 26, 29, 5, 16, 9, 2, 27, 29, 5, 10, 6, 2,
-	28, 24, 3, 2, 2, 2, 28, 25, 3, 2, 2, 2, 28, 26, 3, 2, 2, 2, 28, 27, 3,
-	2, 2, 2, 29, 5, 3, 2, 2, 2, 30, 31, 7, 3, 2, 2, 31, 32, 7, 10, 2, 2, 32,
-	36, 7, 4, 2, 2, 33, 35, 5, 12, 7, 2, 34, 33, 3, 2, 2, 2, 35, 38, 3, 2,
-	2, 2, 36, 34, 3, 2, 2, 2, 36, 37, 3, 2, 2, 2, 37, 39, 3, 2, 2, 2, 38, 36,
-	3, 2, 2, 2, 39, 40, 7, 5, 2, 2, 40, 7, 3, 2, 2, 2, 41, 43, 7, 18, 2, 2,
-	42, 41, 3, 2, 2, 2, 42, 43, 3, 2, 2, 2, 43, 44, 3, 2, 2, 2, 44, 53, 7,
-	10, 2, 2, 45, 49, 7, 3, 2, 2, 46, 48, 5, 14, 8, 2, 47, 46, 3, 2, 2, 2,
-	48, 51, 3, 2, 2, 2, 49, 47, 3, 2, 2, 2, 49, 50, 3, 2, 2, 2, 50, 52, 3,
-	2, 2, 2, 51, 49, 3, 2, 2, 2, 52, 54, 7, 6, 2, 2, 53, 45, 3, 2, 2, 2, 53,
-	54, 3, 2, 2, 2, 54, 9, 3, 2, 2, 2, 55, 56, 7, 7, 2, 2, 56, 58, 5, 8, 5,
-	2, 57, 59, 7, 10, 2, 2, 58, 57, 3, 2, 2, 2, 58, 59, 3, 2, 2, 2, 59, 60,
-	3, 2, 2, 2, 60, 61, 7, 8, 2, 2, 61, 11, 3, 2, 2, 2, 62, 67, 5, 8, 5, 2,
-	63, 67, 5, 6, 4, 2, 64, 67, 5, 16, 9, 2, 65, 67, 5, 10, 6, 2, 66, 62, 3,
-	2, 2, 2, 66, 63, 3, 2, 2, 2, 66, 64, 3, 2, 2, 2, 66, 65, 3, 2, 2, 2, 67,
-	13, 3, 2, 2, 2, 68, 72, 5, 8, 5, 2, 69, 72, 5, 16, 9, 2, 70, 72, 5, 10,
-	6, 2, 71, 68, 3, 2, 2, 2, 71, 69, 3, 2, 2, 2, 71, 70, 3, 2, 2, 2, 72, 15,
-	3, 2, 2, 2, 73, 74, 7, 9, 2, 2, 74, 75, 7, 10, 2, 2, 75, 17, 3, 2, 2, 2,
-	11, 21, 28, 36, 42, 49, 53, 58, 66, 71,
-}
-var literalNames = []string{
-	"", "'['", "':'", "';;'", "']'", "'{'", "'}'", "'#'",
-}
-var symbolicNames = []string{
-	"", "", "", "", "", "", "", "", "FUNC_NAME", "OPS", "NAME", "INTEGER",
-	"DECIMAL_INTEGER", "FLOAT_NUMBER", "STRING", "OP", "MOD", "BLOCK_COMMENT",
-	"WhiteSpace", "NewLine",
-}
-
-var ruleNames = []string{
-	"expressions", "root_term", "ns", "fun", "val", "ns_term", "fun_term",
-	"pos_term",
-}
+var _ = sync.Once{}
 
 type ThreadComputationParser struct {
 	*antlr.BaseParser
 }
 
-// NewThreadComputationParser produces a new parser instance for the optional input antlr.TokenStream.
-//
-// The *ThreadComputationParser instance produced may be reused by calling the SetInputStream method.
-// The initial parser configuration is expensive to construct, and the object is not thread-safe;
-// however, if used within a Golang sync.Pool, the construction cost amortizes well and the
-// objects can be used in a thread-safe manner.
-func NewThreadComputationParser(input antlr.TokenStream) *ThreadComputationParser {
-	this := new(ThreadComputationParser)
-	deserializer := antlr.NewATNDeserializer(nil)
-	deserializedATN := deserializer.DeserializeFromUInt16(parserATN)
-	decisionToDFA := make([]*antlr.DFA, len(deserializedATN.DecisionToState))
-	for index, ds := range deserializedATN.DecisionToState {
-		decisionToDFA[index] = antlr.NewDFA(ds, index)
-	}
-	this.BaseParser = antlr.NewBaseParser(input)
+var threadcomputationParserStaticData struct {
+	once                   sync.Once
+	serializedATN          []int32
+	literalNames           []string
+	symbolicNames          []string
+	ruleNames              []string
+	predictionContextCache *antlr.PredictionContextCache
+	atn                    *antlr.ATN
+	decisionToDFA          []*antlr.DFA
+}
 
-	this.Interpreter = antlr.NewParserATNSimulator(this, deserializedATN, decisionToDFA, antlr.NewPredictionContextCache())
-	this.RuleNames = ruleNames
-	this.LiteralNames = literalNames
-	this.SymbolicNames = symbolicNames
+func threadcomputationParserInit() {
+	staticData := &threadcomputationParserStaticData
+	staticData.literalNames = []string{
+		"", "'['", "':'", "';;'", "']'", "'{'", "'}'", "'#'",
+	}
+	staticData.symbolicNames = []string{
+		"", "", "", "", "", "", "", "", "FUNC_NAME", "OPS", "NAME", "INTEGER",
+		"DECIMAL_INTEGER", "FLOAT_NUMBER", "STRING", "OP", "MOD", "BLOCK_COMMENT",
+		"WhiteSpace", "NewLine",
+	}
+	staticData.ruleNames = []string{
+		"expressions", "root_term", "ns", "fun", "val", "ns_term", "fun_term",
+		"pos_term",
+	}
+	staticData.predictionContextCache = antlr.NewPredictionContextCache()
+	staticData.serializedATN = []int32{
+		4, 1, 19, 75, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
+		4, 2, 5, 7, 5, 2, 6, 7, 6, 2, 7, 7, 7, 1, 0, 5, 0, 18, 8, 0, 10, 0, 12,
+		0, 21, 9, 0, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 27, 8, 1, 1, 2, 1, 2, 1, 2,
+		1, 2, 5, 2, 33, 8, 2, 10, 2, 12, 2, 36, 9, 2, 1, 2, 1, 2, 1, 3, 3, 3, 41,
+		8, 3, 1, 3, 1, 3, 1, 3, 5, 3, 46, 8, 3, 10, 3, 12, 3, 49, 9, 3, 1, 3, 3,
+		3, 52, 8, 3, 1, 4, 1, 4, 1, 4, 3, 4, 57, 8, 4, 1, 4, 1, 4, 1, 5, 1, 5,
+		1, 5, 1, 5, 3, 5, 65, 8, 5, 1, 6, 1, 6, 1, 6, 3, 6, 70, 8, 6, 1, 7, 1,
+		7, 1, 7, 1, 7, 0, 0, 8, 0, 2, 4, 6, 8, 10, 12, 14, 0, 0, 80, 0, 19, 1,
+		0, 0, 0, 2, 26, 1, 0, 0, 0, 4, 28, 1, 0, 0, 0, 6, 40, 1, 0, 0, 0, 8, 53,
+		1, 0, 0, 0, 10, 64, 1, 0, 0, 0, 12, 69, 1, 0, 0, 0, 14, 71, 1, 0, 0, 0,
+		16, 18, 3, 2, 1, 0, 17, 16, 1, 0, 0, 0, 18, 21, 1, 0, 0, 0, 19, 17, 1,
+		0, 0, 0, 19, 20, 1, 0, 0, 0, 20, 1, 1, 0, 0, 0, 21, 19, 1, 0, 0, 0, 22,
+		27, 3, 6, 3, 0, 23, 27, 3, 4, 2, 0, 24, 27, 3, 14, 7, 0, 25, 27, 3, 8,
+		4, 0, 26, 22, 1, 0, 0, 0, 26, 23, 1, 0, 0, 0, 26, 24, 1, 0, 0, 0, 26, 25,
+		1, 0, 0, 0, 27, 3, 1, 0, 0, 0, 28, 29, 5, 1, 0, 0, 29, 30, 5, 8, 0, 0,
+		30, 34, 5, 2, 0, 0, 31, 33, 3, 10, 5, 0, 32, 31, 1, 0, 0, 0, 33, 36, 1,
+		0, 0, 0, 34, 32, 1, 0, 0, 0, 34, 35, 1, 0, 0, 0, 35, 37, 1, 0, 0, 0, 36,
+		34, 1, 0, 0, 0, 37, 38, 5, 3, 0, 0, 38, 5, 1, 0, 0, 0, 39, 41, 5, 16, 0,
+		0, 40, 39, 1, 0, 0, 0, 40, 41, 1, 0, 0, 0, 41, 42, 1, 0, 0, 0, 42, 51,
+		5, 8, 0, 0, 43, 47, 5, 1, 0, 0, 44, 46, 3, 12, 6, 0, 45, 44, 1, 0, 0, 0,
+		46, 49, 1, 0, 0, 0, 47, 45, 1, 0, 0, 0, 47, 48, 1, 0, 0, 0, 48, 50, 1,
+		0, 0, 0, 49, 47, 1, 0, 0, 0, 50, 52, 5, 4, 0, 0, 51, 43, 1, 0, 0, 0, 51,
+		52, 1, 0, 0, 0, 52, 7, 1, 0, 0, 0, 53, 54, 5, 5, 0, 0, 54, 56, 3, 6, 3,
+		0, 55, 57, 5, 8, 0, 0, 56, 55, 1, 0, 0, 0, 56, 57, 1, 0, 0, 0, 57, 58,
+		1, 0, 0, 0, 58, 59, 5, 6, 0, 0, 59, 9, 1, 0, 0, 0, 60, 65, 3, 6, 3, 0,
+		61, 65, 3, 4, 2, 0, 62, 65, 3, 14, 7, 0, 63, 65, 3, 8, 4, 0, 64, 60, 1,
+		0, 0, 0, 64, 61, 1, 0, 0, 0, 64, 62, 1, 0, 0, 0, 64, 63, 1, 0, 0, 0, 65,
+		11, 1, 0, 0, 0, 66, 70, 3, 6, 3, 0, 67, 70, 3, 14, 7, 0, 68, 70, 3, 8,
+		4, 0, 69, 66, 1, 0, 0, 0, 69, 67, 1, 0, 0, 0, 69, 68, 1, 0, 0, 0, 70, 13,
+		1, 0, 0, 0, 71, 72, 5, 7, 0, 0, 72, 73, 5, 8, 0, 0, 73, 15, 1, 0, 0, 0,
+		9, 19, 26, 34, 40, 47, 51, 56, 64, 69,
+	}
+	deserializer := antlr.NewATNDeserializer(nil)
+	staticData.atn = deserializer.Deserialize(staticData.serializedATN)
+	atn := staticData.atn
+	staticData.decisionToDFA = make([]*antlr.DFA, len(atn.DecisionToState))
+	decisionToDFA := staticData.decisionToDFA
+	for index, state := range atn.DecisionToState {
+		decisionToDFA[index] = antlr.NewDFA(state, index)
+	}
+}
+
+// ThreadComputationParserInit initializes any static state used to implement ThreadComputationParser. By default the
+// static state used to implement the parser is lazily initialized during the first call to
+// NewThreadComputationParser(). You can call this function if you wish to initialize the static state ahead
+// of time.
+func ThreadComputationParserInit() {
+	staticData := &threadcomputationParserStaticData
+	staticData.once.Do(threadcomputationParserInit)
+}
+
+// NewThreadComputationParser produces a new parser instance for the optional input antlr.TokenStream.
+func NewThreadComputationParser(input antlr.TokenStream) *ThreadComputationParser {
+	ThreadComputationParserInit()
+	this := new(ThreadComputationParser)
+	this.BaseParser = antlr.NewBaseParser(input)
+	staticData := &threadcomputationParserStaticData
+	this.Interpreter = antlr.NewParserATNSimulator(this, staticData.atn, staticData.decisionToDFA, staticData.predictionContextCache)
+	this.RuleNames = staticData.ruleNames
+	this.LiteralNames = staticData.literalNames
+	this.SymbolicNames = staticData.symbolicNames
 	this.GrammarFileName = "ThreadComputation.g4"
 
 	return this
@@ -167,12 +187,20 @@ func NewExpressionsContext(parser antlr.Parser, parent antlr.ParserRuleContext, 
 func (s *ExpressionsContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *ExpressionsContext) AllRoot_term() []IRoot_termContext {
-	var ts = s.GetTypedRuleContexts(reflect.TypeOf((*IRoot_termContext)(nil)).Elem())
-	var tst = make([]IRoot_termContext, len(ts))
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IRoot_termContext); ok {
+			len++
+		}
+	}
 
-	for i, t := range ts {
-		if t != nil {
+	tst := make([]IRoot_termContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IRoot_termContext); ok {
 			tst[i] = t.(IRoot_termContext)
+			i++
 		}
 	}
 
@@ -180,7 +208,17 @@ func (s *ExpressionsContext) AllRoot_term() []IRoot_termContext {
 }
 
 func (s *ExpressionsContext) Root_term(i int) IRoot_termContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IRoot_termContext)(nil)).Elem(), i)
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IRoot_termContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
 
 	if t == nil {
 		return nil
@@ -291,7 +329,13 @@ func NewRoot_termContext(parser antlr.Parser, parent antlr.ParserRuleContext, in
 func (s *Root_termContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *Root_termContext) Fun() IFunContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IFunContext)(nil)).Elem(), 0)
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IFunContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
 
 	if t == nil {
 		return nil
@@ -301,7 +345,13 @@ func (s *Root_termContext) Fun() IFunContext {
 }
 
 func (s *Root_termContext) Ns() INsContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*INsContext)(nil)).Elem(), 0)
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(INsContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
 
 	if t == nil {
 		return nil
@@ -311,7 +361,13 @@ func (s *Root_termContext) Ns() INsContext {
 }
 
 func (s *Root_termContext) Pos_term() IPos_termContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IPos_termContext)(nil)).Elem(), 0)
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IPos_termContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
 
 	if t == nil {
 		return nil
@@ -321,7 +377,13 @@ func (s *Root_termContext) Pos_term() IPos_termContext {
 }
 
 func (s *Root_termContext) Val() IValContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IValContext)(nil)).Elem(), 0)
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IValContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
 
 	if t == nil {
 		return nil
@@ -485,12 +547,20 @@ func (s *NsContext) FUNC_NAME() antlr.TerminalNode {
 }
 
 func (s *NsContext) AllNs_term() []INs_termContext {
-	var ts = s.GetTypedRuleContexts(reflect.TypeOf((*INs_termContext)(nil)).Elem())
-	var tst = make([]INs_termContext, len(ts))
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(INs_termContext); ok {
+			len++
+		}
+	}
 
-	for i, t := range ts {
-		if t != nil {
+	tst := make([]INs_termContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(INs_termContext); ok {
 			tst[i] = t.(INs_termContext)
+			i++
 		}
 	}
 
@@ -498,7 +568,17 @@ func (s *NsContext) AllNs_term() []INs_termContext {
 }
 
 func (s *NsContext) Ns_term(i int) INs_termContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*INs_termContext)(nil)).Elem(), i)
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(INs_termContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
 
 	if t == nil {
 		return nil
@@ -684,12 +764,20 @@ func (s *FunContext) MOD() antlr.TerminalNode {
 }
 
 func (s *FunContext) AllFun_term() []IFun_termContext {
-	var ts = s.GetTypedRuleContexts(reflect.TypeOf((*IFun_termContext)(nil)).Elem())
-	var tst = make([]IFun_termContext, len(ts))
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IFun_termContext); ok {
+			len++
+		}
+	}
 
-	for i, t := range ts {
-		if t != nil {
+	tst := make([]IFun_termContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IFun_termContext); ok {
 			tst[i] = t.(IFun_termContext)
+			i++
 		}
 	}
 
@@ -697,7 +785,17 @@ func (s *FunContext) AllFun_term() []IFun_termContext {
 }
 
 func (s *FunContext) Fun_term(i int) IFun_termContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IFun_termContext)(nil)).Elem(), i)
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IFun_termContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
 
 	if t == nil {
 		return nil
@@ -869,7 +967,13 @@ func (s *ValContext) GetFname() IFunContext { return s.fname }
 func (s *ValContext) SetFname(v IFunContext) { s.fname = v }
 
 func (s *ValContext) Fun() IFunContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IFunContext)(nil)).Elem(), 0)
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IFunContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
 
 	if t == nil {
 		return nil
@@ -999,7 +1103,13 @@ func NewNs_termContext(parser antlr.Parser, parent antlr.ParserRuleContext, invo
 func (s *Ns_termContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *Ns_termContext) Fun() IFunContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IFunContext)(nil)).Elem(), 0)
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IFunContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
 
 	if t == nil {
 		return nil
@@ -1009,7 +1119,13 @@ func (s *Ns_termContext) Fun() IFunContext {
 }
 
 func (s *Ns_termContext) Ns() INsContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*INsContext)(nil)).Elem(), 0)
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(INsContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
 
 	if t == nil {
 		return nil
@@ -1019,7 +1135,13 @@ func (s *Ns_termContext) Ns() INsContext {
 }
 
 func (s *Ns_termContext) Pos_term() IPos_termContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IPos_termContext)(nil)).Elem(), 0)
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IPos_termContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
 
 	if t == nil {
 		return nil
@@ -1029,7 +1151,13 @@ func (s *Ns_termContext) Pos_term() IPos_termContext {
 }
 
 func (s *Ns_termContext) Val() IValContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IValContext)(nil)).Elem(), 0)
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IValContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
 
 	if t == nil {
 		return nil
@@ -1156,7 +1284,13 @@ func NewFun_termContext(parser antlr.Parser, parent antlr.ParserRuleContext, inv
 func (s *Fun_termContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *Fun_termContext) Fun() IFunContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IFunContext)(nil)).Elem(), 0)
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IFunContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
 
 	if t == nil {
 		return nil
@@ -1166,7 +1300,13 @@ func (s *Fun_termContext) Fun() IFunContext {
 }
 
 func (s *Fun_termContext) Pos_term() IPos_termContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IPos_termContext)(nil)).Elem(), 0)
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IPos_termContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
 
 	if t == nil {
 		return nil
@@ -1176,7 +1316,13 @@ func (s *Fun_termContext) Pos_term() IPos_termContext {
 }
 
 func (s *Fun_termContext) Val() IValContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IValContext)(nil)).Elem(), 0)
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IValContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
 
 	if t == nil {
 		return nil

@@ -21,7 +21,7 @@ pre:
 
 build:
 	rm -rf ./parser
-	antlr -Dlanguage=Go -o parser ThreadComputation.g4
+	antlr4 -Dlanguage=Go -o parser ThreadComputation.g4
 c:
 	go build  -v ./...
 test:
