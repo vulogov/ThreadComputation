@@ -48,17 +48,6 @@ func TCStringConvert(data interface{}, to_type int) interface{} {
 }
 
 
-func TCListConvert(data interface{}, to_type int) interface{} {
-  switch e := data.(type) {
-  case *TCList:
-    switch to_type {
-    case String:
-      return e.String()
-    }
-  }
-  return nil
-}
-
 func TCSetConvert(data interface{}, to_type int) interface{} {
   switch e := data.(type) {
   case mapset.Set:
@@ -107,16 +96,6 @@ func TCErrorConvert(data interface{}, to_type int) interface{} {
   return nil
 }
 
-func TCNumbersConvert(data interface{}, to_type int) interface{} {
-  switch e := data.(type) {
-  case *TCNumbers:
-    switch to_type {
-    case String:
-      return e.String()
-    }
-  }
-  return nil
-}
 
 func TCMatrixConvert(data interface{}, to_type int) interface{} {
   switch e := data.(type) {
@@ -254,12 +233,10 @@ func GetStringConverter() TCConvertFun {
 func init() {
   RegisterConvertCallback(String, TCStringConvert)
   RegisterConvertCallback(Any, TCAnythingConvert)
-  RegisterConvertCallback(List, TCListConvert)
   RegisterConvertCallback(Set, TCSetConvert)
   RegisterConvertCallback(Range, TCRangeConvert)
   RegisterConvertCallback(Error, TCErrorConvert)
   RegisterConvertCallback(None, TCNoneConvert)
-  RegisterConvertCallback(Numbers, TCNumbersConvert)
   RegisterConvertCallback(Matrix, TCMatrixConvert)
   RegisterConvertCallback(Dict, TCDictConvert)
   RegisterConvertCallback(Pair, TCPairConvert)

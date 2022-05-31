@@ -88,3 +88,17 @@ func TestNumbers8(t *testing.T) {
 	n.RotateRight()
 	fmt.Printf("%v\n", n.String())
 }
+
+func TestNumbers9(t *testing.T) {
+	// SetVariable("tc.Debuglevel", "debug")
+	tc := Init()
+	// SetVariable("tc.Debuglevel", "info")
+	tc = tc.Eval("numbers[list['1' '2' '3']] println size")
+	if tc.Errors() != 0 {
+		t.Fatalf(tc.Error())
+	}
+	res := tc.GetAsString()
+	if res != "3" {
+		t.Fatalf("numbers[list['1' '2' '3']] println size had failed: %v", res)
+	}
+}
